@@ -34,8 +34,8 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sz0-Yu-eWM" userLabel="时间">
-                                <rect key="frame" x="311" y="12" width="31" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sz0-Yu-eWM" userLabel="时间">
+                                <rect key="frame" x="253" y="8" width="31" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -52,6 +52,19 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="卡片角标.png" translatesAutoresizingMaskIntoConstraints="NO" id="9sJ-iH-upD">
+                                <rect key="frame" x="306" y="0.0" width="48" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="5ZZ-uE-AT1"/>
+                                    <constraint firstAttribute="width" constant="48" id="PB7-H0-6Y8"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjK-0n-Rag">
+                                <rect key="frame" x="311.5" y="2" width="32.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FgH-Ou-033">
                                 <rect key="frame" x="0.0" y="78.5" width="354" height="20"/>
                                 <color key="backgroundColor" red="0.0" green="0.80784313730000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,20 +75,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pjK-0n-Rag" firstAttribute="trailing" secondItem="9sJ-iH-upD" secondAttribute="trailing" constant="-10" id="4FX-Rr-bRy"/>
                             <constraint firstItem="92U-fB-Z9A" firstAttribute="leading" secondItem="R2C-IF-Ta4" secondAttribute="leading" constant="12" id="4XC-0c-UQI"/>
                             <constraint firstAttribute="trailing" secondItem="FgH-Ou-033" secondAttribute="trailing" id="BXA-Hg-Xe9"/>
                             <constraint firstItem="92U-fB-Z9A" firstAttribute="top" secondItem="R2C-IF-Ta4" secondAttribute="top" constant="12" id="CQp-3W-ikQ"/>
-                            <constraint firstItem="sz0-Yu-eWM" firstAttribute="top" secondItem="R2C-IF-Ta4" secondAttribute="top" constant="12" id="Dnf-cB-Mq7"/>
                             <constraint firstItem="jrY-g0-1qj" firstAttribute="leading" secondItem="92U-fB-Z9A" secondAttribute="trailing" constant="12" id="EsN-rn-FXA"/>
                             <constraint firstItem="0Vk-sj-xVG" firstAttribute="leading" secondItem="92U-fB-Z9A" secondAttribute="trailing" constant="12" id="Gba-bX-km6"/>
+                            <constraint firstItem="sz0-Yu-eWM" firstAttribute="top" secondItem="R2C-IF-Ta4" secondAttribute="top" constant="8" id="LUe-EP-iTt"/>
+                            <constraint firstItem="9sJ-iH-upD" firstAttribute="top" secondItem="R2C-IF-Ta4" secondAttribute="top" id="LXg-ox-OIh"/>
                             <constraint firstAttribute="trailing" secondItem="jrY-g0-1qj" secondAttribute="trailing" constant="12" id="SNc-XZ-84A"/>
                             <constraint firstItem="FgH-Ou-033" firstAttribute="top" secondItem="jrY-g0-1qj" secondAttribute="bottom" priority="250" constant="12" id="T0o-Cy-p0d"/>
+                            <constraint firstItem="pjK-0n-Rag" firstAttribute="top" secondItem="9sJ-iH-upD" secondAttribute="top" constant="2" id="ZQO-Fb-Y91"/>
                             <constraint firstAttribute="bottom" secondItem="FgH-Ou-033" secondAttribute="bottom" id="gha-MV-tdS"/>
                             <constraint firstItem="jrY-g0-1qj" firstAttribute="top" secondItem="0Vk-sj-xVG" secondAttribute="bottom" constant="4" id="hPp-bv-BL8"/>
                             <constraint firstItem="FgH-Ou-033" firstAttribute="top" relation="greaterThanOrEqual" secondItem="92U-fB-Z9A" secondAttribute="bottom" constant="12" id="hej-hY-J6j"/>
                             <constraint firstItem="FgH-Ou-033" firstAttribute="leading" secondItem="R2C-IF-Ta4" secondAttribute="leading" id="tXg-dj-w3l"/>
+                            <constraint firstAttribute="trailing" secondItem="9sJ-iH-upD" secondAttribute="trailing" id="uNx-iC-ch9"/>
                             <constraint firstItem="0Vk-sj-xVG" firstAttribute="top" secondItem="R2C-IF-Ta4" secondAttribute="top" constant="12" id="xEC-W5-rBo"/>
-                            <constraint firstAttribute="trailing" secondItem="sz0-Yu-eWM" secondAttribute="trailing" constant="12" id="zzR-D4-qqq"/>
+                            <constraint firstAttribute="trailing" secondItem="sz0-Yu-eWM" secondAttribute="trailing" constant="70" id="zzR-D4-qqq"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kKk-WP-Azx">
@@ -101,6 +118,7 @@
             <connections>
                 <outlet property="avatarImageView" destination="92U-fB-Z9A" id="m2n-nU-Gg6"/>
                 <outlet property="containerView" destination="R2C-IF-Ta4" id="yhg-9R-UYv"/>
+                <outlet property="diffcultLabel" destination="pjK-0n-Rag" id="JZE-fw-gBe"/>
                 <outlet property="homeworkTitleLabel" destination="jrY-g0-1qj" id="1kp-tS-0IF"/>
                 <outlet property="nameLabel" destination="0Vk-sj-xVG" id="Xh6-0g-FNM"/>
                 <outlet property="rightLineView" destination="kKk-WP-Azx" id="Nk4-Xj-qmj"/>
@@ -110,4 +128,7 @@
             <point key="canvasLocation" x="-844.79999999999995" y="-422.33883058470769"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="卡片角标.png" width="48" height="20"/>
+    </resources>
 </document>

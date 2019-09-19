@@ -799,6 +799,7 @@ MIActivityBannerViewDelegate
     [cell setupWithHomeworkSession:homeworkSession];
     
 #if MANAGERSIDE
+    // 管理端选中状态
     [cell setupSelectState:(indexPath.row == self.currentSelectIndex) ? YES : NO];
 #endif
     

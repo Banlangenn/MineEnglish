@@ -76,31 +76,7 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
 
 - (void)setLeftCommitHomeworkUI:(HomeworkSession *)homeworkSession
 {
-    self.cornerBgView.hidden = NO;
-    if (homeworkSession.homework.level == 0)
-    {
-        self.diffcultLabel.text = @"1星";
-    }
-    else if (homeworkSession.homework.level == 1)
-    {
-        self.diffcultLabel.text = @"2星";
-    }
-    else if (homeworkSession.homework.level == 2)
-    {
-        self.diffcultLabel.text = @"3星";
-    }
-    else if (homeworkSession.homework.level == 3)
-    {
-        self.diffcultLabel.text = @"4星";
-    }
-    else if (homeworkSession.homework.level == 4)
-    {
-        self.diffcultLabel.text = @"5星";
-    }
-    else
-    {
-        self.cornerBgView.hidden = YES;
-    }
+
     NSInteger maxHours;
     if (homeworkSession.homework.style == 1)
     {
@@ -195,6 +171,33 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     HomeworkItem *item = homeworkSession.homework.items.firstObject;
     
     [self setupSelectState:NO];
+    
+    self.cornerBgView.hidden = NO;
+    if (homeworkSession.homework.level == 0)
+    {
+        self.diffcultLabel.text = @"1星";
+    }
+    else if (homeworkSession.homework.level == 1)
+    {
+        self.diffcultLabel.text = @"2星";
+    }
+    else if (homeworkSession.homework.level == 2)
+    {
+        self.diffcultLabel.text = @"3星";
+    }
+    else if (homeworkSession.homework.level == 3)
+    {
+        self.diffcultLabel.text = @"4星";
+    }
+    else if (homeworkSession.homework.level == 4)
+    {
+        self.diffcultLabel.text = @"5星";
+    }
+    else
+    {
+        self.cornerBgView.hidden = YES;
+    }
+    
 #if TEACHERSIDE | MANAGERSIDE
     self.nameLabel.text = homeworkSession.student.nickname;
     
