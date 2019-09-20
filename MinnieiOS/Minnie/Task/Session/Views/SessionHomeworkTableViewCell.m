@@ -26,7 +26,11 @@ UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) IBOutlet UILabel *homeworkTextLabel;
 @property (nonatomic, weak) IBOutlet UICollectionView *homeworksCollectionView;
+// 限制时间
 @property (weak, nonatomic) IBOutlet UILabel *limitTimeLabel;
+
+// 发送作业日期
+@property (weak, nonatomic) IBOutlet UILabel *sendTimeLabel;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewBottomConstraint;
@@ -80,6 +84,16 @@ UICollectionViewDelegateFlowLayout>
         paragraphStyle.lineSpacing = 5;
         [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
         self.homeworkTextLabel.attributedText = mAttribute;
+    }
+    
+    // 发送时间
+    if (self.homeworkSession.sendTime > 0) {
+       
+        NSString *sendTime = [Utils formatedDayDateString:self.homeworkSession.sendTime];
+        self.sendTimeLabel.hidden = NO;
+        self.sendTimeLabel.text = sendTime;
+    } else {
+        self.sendTimeLabel.hidden = YES;
     }
     
     // 批改备注 (仅教师端显示)

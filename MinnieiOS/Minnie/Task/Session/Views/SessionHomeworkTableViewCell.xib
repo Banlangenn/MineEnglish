@@ -30,6 +30,12 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9/20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGV-8K-whd" userLabel="时间">
+                                <rect key="frame" x="74" y="15.5" width="26.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="rAo-pL-Z1Y">
                                 <rect key="frame" x="12" y="411.5" width="834" height="114"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -89,9 +95,11 @@
                             <constraint firstItem="sNi-j7-9rn" firstAttribute="top" secondItem="PZ9-bk-Z7A" secondAttribute="top" constant="15" id="bms-WE-UTY"/>
                             <constraint firstItem="KRx-u9-Uzg" firstAttribute="leading" secondItem="PZ9-bk-Z7A" secondAttribute="leading" constant="10" id="bzX-Tv-1jk"/>
                             <constraint firstItem="yHM-iA-FU1" firstAttribute="top" secondItem="sNi-j7-9rn" secondAttribute="bottom" constant="7" id="cNJ-0c-1T6"/>
+                            <constraint firstItem="GGV-8K-whd" firstAttribute="centerY" secondItem="sNi-j7-9rn" secondAttribute="centerY" id="dkl-Me-D4R"/>
                             <constraint firstItem="rAo-pL-Z1Y" firstAttribute="leading" secondItem="yHM-iA-FU1" secondAttribute="leading" id="eFl-8d-U0N"/>
                             <constraint firstItem="rAo-pL-Z1Y" firstAttribute="top" secondItem="yHM-iA-FU1" secondAttribute="bottom" constant="12" id="kcW-sc-d65"/>
                             <constraint firstAttribute="trailing" secondItem="rAo-pL-Z1Y" secondAttribute="trailing" constant="12" id="oHR-hr-NAv"/>
+                            <constraint firstItem="GGV-8K-whd" firstAttribute="leading" secondItem="sNi-j7-9rn" secondAttribute="trailing" constant="12" id="qRT-L6-Q8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PZ9-bk-Z7A"/>
                     </view>
@@ -111,6 +119,7 @@
                 <outlet property="homeworkTitleLabel" destination="sNi-j7-9rn" id="x18-o6-pHl"/>
                 <outlet property="homeworksCollectionView" destination="rAo-pL-Z1Y" id="lrc-g2-796"/>
                 <outlet property="limitTimeLabel" destination="9cW-b1-vz7" id="vQ2-mp-9rw"/>
+                <outlet property="sendTimeLabel" destination="GGV-8K-whd" id="DlL-x3-Qka"/>
                 <outlet property="teremarkLabel" destination="KRx-u9-Uzg" id="ULd-dJ-WoN"/>
             </connections>
             <point key="canvasLocation" x="-3156.8000000000002" y="-1040.7796101949027"/>

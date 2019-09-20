@@ -29,6 +29,8 @@
 
 + (NSString *)formatedDateString:(long long)microSecond;
 
++ (NSString *)formatedDayDateString:(long long)microSecond;
+
 + (NSString *)dateFormatterTime:(long long)microSecond;
 
 + (NSString *)montAndDateTime:(long long)microSecond;

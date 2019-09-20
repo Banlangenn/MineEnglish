@@ -91,6 +91,64 @@
     return result;
 }
 
++ (NSString *)formatedDayDateString:(long long)microSecond
+{
+    //    TIKI;
+    NSTimeInterval second = microSecond/1000;
+    NSString *result = nil;
+    NSDate *now = [NSDate date];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:second];
+    
+    do {
+        NSTimeInterval delta = [now timeIntervalSinceDate:date];
+        if (delta < 60) { // 处理60s内的
+            result = @"刚刚";
+            break;
+        }
+        else if (delta < 3600) { // 处理1小时内的
+            result = [NSString stringWithFormat:@"%.f分钟前", delta/60];
+            break;
+        }
+        
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+        }
+        
+        // 如果是今天
+        if ([Utils isSameDay:now withDate:date]) {
+            result = @"今天";
+            break;
+        }
+        
+        NSDate *today = [Utils today];
+        
+        // 如果是昨天
+        NSDate *yesterday = [NSDate dateWithTimeIntervalSince1970:[today timeIntervalSince1970]-24*3600];
+        if ([Utils isSameDay:yesterday withDate:date]) {
+            result = @"昨天";
+            break;
+        }
+        
+        // 如果是前天
+        NSDate *dayBeforYesterday = [NSDate dateWithTimeIntervalSince1970:[today timeIntervalSince1970]-24*3600];
+        if ([Utils isSameDay:dayBeforYesterday withDate:date]) {
+            [dateFormatter setDateFormat:@"H:mm"];
+            result = @"前天";
+            break;
+        }
+        
+        [dateFormatter setDateFormat:@"MM/dd"];
+        result = [dateFormatter stringFromDate:date];
+    } while(NO);
+    
+    //    TAKA(@"格式化时间");
+    if (result == nil) {
+        result = @"";
+    }
+    return result;
+}
+
 + (NSString *)formatedDateString:(long long)microSecond
 {
     //    TIKI;
