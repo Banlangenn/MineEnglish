@@ -25,6 +25,7 @@
 #import "MISutdentActDetailViewController.h"
 #endif
 
+
 @interface HomeworkSessionsViewController ()<
 UITableViewDataSource,
 UITableViewDelegate,
@@ -77,7 +78,6 @@ MIActivityBannerViewDelegate
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 12.f)];
     self.homeworkSessionsTableView.tableFooterView = footerView;
-    
     
     [self setupRequestState];
 #if MANAGERSIDE

@@ -42,6 +42,7 @@
 #import "HomeworkAnswersPickerViewController.h"
 #import "MICheckWordsViewController.h"
 #import "MIFollowUpViewController.h"
+#import "MIPlayerViewController.h"
 
 #if MANAGERSIDE
 #else
@@ -855,7 +856,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         if (index < images.count) {
             editedImage = [self editedImageWithImage:[images objectAtIndex:index]];
         }
-        NSData *data = UIImageJPEGRepresentation(editedImage, 0.7f);
+        NSData *data = UIImageJPEGRepresentation(editedImage, 0.4f);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [HUD showProgressWithMessage:@"正在上传图片..."];
@@ -1353,7 +1354,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     }];
 }
 
-- (void)playerVideoWithURL:(NSString *)url {
+- (void)playerVideoWithURL:(NSString *)url showSave:(BOOL)showSave{
     [self.inputTextView resignFirstResponder];
     
     [[AudioPlayer sharedPlayer] stop];
@@ -1361,7 +1362,10 @@ HomeworkAnswersPickerViewControllerDelegate>
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     NSInteger playMode = [[Application sharedInstance] playMode];
 
-    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
+    MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+    if (showSave) {
+        [playerViewController showSaveVideo:url];
+    }
     AVPlayer *player;
     if (playMode == 1) // 在线播放
     {
@@ -1790,7 +1794,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         }];
         
         [cell setVideoCallback:^(NSString *videoUrl) {
-            [weakSelf playerVideoWithURL:videoUrl];
+            [weakSelf playerVideoWithURL:videoUrl showSave:NO];
         }];
         
         [cell setImageCallback:^(NSString * imageUrl, UIImageView *currentImage, NSInteger index) {
@@ -1963,7 +1967,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         
         WeakifySelf;
         [videoCell setVideoPlayCallback:^{
-            [weakSelf playerVideoWithURL:message.file.url];
+            [weakSelf playerVideoWithURL:message.file.url showSave:YES];
         }];
         
         [videoCell setResendCallback:^{

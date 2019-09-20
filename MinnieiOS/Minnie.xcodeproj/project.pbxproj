@@ -110,6 +110,9 @@
 		122C16A922AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
 		122C16AA22AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
 		122C16AB22AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
+		122F22DE2333856D00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
+		122F22DF2333856D00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
+		122F22E02333856E00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
 		122F798222AC9ABC00D2AA53 /* MISutActDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F798022AC9ABC00D2AA53 /* MISutActDetailTableViewCell.m */; };
 		122F798322AC9ABC00D2AA53 /* MISutActDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122F798122AC9ABC00D2AA53 /* MISutActDetailTableViewCell.xib */; };
 		122F798B22ACB02B00D2AA53 /* MIStuActDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F798A22ACB02B00D2AA53 /* MIStuActDetailHeaderView.m */; };
@@ -284,6 +287,9 @@
 		12747C8622A7D2CD009C390E /* EmojiInputCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710984C207A0BF500568785 /* EmojiInputCollectionViewCell.m */; };
 		12747C8722A7D2D2009C390E /* EmojiInputCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9710984A207A0BF500568785 /* EmojiInputCollectionViewCell.xib */; };
 		12747C8822A7D2DC009C390E /* RecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97109865207A0BF500568785 /* RecordButton.m */; };
+		12786FB823346EF700FBD62F /* MIPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12786FB723346EF700FBD62F /* MIPlayerViewController.m */; };
+		12786FB923346EF700FBD62F /* MIPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12786FB723346EF700FBD62F /* MIPlayerViewController.m */; };
+		12786FBA23346EF700FBD62F /* MIPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12786FB723346EF700FBD62F /* MIPlayerViewController.m */; };
 		128B70772302A6CE00A2A187 /* MITeacherAuthorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 128B70752302A6CE00A2A187 /* MITeacherAuthorViewController.m */; };
 		128B70782302A6CE00A2A187 /* MITeacherAuthorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 128B70752302A6CE00A2A187 /* MITeacherAuthorViewController.m */; };
 		128B70792302A6CE00A2A187 /* MITeacherAuthorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 128B70762302A6CE00A2A187 /* MITeacherAuthorViewController.xib */; };
@@ -2166,6 +2172,8 @@
 		1226F2FD2297F37B00BAB1C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		122C16A722AA2DD900084AC7 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		122C16A822AA2DD900084AC7 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		122F22DC2333856D00B3E4DA /* DownloadVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadVideo.h; sourceTree = "<group>"; };
+		122F22DD2333856D00B3E4DA /* DownloadVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadVideo.m; sourceTree = "<group>"; };
 		122F797F22AC9ABC00D2AA53 /* MISutActDetailTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MISutActDetailTableViewCell.h; sourceTree = "<group>"; };
 		122F798022AC9ABC00D2AA53 /* MISutActDetailTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MISutActDetailTableViewCell.m; sourceTree = "<group>"; };
 		122F798122AC9ABC00D2AA53 /* MISutActDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MISutActDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -2181,6 +2189,8 @@
 		1237F3D823039C050086AB1B /* MIAuthorPreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIAuthorPreviewViewController.h; sourceTree = "<group>"; };
 		1237F3D923039C050086AB1B /* MIAuthorPreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIAuthorPreviewViewController.m; sourceTree = "<group>"; };
 		1237F3DA23039C050086AB1B /* MIAuthorPreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIAuthorPreviewViewController.xib; sourceTree = "<group>"; };
+		12786FB623346EF700FBD62F /* MIPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIPlayerViewController.h; sourceTree = "<group>"; };
+		12786FB723346EF700FBD62F /* MIPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIPlayerViewController.m; sourceTree = "<group>"; };
 		128B70742302A6CE00A2A187 /* MITeacherAuthorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MITeacherAuthorViewController.h; sourceTree = "<group>"; };
 		128B70752302A6CE00A2A187 /* MITeacherAuthorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MITeacherAuthorViewController.m; sourceTree = "<group>"; };
 		128B70762302A6CE00A2A187 /* MITeacherAuthorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MITeacherAuthorViewController.xib; sourceTree = "<group>"; };
@@ -4669,6 +4679,8 @@
 			children = (
 				971098AB207A0BF500568785 /* Utils.h */,
 				971098AC207A0BF500568785 /* Utils.m */,
+				122F22DC2333856D00B3E4DA /* DownloadVideo.h */,
+				122F22DD2333856D00B3E4DA /* DownloadVideo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4848,6 +4860,8 @@
 				971099FE207A158C00568785 /* HomeworkSessionViewController.h */,
 				971099FC207A158C00568785 /* HomeworkSessionViewController.m */,
 				971099FD207A158C00568785 /* HomeworkSessionViewController.xib */,
+				12786FB623346EF700FBD62F /* MIPlayerViewController.h */,
+				12786FB723346EF700FBD62F /* MIPlayerViewController.m */,
 				12EAC63622AD4BF300F1F3DB /* MICheckWordsViewController.h */,
 				12EAC63722AD4BF300F1F3DB /* MICheckWordsViewController.m */,
 				12E079942313D3600054A8CE /* MICheckWordsViewController.xib */,
@@ -7505,6 +7519,7 @@
 				12747C0822A7CF42009C390E /* AnswerPickerCell.m in Sources */,
 				12747BF722A7CE01009C390E /* TextMessageTableViewCell.m in Sources */,
 				12961CCC229FD67F0075B04A /* DeleteFormTagsRequest.m in Sources */,
+				12786FBA23346EF700FBD62F /* MIPlayerViewController.m in Sources */,
 				12B503EC2317DC05001880A9 /* ActivityInfo.m in Sources */,
 				12961CC9229FD64B0075B04A /* HomeworkSessionService.m in Sources */,
 				12747BF522A7CDDE009C390E /* AudioMessageTableViewCell.m in Sources */,
@@ -7717,6 +7732,7 @@
 				12961CC1229FD4EC0075B04A /* TagsViewController.m in Sources */,
 				12B5045F2318CF63001880A9 /* WebViewController.m in Sources */,
 				1226F3432298366B00BAB1C9 /* UpdateProfileRequest.m in Sources */,
+				122F22E02333856E00B3E4DA /* DownloadVideo.m in Sources */,
 				12B7B96622D88BEA0057C798 /* TimePickerView.m in Sources */,
 				12A156A32320FE450078C2E5 /* CircleViewController.m in Sources */,
 				128F136722D37D9700C9F5B7 /* ExchangeRequestTableViewCell.m in Sources */,
@@ -8032,6 +8048,7 @@
 				12EAC64222AE2AED00F1F3DB /* MIReadingWordsView.m in Sources */,
 				97109D35207A2F0400568785 /* SettingsViewController.m in Sources */,
 				971098F6207A0BF500568785 /* NEPhotoIndicatorView.m in Sources */,
+				12786FB823346EF700FBD62F /* MIPlayerViewController.m in Sources */,
 				97109EDE207A7C1600568785 /* ExchangeRecordTableViewCell.m in Sources */,
 				1229814122C5B3BC00C09750 /* PinyinFormatter.m in Sources */,
 				977BD093207CA13B000A1994 /* PushManager.m in Sources */,
@@ -8078,6 +8095,7 @@
 				97109948207A0BF600568785 /* Student.m in Sources */,
 				97109A2E207A158C00568785 /* HomeworkSessionService.m in Sources */,
 				8707EFC621D61E270060B5A6 /* DeleteFormTagsRequest.m in Sources */,
+				122F22DE2333856D00B3E4DA /* DownloadVideo.m in Sources */,
 				87FD07DC21BE464700664AF1 /* HomeworkAudioTableViewCell.m in Sources */,
 				97109C8E207A2EC900568785 /* InputPhoneNumberViewController.m in Sources */,
 				9710994E207A0BF600568785 /* Clazz.m in Sources */,
@@ -8280,6 +8298,7 @@
 				9710994B207A0BF600568785 /* Homework.m in Sources */,
 				97109959207A0BF600568785 /* NSString+Qiniu.m in Sources */,
 				870286802182FF0800559195 /* StarRank.m in Sources */,
+				122F22DF2333856D00B3E4DA /* DownloadVideo.m in Sources */,
 				12B504DC23191EA3001880A9 /* MIInPutTypeTableViewCell.m in Sources */,
 				973649C020AF2F8600511A95 /* HomeworkImageTableViewCell.m in Sources */,
 				870ABA522229256700958ED2 /* AskQNTokenRequest.m in Sources */,
@@ -8375,6 +8394,7 @@
 				875C262A218ADA7D0047E32A /* FilterAlertView.m in Sources */,
 				97109963207A0BF600568785 /* FileUploader.m in Sources */,
 				12B504D523191E3C001880A9 /* MIExpandPickerView.m in Sources */,
+				12786FB923346EF700FBD62F /* MIPlayerViewController.m in Sources */,
 				973649D420AF2F8600511A95 /* StudentsRequest.m in Sources */,
 				122F799922AD3D6C00D2AA53 /* MIStuActDetailHeaderView.m in Sources */,
 				97109AEB207A1C0800568785 /* ClassesViewController.m in Sources */,
