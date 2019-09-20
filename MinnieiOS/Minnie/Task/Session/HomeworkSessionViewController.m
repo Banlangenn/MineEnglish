@@ -1354,6 +1354,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     }];
 }
 
+#pragma mark - 播放音视频
 - (void)playerVideoWithURL:(NSString *)url showSave:(BOOL)showSave{
     [self.inputTextView resignFirstResponder];
     
@@ -1363,9 +1364,12 @@ HomeworkAnswersPickerViewControllerDelegate>
     NSInteger playMode = [[Application sharedInstance] playMode];
 
     MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+#if TEACHERSIDE | MANAGERSIDE
+    // 教师端管理端显示下载视频
     if (showSave) {
         [playerViewController showSaveVideo:url];
     }
+#endif
     AVPlayer *player;
     if (playMode == 1) // 在线播放
     {

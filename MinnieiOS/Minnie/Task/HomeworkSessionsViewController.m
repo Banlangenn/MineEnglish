@@ -209,7 +209,7 @@ MIActivityBannerViewDelegate
     [conversation whereKey:@"name" containedIn:queryArr];
     
     // 缓存 先走网络查询，发生网络错误的时候，再从本地查询
-    conversation.cachePolicy = kAVCachePolicyCacheElseNetwork;
+    conversation.cachePolicy = kAVCachePolicyNetworkElseCache;
     // 设置查询选项，指定返回对话的最后一条消息
     conversation.option = AVIMConversationQueryOptionWithMessage;
     // 每条作业 homeworkSessionId唯一 限制查询数量，减少耗时
