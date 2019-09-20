@@ -44,8 +44,9 @@ MIActivityBannerViewDelegate
 @property (nonatomic, strong) NSMutableArray <HomeworkSession *> *homeworkSessions;
 @property (nonatomic, strong) NSString *nextUrl;
 
+// 页面出现是否需要刷新
 @property (nonatomic, assign) BOOL shouldReloadWhenAppeard;
-@property (nonatomic, assign) BOOL shouldReloadTableWhenAppeard;
+
 // 查询会话列表
 @property (nonatomic, strong) NSArray *queriedConversations;
 //名字搜索条件 只有在搜索页使用
@@ -108,14 +109,8 @@ MIActivityBannerViewDelegate
         if (self.homeworkSessions.count > 0) {
             [self.homeworkSessionsTableView headerBeginRefreshing];
         } else {
-            
             NSLog(@"requestHomeworkSessions3");
             [self requestHomeworkSessions];
-        }
-    } else {
-        if (self.shouldReloadTableWhenAppeard) {
-            self.shouldReloadTableWhenAppeard = NO;
-            [self updateUI];
         }
     }
 }
@@ -149,7 +144,7 @@ MIActivityBannerViewDelegate
     
     if (!self.isUnfinished) return;
     //不需要加载
-    if (!self.bLoadConversion)  return;
+//    if (!self.bLoadConversion)  return;
  
     NSString *userId;
     NSString *clientId = [IMManager sharedManager].client.clientId;
@@ -413,12 +408,10 @@ MIActivityBannerViewDelegate
     
     if (!self.isUnfinished) {
         self.shouldReloadWhenAppeard = YES;
-        
         return;
     }
     if (!self.bLoadConversion) {
         self.shouldReloadWhenAppeard = YES;
-        
         return;
     }
     HomeworkSession *session = notification.userInfo[@"HomeworkSession"];
@@ -432,7 +425,7 @@ MIActivityBannerViewDelegate
         }
     }
     if (found) {
-        self.shouldReloadTableWhenAppeard = YES;
+        [self updateUI];
     }
 }
 
@@ -516,7 +509,7 @@ MIActivityBannerViewDelegate
                 {
                     //一般由点击事件产生,需要在重新进入页面的时候
 //                    [self.unReadHomeworkSessions removeObject:session];
-                    self.shouldReloadTableWhenAppeard = YES;
+                    [self updateUI];
                 }
                 else
                 {
