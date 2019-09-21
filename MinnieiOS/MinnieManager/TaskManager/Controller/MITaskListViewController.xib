@@ -42,7 +42,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xce-Xn-fSJ">
-                            <rect key="frame" x="262" y="24" width="24" height="40"/>
+                            <rect key="frame" x="378" y="24" width="24" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="J0h-ZC-hsO"/>
                             </constraints>
@@ -55,7 +55,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9A-YH-9VY">
-                            <rect key="frame" x="310" y="24" width="30" height="40"/>
+                            <rect key="frame" x="294" y="24" width="30" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="W3K-Hu-Zp8"/>
                             </constraints>
@@ -68,7 +68,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPY-tv-4Bx">
-                            <rect key="frame" x="364" y="24" width="30" height="40"/>
+                            <rect key="frame" x="336" y="24" width="30" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="OH5-rV-pof"/>
                             </constraints>
@@ -95,12 +95,12 @@
                         <constraint firstItem="F9A-YH-9VY" firstAttribute="centerY" secondItem="YPY-tv-4Bx" secondAttribute="centerY" id="0YW-yV-ov7"/>
                         <constraint firstAttribute="bottom" secondItem="YPY-tv-4Bx" secondAttribute="bottom" id="F2J-iC-vN1"/>
                         <constraint firstAttribute="trailing" secondItem="WHG-zH-kTA" secondAttribute="trailing" id="Fi5-zY-oAf"/>
+                        <constraint firstAttribute="trailing" secondItem="Xce-Xn-fSJ" secondAttribute="trailing" constant="12" id="Nmn-DH-ccA"/>
                         <constraint firstAttribute="height" constant="64" id="R9f-Ue-d32"/>
                         <constraint firstItem="IOA-BV-c2a" firstAttribute="leading" secondItem="reE-sz-sjS" secondAttribute="leading" constant="20" id="UcU-Ad-XKq"/>
-                        <constraint firstItem="F9A-YH-9VY" firstAttribute="leading" secondItem="Xce-Xn-fSJ" secondAttribute="trailing" constant="24" id="VAr-GL-Ioe"/>
-                        <constraint firstAttribute="trailing" secondItem="YPY-tv-4Bx" secondAttribute="trailing" constant="20" id="Vp6-zf-i3s"/>
+                        <constraint firstAttribute="trailing" secondItem="YPY-tv-4Bx" secondAttribute="trailing" constant="48" id="Vp6-zf-i3s"/>
                         <constraint firstItem="WHG-zH-kTA" firstAttribute="leading" secondItem="reE-sz-sjS" secondAttribute="leading" id="lCw-Wg-oEV"/>
-                        <constraint firstItem="YPY-tv-4Bx" firstAttribute="leading" secondItem="F9A-YH-9VY" secondAttribute="trailing" constant="24" id="rA2-0u-XcD"/>
+                        <constraint firstItem="YPY-tv-4Bx" firstAttribute="leading" secondItem="F9A-YH-9VY" secondAttribute="trailing" constant="12" id="rA2-0u-XcD"/>
                         <constraint firstAttribute="bottom" secondItem="WHG-zH-kTA" secondAttribute="bottom" id="s9l-F5-EFP"/>
                         <constraint firstItem="Xce-Xn-fSJ" firstAttribute="centerY" secondItem="F9A-YH-9VY" secondAttribute="centerY" id="t2F-Po-aLd"/>
                         <constraint firstItem="IOA-BV-c2a" firstAttribute="centerY" secondItem="YPY-tv-4Bx" secondAttribute="centerY" id="yKO-2b-pcC"/>
