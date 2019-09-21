@@ -12,8 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MIZeroMessagesViewController">
             <connections>
                 <outlet property="headerView" destination="JPZ-UK-TA0" id="lbM-y6-Ron"/>
+                <outlet property="qestionHomeworkBtn" destination="pQi-DY-q0m" id="6Kf-IB-bJC"/>
                 <outlet property="tableView" destination="sHD-vg-IOM" id="vLB-Jf-3Mx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="zeroMsgBtn" destination="8UC-jz-YU6" id="HGq-nh-zaY"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,12 +26,30 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPZ-UK-TA0" userLabel="导航栏">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="零分动态" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJr-I9-cYO">
-                            <rect key="frame" x="170.5" y="21" width="73.5" height="22"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                            <color key="textColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8UC-jz-YU6">
+                            <rect key="frame" x="120" y="23" width="74" height="34"/>
+                            <state key="normal" title="零分动态">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="selected" title="零分动态">
+                                <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="zeroMsgAction:" destination="-1" eventType="touchUpInside" id="OQS-VA-7jH"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pQi-DY-q0m">
+                            <rect key="frame" x="220" y="23" width="74" height="34"/>
+                            <state key="normal" title="问题任务">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="selected" title="问题任务">
+                                <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="questionHomeworkAction:" destination="-1" eventType="touchUpInside" id="Fd5-6j-Lvt"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0XJ-os-9bA">
                             <rect key="frame" x="0.0" y="63.5" width="414" height="0.5"/>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,11 +61,13 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="4SX-rc-jis"/>
-                        <constraint firstItem="WJr-I9-cYO" firstAttribute="centerX" secondItem="JPZ-UK-TA0" secondAttribute="centerX" id="U8G-hh-6rZ"/>
+                        <constraint firstItem="8UC-jz-YU6" firstAttribute="centerX" secondItem="JPZ-UK-TA0" secondAttribute="centerX" constant="-50" id="WwL-ad-g3L"/>
+                        <constraint firstItem="pQi-DY-q0m" firstAttribute="centerX" secondItem="JPZ-UK-TA0" secondAttribute="centerX" constant="50" id="YzM-AG-j5i"/>
                         <constraint firstAttribute="bottom" secondItem="0XJ-os-9bA" secondAttribute="bottom" id="adl-7w-4Eh"/>
                         <constraint firstItem="0XJ-os-9bA" firstAttribute="leading" secondItem="JPZ-UK-TA0" secondAttribute="leading" id="gDt-fg-RAS"/>
+                        <constraint firstItem="8UC-jz-YU6" firstAttribute="centerY" secondItem="JPZ-UK-TA0" secondAttribute="centerY" constant="8" id="jvU-h7-pxy"/>
                         <constraint firstAttribute="trailing" secondItem="0XJ-os-9bA" secondAttribute="trailing" id="l3e-K9-cjK"/>
-                        <constraint firstItem="WJr-I9-cYO" firstAttribute="centerY" secondItem="JPZ-UK-TA0" secondAttribute="centerY" id="zpJ-vL-fW6"/>
+                        <constraint firstItem="pQi-DY-q0m" firstAttribute="centerY" secondItem="8UC-jz-YU6" secondAttribute="centerY" id="w2J-US-VWI"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-vg-IOM">

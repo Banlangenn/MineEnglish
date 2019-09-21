@@ -360,6 +360,11 @@ MICampusManagerViewControllerDelegate
     
     if (!_zeroMessagesVC) {
         _zeroMessagesVC = [[MIZeroMessagesViewController alloc] initWithNibName:NSStringFromClass([MIZeroMessagesViewController class]) bundle:nil];
+//        WeakifySelf;
+//        _zeroMessagesVC.pushVCCallback = ^(UIViewController *VC) {
+//            [weakSelf.teacherManagerDetailVC.navigationController popToRootViewControllerAnimated:NO];
+//            [weakSelf.teacherManagerDetailVC.navigationController pushViewController:VC animated:YES];
+//        };
     }
     return _zeroMessagesVC;
 }

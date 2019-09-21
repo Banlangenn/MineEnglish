@@ -15,7 +15,7 @@
 #import "EditStudentMarkView.h"
 #import "StudentDetailHeaderCell.h"
 #import "ModifyStarCountViewController.h"
-#import "EditStudentRemarkViewController.h"
+#import "EditContentViewController.h"
 
 @interface StudentDetailViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource,UITableViewDelegate,StudentDetailCellDelegate>
 
@@ -132,9 +132,11 @@
         WeakifySelf;
         cell.callback = ^{
             
-            EditStudentRemarkViewController *remarkVC = [[EditStudentRemarkViewController alloc] init];
-            remarkVC.remark = weakSelf.user.stuRemark;
+            EditContentViewController *remarkVC = [[EditContentViewController alloc] initWithNibName:NSStringFromClass([EditContentViewController class]) bundle:nil];
             remarkVC.userId = weakSelf.userId;
+            [remarkVC setupEditContentType:EditContentType_StuRemark
+                               placeholder:@"备注的学生信息"
+                                   content:weakSelf.user.stuRemark];
             [weakSelf.navigationController pushViewController:remarkVC animated:YES];
         };
         if (indexPath.row - 1 < self.titleArray.count) {
@@ -244,9 +246,9 @@
         [self.navigationController pushViewController:modifyVc animated:YES];
     } else { // 编辑备注
         
-        EditStudentRemarkViewController *remarkVC = [[EditStudentRemarkViewController alloc] init];
-        remarkVC.remark = self.user.stuRemark;
+        EditContentViewController *remarkVC = [[EditContentViewController alloc] initWithNibName:NSStringFromClass([EditContentViewController class]) bundle:nil];
         remarkVC.userId = self.userId;
+        [remarkVC setupEditContentType:EditContentType_StuRemark placeholder:@"" content:self.user.stuRemark];
         [self.navigationController pushViewController:remarkVC animated:YES];
     }
 }

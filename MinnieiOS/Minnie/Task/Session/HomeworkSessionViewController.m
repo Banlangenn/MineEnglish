@@ -43,6 +43,7 @@
 #import "MICheckWordsViewController.h"
 #import "MIFollowUpViewController.h"
 #import "MIPlayerViewController.h"
+#import "EditContentViewController.h"
 
 #if MANAGERSIDE
 #else
@@ -600,37 +601,11 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 - (IBAction)sendWarningButtonPressed:(id)sender {
     
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"确定要发送警告吗？"
-                                                                     message:nil
-                                                              preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * cancleAction = [UIAlertAction actionWithTitle:@"取消"
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction * _Nonnull action) {
-                                                           
-                                                       }];
-    
-    UIAlertAction * confirmAction = [UIAlertAction actionWithTitle:@"确定"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             
-                                                             [self sendImageMessageWithImage:[UIImage imageNamed:@"警告图片"]];
-#if TEACHERSIDE || MANAGERSIDE
-                                                             [HomeworkService sendWarnForStudent:self.homeworkSession.student.userId callback:^(Result *result, NSError *error) {
-                                                                 if (error)
-                                                                 {
-                                                                     
-                                                                 }
-                                                             }];
-#endif
-                                                         }];
-    
-    [alertVC addAction:cancleAction];
-    [alertVC addAction:confirmAction];
-    
-    [self presentViewController:alertVC
-                     animated:YES
-                   completion:nil];
-   
+    EditContentViewController *remarkVC = [[EditContentViewController alloc] initWithNibName:NSStringFromClass([EditContentViewController class]) bundle:nil];
+    [remarkVC setupEditContentType:EditContentType_QuestionHomework
+                       placeholder:@"请描述该任务的问题"
+                           content:@""];
+    [self.navigationController pushViewController:remarkVC animated:YES];
 }
 
 
@@ -2200,7 +2175,7 @@ HomeworkAnswersPickerViewControllerDelegate>
             HomeworkSession *session = (HomeworkSession *)(result.userInfo);
             if (session) {
                 self.homeworkSession = session;
-              
+                self.teacher = session.correctTeacher;
                 if ((session.correctTeacher.userId > 0) && (session.student.userId > 0)) {
                     [self setupConversation];
                 } else {
