@@ -174,6 +174,10 @@
     NoticeMessageDetailViewController *messageDetailVC = [[NoticeMessageDetailViewController alloc] initWithNibName:@"NoticeMessageDetailViewController" bundle:nil];
     
     messageDetailVC.messageId = message.messageId;
+    WeakifySelf;
+    messageDetailVC.deleteCallBack = ^{
+        [weakSelf requestMessages];
+    };
 
     [self.navigationController pushViewController:messageDetailVC animated:YES];
 }

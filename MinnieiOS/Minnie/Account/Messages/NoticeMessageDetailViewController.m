@@ -41,10 +41,14 @@
 }
 - (IBAction)deleteMessageAction:(id)sender {
     
+    WeakifySelf;
     [MessageService requestDeleteMessagesWithId:self.messageId callback:^(Result *result, NSError *error) {
         
         if (!error) {
-            [self.navigationController popViewControllerAnimated:YES];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            if (weakSelf.deleteCallBack) {
+                weakSelf.deleteCallBack();
+            }
         }
     }];
 }

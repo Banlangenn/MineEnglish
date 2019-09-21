@@ -13,4 +13,6 @@
 
 @property (nonatomic, assign) NSUInteger messageId;
 
+@property (nonatomic, copy) void (^deleteCallBack) (void);
+
 @end
