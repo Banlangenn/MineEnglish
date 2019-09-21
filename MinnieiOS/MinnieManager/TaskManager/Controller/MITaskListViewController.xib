@@ -21,6 +21,7 @@
                 <outlet property="rightLineView" destination="opl-ES-3zb" id="qw4-Xr-nGG"/>
                 <outlet property="selectCountLabel" destination="QdF-S0-wfJ" id="DcP-eI-pAG"/>
                 <outlet property="sendBtn" destination="drd-y9-dbR" id="GM2-Uj-jsH"/>
+                <outlet property="switchTypeBtn" destination="Xce-Xn-fSJ" id="qJZ-T0-DYN"/>
                 <outlet property="tableView" destination="THK-qy-fml" id="7eQ-Wn-d7A"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,6 +41,19 @@
                                 <constraint firstAttribute="height" constant="1" id="Gh6-3u-TCx"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xce-Xn-fSJ">
+                            <rect key="frame" x="262" y="24" width="24" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="J0h-ZC-hsO"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" image="navbar_screen.png">
+                                <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="switchTypeAction:" destination="-1" eventType="touchUpInside" id="Doa-Nd-cR6"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9A-YH-9VY">
                             <rect key="frame" x="310" y="24" width="30" height="40"/>
                             <constraints>
@@ -83,10 +97,12 @@
                         <constraint firstAttribute="trailing" secondItem="WHG-zH-kTA" secondAttribute="trailing" id="Fi5-zY-oAf"/>
                         <constraint firstAttribute="height" constant="64" id="R9f-Ue-d32"/>
                         <constraint firstItem="IOA-BV-c2a" firstAttribute="leading" secondItem="reE-sz-sjS" secondAttribute="leading" constant="20" id="UcU-Ad-XKq"/>
+                        <constraint firstItem="F9A-YH-9VY" firstAttribute="leading" secondItem="Xce-Xn-fSJ" secondAttribute="trailing" constant="24" id="VAr-GL-Ioe"/>
                         <constraint firstAttribute="trailing" secondItem="YPY-tv-4Bx" secondAttribute="trailing" constant="20" id="Vp6-zf-i3s"/>
                         <constraint firstItem="WHG-zH-kTA" firstAttribute="leading" secondItem="reE-sz-sjS" secondAttribute="leading" id="lCw-Wg-oEV"/>
                         <constraint firstItem="YPY-tv-4Bx" firstAttribute="leading" secondItem="F9A-YH-9VY" secondAttribute="trailing" constant="24" id="rA2-0u-XcD"/>
                         <constraint firstAttribute="bottom" secondItem="WHG-zH-kTA" secondAttribute="bottom" id="s9l-F5-EFP"/>
+                        <constraint firstItem="Xce-Xn-fSJ" firstAttribute="centerY" secondItem="F9A-YH-9VY" secondAttribute="centerY" id="t2F-Po-aLd"/>
                         <constraint firstItem="IOA-BV-c2a" firstAttribute="centerY" secondItem="YPY-tv-4Bx" secondAttribute="centerY" id="yKO-2b-pcC"/>
                     </constraints>
                 </view>
@@ -197,4 +213,7 @@
             <point key="canvasLocation" x="157.97101449275362" y="84.375"/>
         </view>
     </objects>
+    <resources>
+        <image name="navbar_screen.png" width="24" height="24"/>
+    </resources>
 </document>

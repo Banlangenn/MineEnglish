@@ -8,6 +8,7 @@
 
 #import "ManagerServce.h"
 #import "MITaskEmptyView.h"
+#import "FilterAlertView.h"
 #import "HomeworkTableViewCell.h"
 #import "MIMoveHomeworkTaskView.h"
 #import "MITaskListViewController.h"
@@ -45,6 +46,8 @@ VIResourceLoaderManagerDelegate
 @property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *operatorBtn;
 
+@property (weak, nonatomic) IBOutlet UIButton *switchTypeBtn;
+
 @property (weak, nonatomic) IBOutlet UILabel *selectCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
@@ -78,6 +81,10 @@ VIResourceLoaderManagerDelegate
 
 
 @property (nonatomic, assign) NSInteger currentSelectedIndex;
+
+// 当前任务列表类型 0按时间 1按名称
+@property (nonatomic, assign) NSInteger taskListtype;
+
 
 @end
 
@@ -121,6 +128,18 @@ VIResourceLoaderManagerDelegate
 - (void)registerCellNibs {
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeworkTableViewCell class]) bundle:nil] forCellReuseIdentifier:HomeworkTableViewCellId];
 }
+- (IBAction)switchTypeAction:(id)sender {
+
+    WeakifySelf;
+    [FilterAlertView showInView:self.view
+                   atFliterType:self.taskListtype
+                 forFliterArray:@[@"按名称",@"按时间"]
+                 withAtionBlock:^(NSInteger index) {
+                     StrongifySelf;
+                     strongSelf.taskListtype = index;
+                     [strongSelf requestHomeworks];
+                 }];
+}
 
 #pragma mark - actions  新建  发送记录  操作
 - (IBAction)addTaskAction:(id)sender {
@@ -135,11 +154,14 @@ VIResourceLoaderManagerDelegate
     if (self.inEditMode) {
         
         [self.selectedHomeworkIds removeAllObjects];
+        self.switchTypeBtn.hidden = YES;
         self.createBtn.hidden = YES;
         self.folderLabel.hidden = YES;
         self.footerView.hidden = NO;
         self.footerHeightConstraint.constant = 50;
     } else {
+        
+        self.switchTypeBtn.hidden = NO;
         self.createBtn.hidden = NO;
         self.folderLabel.hidden = NO;
         self.footerView.hidden = YES;
