@@ -120,13 +120,17 @@ CGFloat const MIHeaderTableViewCellHeight = 60.f;
         } else {
             self.addBtn.hidden = NO;
         }
+        self.addBtn.enabled = YES;
+        [self.addBtn setTitle:@"" forState:UIControlStateNormal];
         self.titleLabel.text = parentFileInfo.fileInfo.fileName;
         self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     } else {
         if (![fileInfo isKindOfClass:[FileInfo class]]) return;
         FileInfo *subFileInfo = fileInfo;
         self.isSelected = selected;
-        self.addBtn.hidden = YES;
+        self.addBtn.enabled = NO;
+        [self.addBtn setTitle:@"23" forState:UIControlStateNormal];
+        [self.addBtn setImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
         if (selected) {
             self.titleLabel.textColor = [UIColor mainColor];
             self.backgroundColor = [UIColor selectedColor];
