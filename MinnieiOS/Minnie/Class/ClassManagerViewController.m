@@ -243,10 +243,10 @@ UITableViewDelegate> {
             break;
         }
         
-        if (self.clazz.maxStudentsCount == 0) {
-            [HUD showErrorWithMessage:@"请选择课堂最多学生人数"];
-            break;
-        }
+//        if (self.clazz.maxStudentsCount == 0) {
+//            [HUD showErrorWithMessage:@"请选择课堂最多学生人数"];
+//            break;
+//        }
         
         if (self.clazz.dates.count == 0) {
             [HUD showErrorWithMessage:@"请设置课表"];
@@ -521,29 +521,29 @@ UITableViewDelegate> {
                               }];
         };
         
-        
-        editCell.selectStudentsCountCallback = ^{
-            [weakCell.classNameTextField resignFirstResponder];
-            [weakCell.classLocationTextField resignFirstResponder];
-            
-            NSArray *contents = @[@"12", @"18", @"20", @"26"];
-            NSInteger index = 0;
-            if (weakSelf.clazz.maxStudentsCount > 0) {
-                NSString *number = [NSString stringWithFormat:@"%zd", weakSelf.clazz.maxStudentsCount];
-                if ([contents containsObject:number]) {
-                    index = [contents indexOfObject:number];
-                }
-            }
-            
-            [TextPickerView showInView:weakSelf.navigationController.view
-                              contents:contents
-                         selectedIndex:index
-                              callback:^(NSString *number) {
-                                  NSInteger count = [number integerValue];
-                                  weakSelf.clazz.maxStudentsCount = count;
-                                  weakCell.classStudentsTextField.text = number;
-                              }];
-        };
+        // 学生上课人数废弃
+//        editCell.selectStudentsCountCallback = ^{
+//            [weakCell.classNameTextField resignFirstResponder];
+//            [weakCell.classLocationTextField resignFirstResponder];
+//
+//            NSArray *contents = @[@"12", @"18", @"20", @"26"];
+//            NSInteger index = 0;
+//            if (weakSelf.clazz.maxStudentsCount > 0) {
+//                NSString *number = [NSString stringWithFormat:@"%zd", weakSelf.clazz.maxStudentsCount];
+//                if ([contents containsObject:number]) {
+//                    index = [contents indexOfObject:number];
+//                }
+//            }
+//
+//            [TextPickerView showInView:weakSelf.navigationController.view
+//                              contents:contents
+//                         selectedIndex:index
+//                              callback:^(NSString *number) {
+//                                  NSInteger count = [number integerValue];
+//                                  weakSelf.clazz.maxStudentsCount = count;
+//                                  weakCell.classStudentsTextField.text = number;
+//                              }];
+//        };
         
         cell = editCell;
     } else if (indexPath.section == 1) {
@@ -565,7 +565,6 @@ UITableViewDelegate> {
                 
                 return;
             }
-            
             StudentsManageViewController *vc = [[StudentsManageViewController alloc] initWithNibName:@"StudentsManageViewController" bundle:nil];
             vc.clazz = weakSelf.clazz;
             [weakSelf.navigationController pushViewController:vc animated:YES];

@@ -9,7 +9,7 @@
 #import "ClassEditTableViewCell.h"
 
 NSString * const ClassEditTableViewCellId = @"ClassEditTableViewCellId";
-CGFloat const ClassEditTableViewCellHeight = 320.f;
+CGFloat const ClassEditTableViewCellHeight = 276.f;
 
 @interface ClassEditTableViewCell()
 

@@ -239,40 +239,40 @@
                                     <constraint firstItem="PlY-uA-LIO" firstAttribute="leading" secondItem="Has-LN-XBr" secondAttribute="leading" constant="12" id="yzU-HN-0FE"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RS1-2x-NWE">
-                                <rect key="frame" x="0.0" y="188" width="354" height="44"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RS1-2x-NWE">
+                                <rect key="frame" x="0.0" y="188" width="354" height="0.0"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上课人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1E-QW-P39" userLabel="上课人数">
-                                        <rect key="frame" x="12" y="13.5" width="58" height="17"/>
+                                        <rect key="frame" x="12" y="-8.5" width="58" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请选择班级人数上限" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sx5-RS-Zft">
-                                        <rect key="frame" x="88" y="0.0" width="226" height="44"/>
+                                        <rect key="frame" x="88" y="0.0" width="226" height="0.0"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_drop_small.png" translatesAutoresizingMaskIntoConstraints="NO" id="5gW-gK-qNt">
-                                        <rect key="frame" x="326" y="14" width="16" height="16"/>
+                                        <rect key="frame" x="326" y="0.0" width="16" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="16" id="2oX-iw-EeW"/>
-                                            <constraint firstAttribute="height" constant="16" id="jeH-Kq-IEj"/>
+                                            <constraint firstAttribute="height" id="jeH-Kq-IEj"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IdY-gw-1Z2">
-                                        <rect key="frame" x="88" y="0.0" width="266" height="43.5"/>
+                                        <rect key="frame" x="88" y="0.0" width="266" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="studentsCountButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cm3-Nd-KnK"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ck-Le-htl" userLabel="分隔线">
-                                        <rect key="frame" x="0.0" y="43.5" width="354" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="0.0"/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="5Uo-ku-BPZ"/>
+                                            <constraint firstAttribute="height" id="5Uo-ku-BPZ"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -281,7 +281,7 @@
                                     <constraint firstAttribute="trailing" secondItem="7ck-Le-htl" secondAttribute="trailing" id="52p-a5-qJv"/>
                                     <constraint firstAttribute="bottom" secondItem="sx5-RS-Zft" secondAttribute="bottom" id="5Hp-IX-J2r"/>
                                     <constraint firstAttribute="bottom" secondItem="7ck-Le-htl" secondAttribute="bottom" id="A8J-z1-c1z"/>
-                                    <constraint firstAttribute="height" constant="44" id="C6O-j4-HuK"/>
+                                    <constraint firstAttribute="height" id="C6O-j4-HuK"/>
                                     <constraint firstItem="7ck-Le-htl" firstAttribute="top" secondItem="IdY-gw-1Z2" secondAttribute="bottom" id="Dm0-YY-SAO"/>
                                     <constraint firstItem="sx5-RS-Zft" firstAttribute="top" secondItem="RS1-2x-NWE" secondAttribute="top" id="NX3-dB-Ufy"/>
                                     <constraint firstItem="IdY-gw-1Z2" firstAttribute="top" secondItem="RS1-2x-NWE" secondAttribute="top" id="P2j-Tf-53N"/>
@@ -297,7 +297,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWZ-Xl-FPo">
-                                <rect key="frame" x="0.0" y="232" width="354" height="44"/>
+                                <rect key="frame" x="0.0" y="188" width="354" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课堂类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCI-G0-HGK">
                                         <rect key="frame" x="12" y="13.5" width="58" height="17"/>
@@ -354,7 +354,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iqe-Ci-cqO">
-                                <rect key="frame" x="0.0" y="276" width="354" height="44"/>
+                                <rect key="frame" x="0.0" y="232" width="354" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班级等级" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D8G-BV-fpm">
                                         <rect key="frame" x="12" y="13.5" width="58" height="17"/>

@@ -72,9 +72,9 @@
  *  线上环境:     @"http://api.minniedu.com:8888"
  *  开发环境:     @"http://api.minniedu.com:9999"
  */
-#define kConfigBaseUrl         @"http://api.minniedu.com:8888"
+//#define kConfigBaseUrl         @"http://api.minniedu.com:8888"
 
-//#define kConfigBaseUrl         @"http://api.minniedu.com:9999"
+#define kConfigBaseUrl         @"http://api.minniedu.com:9999"
 
 /*
  *  AVOSCloud配置
@@ -87,11 +87,11 @@
  *
  */
 
-#define kAVOSCloudApplicationId         @"pe0Om2fpgh5oHCd0NfSUbwkT-gzGzoHsz"
-#define kAVOSCloudClientKey             @"gfJuGSytpQalwcnAmNtunRoP"
+//#define kAVOSCloudApplicationId         @"pe0Om2fpgh5oHCd0NfSUbwkT-gzGzoHsz"
+//#define kAVOSCloudClientKey             @"gfJuGSytpQalwcnAmNtunRoP"
 
-//#define kAVOSCloudApplicationId         @"JE1gHMgc1MJaTRCPFcz30F9E-gzGzoHsz"
-//#define kAVOSCloudClientKey             @"Axlm6WN8mJ7j1ivtGjgHxGqb"
+#define kAVOSCloudApplicationId         @"JE1gHMgc1MJaTRCPFcz30F9E-gzGzoHsz"
+#define kAVOSCloudClientKey             @"Axlm6WN8mJ7j1ivtGjgHxGqb"
 
 typedef NS_ENUM(NSInteger, MIHomeworkCreateContentType) {
     
