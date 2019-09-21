@@ -47,8 +47,8 @@
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
     
-    CGFloat progress = totalBytesWritten / (double)totalBytesExpectedToWrite;
-    NSLog(@"progress %f",progress);
+//    CGFloat progress = totalBytesWritten / (double)totalBytesExpectedToWrite;
+//    NSLog(@"progress %f",progress);
 }
 
 - (void)URLSession:(NSURLSession *)session

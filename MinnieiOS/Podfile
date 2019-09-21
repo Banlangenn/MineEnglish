@@ -26,6 +26,7 @@ abstract_target 'Minnie' do
   pod 'Qiniu'
   pod 'WMPageController', '~> 2.4.0' 
   #pod 'PinYin4Objc'
+  pod 'Aspects', '~> 1.4.1'
 target 'MinnieStudent'
 target 'MinnieTeacher'
 target 'MinnieManager'

@@ -684,6 +684,12 @@
 		12B9B64A228AEB0C00D8F277 /* StudentRemarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B9B646228AE40600D8F277 /* StudentRemarkTableViewCell.m */; };
 		12B9B64B228AEBC400D8F277 /* StudentRemarkTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 12B9B647228AE40600D8F277 /* StudentRemarkTableViewCell.xib */; };
 		12B9B64C228B05E500D8F277 /* StudentRemarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B9B646228AE40600D8F277 /* StudentRemarkTableViewCell.m */; };
+		12C39BA0233606050005DFBC /* NSObject+BlockObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */; };
+		12C39BA1233606050005DFBC /* NSObject+BlockObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */; };
+		12C39BA2233606050005DFBC /* NSObject+BlockObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */; };
+		12C39BA3233606050005DFBC /* UIView+ViewDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9F233606050005DFBC /* UIView+ViewDesc.m */; };
+		12C39BA4233606050005DFBC /* UIView+ViewDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9F233606050005DFBC /* UIView+ViewDesc.m */; };
+		12C39BA5233606050005DFBC /* UIView+ViewDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39B9F233606050005DFBC /* UIView+ViewDesc.m */; };
 		12CB736F22AB437D0064FB21 /* CSCustomSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12ED3B0B229C2E5E00255F8B /* CSCustomSplitViewController.m */; };
 		12CB737A22AB49C80064FB21 /* MIHomeworkManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */; };
 		12CB737B22AB49C80064FB21 /* MIHomeworkManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */; };
@@ -2354,6 +2360,10 @@
 		12B9B645228AE40600D8F277 /* StudentRemarkTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StudentRemarkTableViewCell.h; sourceTree = "<group>"; };
 		12B9B646228AE40600D8F277 /* StudentRemarkTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudentRemarkTableViewCell.m; sourceTree = "<group>"; };
 		12B9B647228AE40600D8F277 /* StudentRemarkTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentRemarkTableViewCell.xib; sourceTree = "<group>"; };
+		12C39B9C233606040005DFBC /* NSObject+BlockObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BlockObserver.h"; sourceTree = "<group>"; };
+		12C39B9D233606040005DFBC /* UIView+ViewDesc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewDesc.h"; sourceTree = "<group>"; };
+		12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BlockObserver.m"; sourceTree = "<group>"; };
+		12C39B9F233606050005DFBC /* UIView+ViewDesc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewDesc.m"; sourceTree = "<group>"; };
 		12CB737722AB49C80064FB21 /* MIHomeworkManagerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIHomeworkManagerViewController.h; sourceTree = "<group>"; };
 		12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIHomeworkManagerViewController.m; sourceTree = "<group>"; };
 		12CB737922AB49C80064FB21 /* MIHomeworkManagerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIHomeworkManagerViewController.xib; sourceTree = "<group>"; };
@@ -3730,6 +3740,20 @@
 			path = CreateTaskCell;
 			sourceTree = "<group>";
 		};
+		12C39BA6233606CD0005DFBC /* DownloadVideo */ = {
+			isa = PBXGroup;
+			children = (
+				122F22DC2333856D00B3E4DA /* DownloadVideo.h */,
+				122F22DD2333856D00B3E4DA /* DownloadVideo.m */,
+				12C39B9D233606040005DFBC /* UIView+ViewDesc.h */,
+				12C39B9F233606050005DFBC /* UIView+ViewDesc.m */,
+				12786FB623346EF700FBD62F /* MIPlayerViewController.h */,
+				12786FB723346EF700FBD62F /* MIPlayerViewController.m */,
+			);
+			name = DownloadVideo;
+			path = Minnie/Public/UI/DownloadVideo;
+			sourceTree = SOURCE_ROOT;
+		};
 		12CB73C022AC0D7A0064FB21 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
@@ -4482,6 +4506,7 @@
 				9710988D207A0BF500568785 /* SegmentControl */,
 				9710987E207A0BF500568785 /* TIP */,
 				97109859207A0BF500568785 /* UITextView+Placeholder */,
+				12C39BA6233606CD0005DFBC /* DownloadVideo */,
 				9710985C207A0BF500568785 /* WebViewController */,
 			);
 			path = UI;
@@ -4679,8 +4704,8 @@
 			children = (
 				971098AB207A0BF500568785 /* Utils.h */,
 				971098AC207A0BF500568785 /* Utils.m */,
-				122F22DC2333856D00B3E4DA /* DownloadVideo.h */,
-				122F22DD2333856D00B3E4DA /* DownloadVideo.m */,
+				12C39B9C233606040005DFBC /* NSObject+BlockObserver.h */,
+				12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4860,8 +4885,6 @@
 				971099FE207A158C00568785 /* HomeworkSessionViewController.h */,
 				971099FC207A158C00568785 /* HomeworkSessionViewController.m */,
 				971099FD207A158C00568785 /* HomeworkSessionViewController.xib */,
-				12786FB623346EF700FBD62F /* MIPlayerViewController.h */,
-				12786FB723346EF700FBD62F /* MIPlayerViewController.m */,
 				12EAC63622AD4BF300F1F3DB /* MICheckWordsViewController.h */,
 				12EAC63722AD4BF300F1F3DB /* MICheckWordsViewController.m */,
 				12E079942313D3600054A8CE /* MICheckWordsViewController.xib */,
@@ -7540,6 +7563,7 @@
 				12CB73B422AB92240064FB21 /* UIView+AZGradient.m in Sources */,
 				12ED3B62229D96CB00255F8B /* ProgressHUD.m in Sources */,
 				12B503FF2317DC3C001880A9 /* MITagsView.m in Sources */,
+				12C39BA5233606050005DFBC /* UIView+ViewDesc.m in Sources */,
 				12EAC66122B39D8C00F1F3DB /* EditAudioVideo.m in Sources */,
 				12961C7A229E67BE0075B04A /* TeachersRequest.m in Sources */,
 				1226F33A2298335A00BAB1C9 /* Homework.m in Sources */,
@@ -7574,6 +7598,7 @@
 				12961C6F229E66E60075B04A /* HomeworkImageCollectionViewCell.m in Sources */,
 				12961C74229E67290075B04A /* HomeworkConfirmViewController.m in Sources */,
 				12B503DA2317D391001880A9 /* ManagerServce.m in Sources */,
+				12C39BA2233606050005DFBC /* NSObject+BlockObserver.m in Sources */,
 				12ED3B4D229D95A800255F8B /* UIView+Load.m in Sources */,
 				12EAC66822B65F3C00F1F3DB /* MIRecordWaveView.m in Sources */,
 				12747BEC22A7CD81009C390E /* ModifyStarCountViewController.m in Sources */,
@@ -7942,6 +7967,7 @@
 				97109BCC207A1D5000568785 /* DateButton.m in Sources */,
 				97109A89207A171600568785 /* HomeworkAudioCollectionViewCell.m in Sources */,
 				871806CA21DF438C0023511C /* MUCircleView.m in Sources */,
+				12C39BA0233606050005DFBC /* NSObject+BlockObserver.m in Sources */,
 				9710993E207A0BF600568785 /* Error.m in Sources */,
 				97109C7A207A2EC900568785 /* ResetPasswordViewController.m in Sources */,
 				97109928207A0BF600568785 /* SegmentControl.m in Sources */,
@@ -8012,6 +8038,7 @@
 				97109C24207A2E3E00568785 /* CircleService.m in Sources */,
 				97109C1E207A2E3E00568785 /* CircleViewController.m in Sources */,
 				8707EFC521D61E120060B5A6 /* TagService.m in Sources */,
+				12C39BA3233606050005DFBC /* UIView+ViewDesc.m in Sources */,
 				12B504EB231CB329001880A9 /* ManagerRequest.m in Sources */,
 				8702866E2182EA8700559195 /* StudentStarListViewController.m in Sources */,
 				97109DF6207A655000568785 /* GoodWorkTableViewCell.m in Sources */,
@@ -8141,6 +8168,7 @@
 				1923CB1F22845F810056B2AD /* StarLogs.m in Sources */,
 				97109EBB207A7C0A00568785 /* TeacherAwardCollectionViewCell.m in Sources */,
 				97109953207A0BF600568785 /* PublicService.m in Sources */,
+				12C39BA4233606050005DFBC /* UIView+ViewDesc.m in Sources */,
 				97109D64207A2F0400568785 /* NoticeMessageHeadTableViewCell.m in Sources */,
 				97109EB3207A7C0A00568785 /* TeacherAwardsViewController.m in Sources */,
 				97109AEA207A1C0800568785 /* ScheduleEditViewController.m in Sources */,
@@ -8338,6 +8366,7 @@
 				1923CB332286B35A0056B2AD /* HomeworkPreviewViewController.m in Sources */,
 				12B5045B2318C490001880A9 /* MITaskListViewController.m in Sources */,
 				9710995F207A0BF600568785 /* IMManager.m in Sources */,
+				12C39BA1233606050005DFBC /* NSObject+BlockObserver.m in Sources */,
 				97109A21207A158C00568785 /* HomeworkSessionsContainerViewController.m in Sources */,
 				871806BD21DF438C0023511C /* MUSlomoIconView.m in Sources */,
 				12E07986231386600054A8CE /* MIFollowUpViewController.m in Sources */,
