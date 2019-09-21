@@ -182,7 +182,9 @@
     [cell setupWithStudent:student];
     [cell setChoice:[self.selectedStudents containsObject:student]];
     [cell setReviewMode:self.reviewMode];
-    
+    if (self.showClassName) {
+        [cell setClassName:@"(武义1班)"];
+    }
     return cell;
 }
 

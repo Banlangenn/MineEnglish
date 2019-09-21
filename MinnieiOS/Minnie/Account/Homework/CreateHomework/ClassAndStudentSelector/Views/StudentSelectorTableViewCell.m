@@ -19,6 +19,9 @@ CGFloat const StudentSelectorTableViewCellHeight = 50.f;
 @property (nonatomic, weak) IBOutlet UIImageView *avatarImageView;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *classLabel;
+
+
 @end
 
 @implementation StudentSelectorTableViewCell
@@ -55,7 +58,14 @@ CGFloat const StudentSelectorTableViewCellHeight = 50.f;
 - (void)setupWithStudent:(User *)student {
     [self.avatarImageView sd_setImageWithURL:[student.avatarUrl imageURLWithWidth:36.f]];
     self.nameLabel.text = student.nickname;
+    
+    self.classLabel.hidden = YES;
 }
 
+- (void)setClassName:(NSString *)className{
+    _className = className;
+    self.classLabel.hidden = NO;
+    self.classLabel.text = _className;
+}
 @end
 

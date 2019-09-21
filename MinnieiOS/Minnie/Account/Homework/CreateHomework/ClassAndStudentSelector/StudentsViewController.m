@@ -85,6 +85,7 @@
             self.studentsSelectorChildController.reviewMode = YES;
             self.studentsSelectorChildController.classStateMode = YES;
             self.studentsSelectorChildController.inClass = YES;
+            self.studentsSelectorChildController.showClassName = YES;
             existed = NO;
             
             WeakifySelf;
