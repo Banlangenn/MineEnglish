@@ -170,7 +170,7 @@ VIResourceLoaderManagerDelegate
     [self.tableView reloadData];
 }
 
-#pragma mark - 发送作业 && 删除作业
+#pragma mark - 发送作业 && 移动作业
 - (IBAction)sendHomeworkAction:(id)sender {
     
     if (self.selectedHomeworkIds.count == 0) {

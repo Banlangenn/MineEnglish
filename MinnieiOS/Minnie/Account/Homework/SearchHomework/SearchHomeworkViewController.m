@@ -13,6 +13,7 @@
 #import "UIScrollView+Refresh.h"
 #import "TagCollectionViewCell.h"
 #import "HomeworkTableViewCell.h"
+#import "MIMoveHomeworkTaskView.h"
 
 #import "NEPhotoBrowser.h"
 #import "VICacheManager.h"
@@ -39,10 +40,23 @@ EqualSpaceFlowLayoutDelegate,
 VIResourceLoaderManagerDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *searchImageV;
 
 @property (nonatomic, weak) IBOutlet UIView *tagsView;
 @property (nonatomic, weak) IBOutlet UIView *homeworksView;
 @property (nonatomic, weak) IBOutlet UITableView *homeworksTableView;
+
+@property (weak, nonatomic) IBOutlet UIButton *operateBtn;
+@property (weak, nonatomic) IBOutlet UIButton *removeBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *sendBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelTrailingConstraint;
 
 @property (nonatomic, strong) UICollectionView *tagsCollectionView;
 
@@ -65,6 +79,9 @@ VIResourceLoaderManagerDelegate>
 @property (nonatomic, strong) UIImageView *currentSelectedImageView;
 @property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
 
+// 操作模式
+@property (nonatomic, assign) BOOL inEditMode;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *selectedHomeworkIds;
 
 @end
 
@@ -77,6 +94,7 @@ VIResourceLoaderManagerDelegate>
     self.selectTags = [[NSMutableArray alloc] init];
     self.keywords = [[NSMutableArray alloc] init];
     self.homeworks = [NSMutableArray array];
+    self.selectedHomeworkIds = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(shouldReloadDataWhenAppeared:)
@@ -148,6 +166,96 @@ VIResourceLoaderManagerDelegate>
     }
     [self.navigationController popViewControllerAnimated:NO];
 }
+#pragma mark - 操作 发送 移动
+- (IBAction)operateButtonPressed:(id)sender {
+    
+    
+    self.inEditMode = !self.inEditMode;
+    self.operateBtn.selected = self.inEditMode;
+    if (self.inEditMode) { // 操作模式
+        self.operateBtn.selected = YES;
+        self.searchTextField.hidden = YES;
+        self.cancelBtn.hidden = YES;
+        self.searchImageV.hidden = YES;
+        self.inEditMode = YES;
+        self.footerView.hidden = NO;
+        self.footerViewHeightConstraint.constant = 50;
+        
+        [self.selectedHomeworkIds removeAllObjects];
+        
+        _currentSelectedIndex = -1;
+        if (self.popDetailCallBack) {
+            self.popDetailCallBack();
+        }
+    } else {
+        self.operateBtn.selected = NO;
+        self.searchTextField.hidden = NO;
+        self.cancelBtn.hidden = NO;
+        self.searchImageV.hidden = NO;
+        self.footerView.hidden = YES;
+        self.footerViewHeightConstraint.constant = 0;
+        self.inEditMode = NO;
+    }
+    
+    [self.homeworksTableView reloadData];
+}
+- (void)cancelEditMode{
+    // 手动取消编辑模式
+    self.inEditMode = YES;
+    [self operateButtonPressed:nil];
+}
+
+- (IBAction)sendButtonPressed:(id)sender {
+    
+    if (self.selectedHomeworkIds.count == 0) {
+        return;
+    }
+    NSMutableArray *homeworks = [NSMutableArray array];
+    for (int i = 0; i < self.selectedHomeworkIds.count; i++)
+    {
+        NSNumber * homeSelectId = [self.selectedHomeworkIds objectAtIndex:i];
+        for (Homework *homework in self.homeworks) {
+            if ([homeSelectId integerValue] == homework.homeworkId)
+            {
+                [homeworks addObject:homework];
+            }
+        }
+    }
+    
+    ClassAndStudentSelectView *selectView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ClassAndStudentSelectView class]) owner:nil options:nil].lastObject;
+    WeakifySelf;
+    selectView.cancelBack = ^{
+        [weakSelf cancelEditMode];
+    };
+    selectView.selectBack = ^(NSArray<Clazz *> * _Nullable classes, NSArray<User *> * _Nullable students) {
+        [weakSelf classAndStudentSelectViewClasses:classes students:students homeworks:homeworks];
+    };
+    [selectView showSelectView];
+}
+
+- (IBAction)removeButtonPressed:(id)sender {
+    
+    MIMoveHomeworkTaskView *view = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIMoveHomeworkTaskView class]) owner:nil options:nil].lastObject;
+    view.frame = [UIScreen mainScreen].bounds;
+    view.isMultiple = YES;
+    WeakifySelf;
+    view.callback = ^{
+        
+        [weakSelf.homeworks removeAllObjects];
+        [weakSelf.selectedHomeworkIds removeAllObjects];
+        weakSelf.nextUrl = nil;
+        [weakSelf cancelEditMode];
+        if (self.keywords.count > 0) {
+            [self searchWithKeyword];
+        }
+    };
+    view.cancelCallback = ^{
+        [weakSelf cancelEditMode];
+    };
+    view.currentFileInfo = [FileInfo new];
+    view.homeworkIds = self.selectedHomeworkIds;
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
+}
 
 #pragma mark - Private Methods
 
@@ -190,9 +298,15 @@ VIResourceLoaderManagerDelegate>
             if (self.searchTextField.text.length == 0) {
                 self.homeworksView.hidden = YES;
                 self.tagsView.hidden = NO;
+                
+                self.operateBtn.hidden = YES;
+                self.cancelTrailingConstraint.constant = 0;
             } else {
                 self.homeworksView.hidden = NO;
                 self.tagsView.hidden = YES;
+                
+                self.operateBtn.hidden = NO;
+                self.cancelTrailingConstraint.constant = 40;
             }
         }
     }];
@@ -207,6 +321,9 @@ VIResourceLoaderManagerDelegate>
         self.noresultLabel.hidden = YES;
         [self.selectTags removeAllObjects];
         [self.homeworks removeAllObjects];
+        
+        self.operateBtn.hidden = YES;
+        self.cancelTrailingConstraint.constant = 0;
     } else {
         self.tagsView.hidden = YES;
         [self.homeworks removeAllObjects];
@@ -215,6 +332,9 @@ VIResourceLoaderManagerDelegate>
         self.homeworksView.hidden = NO;
         [self.homeworksView hideAllStateView];
         self.homeworksTableView.hidden = YES;
+        
+        self.operateBtn.hidden = NO;
+        self.cancelTrailingConstraint.constant = 40;
     }
 }
 
@@ -222,6 +342,9 @@ VIResourceLoaderManagerDelegate>
    
     self.tagsView.hidden = YES;
     self.homeworksView.hidden = NO;
+    
+    self.operateBtn.hidden = NO;
+    self.cancelTrailingConstraint.constant = 40;
 
     [self.homeworksView showLoadingView];
     
@@ -365,9 +488,25 @@ VIResourceLoaderManagerDelegate>
     Homework *homework = self.homeworks[indexPath.row];
     
     [cell setupWithHomework:homework];
-    [cell updateWithEditMode:NO selected:NO];
+//    [cell updateWithEditMode:NO selected:NO];
     
+    if (self.inEditMode) {
+        [cell selectedState:NO];
+    } else {
+        [cell selectedState: (indexPath.row == self.currentSelectedIndex) ? YES : NO];
+    }
+    [cell updateWithEditMode:self.inEditMode selected:[self.selectedHomeworkIds containsObject:@(homework.homeworkId)]];
     WeakifySelf;
+    [cell setSelectCallback:^{
+        if ([weakSelf.selectedHomeworkIds containsObject:@(homework.homeworkId)]) {
+            [weakSelf.selectedHomeworkIds removeObject:@(homework.homeworkId)];
+        } else {
+            [weakSelf.selectedHomeworkIds addObject:@(homework.homeworkId)];
+        }
+        weakSelf.sendBtn.enabled = weakSelf.selectedHomeworkIds.count>0;
+        weakSelf.removeBtn.enabled = weakSelf.selectedHomeworkIds.count>0;
+    }];
+    
     [cell setSendCallback:^{
         
         [weakSelf sendHomeworkWithIndexPath:indexPath];
@@ -700,14 +839,14 @@ VIResourceLoaderManagerDelegate>
 #endif
 
 }
-
-
 - (void)classAndStudentSelectViewClasses:(NSArray<Clazz *> *)classes students:(NSArray<User *> *)students homeworks:(NSArray *)homeworks{
- 
+    
+    WeakifySelf;
     [TeacherService requestTeachersWithCallback:^(Result *result, NSError *error) {
         
         if (error != nil) {
             
+            [weakSelf cancelEditMode];
             [HUD showErrorWithMessage:@"教师获取失败"];
             return;
         }
@@ -741,14 +880,17 @@ VIResourceLoaderManagerDelegate>
                                           if (confirmViewBg.superview) {
                                               [confirmViewBg removeFromSuperview];
                                           }
+                                          [weakSelf cancelEditMode];
                                       };
                                       confirmView.successCallBack = ^{
                                           
                                           if (confirmViewBg.superview) {
                                               [confirmViewBg removeFromSuperview];
                                           }
+                                          [weakSelf cancelEditMode];
                                       };
                                   } cancelback:^{
+                                      [weakSelf cancelEditMode];
                                   }];
     }];
 }
