@@ -33,8 +33,40 @@
     if (self.nextUrl != nil) {
         return self.nextUrl;
     }
-    
     return [NSString stringWithFormat:@"%@/message/noticeMessages", ServerProjectName];
+}
+
+@end
+
+
+
+@interface DeleteMessagesRequest()
+
+@property (nonatomic, assign) NSInteger messageId;
+
+@end
+
+@implementation DeleteMessagesRequest
+
+- (instancetype)initWithMessageId:(NSInteger)messageId{
+   
+    self = [super init];
+    if (self != nil) {
+        _messageId = messageId;
+    }
+    return self;
+}
+
+- (YTKRequestMethod)requestMethod {
+    return YTKRequestMethodGET;
+}
+
+- (NSString *)requestUrl {
+    return [NSString stringWithFormat:@"%@/message/noticeMessages", ServerProjectName];
+}
+
+- (id)requestArgument {
+    return @{@"id":@(self.messageId)};
 }
 
 @end

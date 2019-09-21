@@ -13,6 +13,9 @@
 
 @interface MessageService : NSObject
 
+
++ (BaseRequest *)requestDeleteMessagesWithId:(NSInteger)msgId
+                                    callback:(RequestCallback)callback;
 // 加载通知消息
 + (BaseRequest *)requestNoticeMessagesWithCallback:(RequestCallback)callback;
 

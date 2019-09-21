@@ -39,6 +39,15 @@
     
     NSLog(@"%s", __func__);
 }
+- (IBAction)deleteMessageAction:(id)sender {
+    
+    [MessageService requestDeleteMessagesWithId:self.messageId callback:^(Result *result, NSError *error) {
+        
+        if (!error) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
+}
 
 #pragma mark - Private Methods
 

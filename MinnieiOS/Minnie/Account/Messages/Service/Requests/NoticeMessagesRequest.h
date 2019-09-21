@@ -13,3 +13,10 @@
 - (instancetype)initWithNextUrl:(NSString *)nextUrl;
 
 @end
+
+
+@interface DeleteMessagesRequest : BaseRequest
+
+- (instancetype)initWithMessageId:(NSInteger)messageId;
+
+@end

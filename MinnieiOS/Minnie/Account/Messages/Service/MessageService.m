@@ -15,7 +15,17 @@
 
 @implementation MessageService
 
-// 加载通知消息
+// 删除消息
++ (BaseRequest *)requestDeleteMessagesWithId:(NSInteger)msgId
+                                    callback:(RequestCallback)callback{
+    
+    DeleteMessagesRequest *request= [[DeleteMessagesRequest alloc] initWithMessageId:msgId];
+    request.callback = callback;
+    [request start];
+    
+    return request;
+}
+
 + (BaseRequest *)requestNoticeMessagesWithCallback:(RequestCallback)callback {
     NoticeMessagesRequest *request= [[NoticeMessagesRequest alloc] init];
     request.callback = callback;
