@@ -758,10 +758,13 @@ MIActivityBannerViewDelegate
     if (indexPath.row >= self.homeworkSessions.count) {
         return 0.f;
     }
-//    HomeworkSession *session = self.homeworkSessions[indexPath.row];
-//    CGFloat height = [HomeworkSessionTableViewCell cellHeightWithHomeworkSession:session
-//                                                                        finished:!self.isUnfinished];
-//    return height;
+    if (self.mState == 1){
+        
+        HomeworkSession *session = self.homeworkSessions[indexPath.row];
+        CGFloat height = [HomeworkSessionTableViewCell cellHeightWithHomeworkSession:session
+                                                                            finished:!self.isUnfinished];
+        return height;
+    }
     return 143;
 }
 

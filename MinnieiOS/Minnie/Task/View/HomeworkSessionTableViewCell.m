@@ -118,7 +118,6 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     
     //计算时间
     NSInteger hours = [self calculateDeadlineHourForTime:homeworkSession.sendTime];
-    NSLog(@"hours:  %lu",hours);
     BOOL isOutTime; //是否超时，超过规定时间
     if (hours < maxHours)
     {
@@ -343,7 +342,6 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     
 #endif
     
-    
     self.lastSessionLabel.text = homeworkSession.lastSessionContent;
     
     if (homeworkSession.sortTime > 0)
@@ -352,7 +350,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     }
     else
     {
-        self.timeLabel.text = [Utils formatedDateString:homeworkSession.sendTime];
+//        self.timeLabel.text = [Utils formatedDateString:homeworkSession.sendTime];
+        self.timeLabel.text = [Utils formatedDateString:homeworkSession.updateTime];
     }
     
     self.unreadIconImageView.hidden = homeworkSession.unreadMessageCount==0;

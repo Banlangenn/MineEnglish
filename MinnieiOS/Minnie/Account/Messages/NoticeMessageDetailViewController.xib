@@ -41,11 +41,11 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaL-bu-e8H">
-                            <rect key="frame" x="331" y="10" width="44" height="24"/>
+                            <rect key="frame" x="331" y="11" width="44" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="44" id="saN-xD-xx4"/>
                             </constraints>
-                            <state key="normal" image="navbar_back.png"/>
+                            <state key="normal" image="delete"/>
                             <connections>
                                 <action selector="deleteMessageAction:" destination="-1" eventType="touchUpInside" id="Me6-ET-iH2"/>
                             </connections>
@@ -110,6 +110,7 @@
         </view>
     </objects>
     <resources>
+        <image name="delete" width="22" height="22"/>
         <image name="navbar_back.png" width="24" height="24"/>
     </resources>
 </document>
