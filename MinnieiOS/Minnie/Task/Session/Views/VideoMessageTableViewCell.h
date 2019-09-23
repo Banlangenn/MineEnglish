@@ -18,6 +18,12 @@ extern NSString * const RightVideoMessageTableViewCellId;
 
 @interface VideoMessageTableViewCell : MessageTableViewCell
 
+
+@property (nonatomic, copy) void(^shareVideoUrlCallBack)(NSString *_Nullable shareVideoUrl);
+
 @property (nonatomic, copy) VideoMessageTableViewCellPlayCallback videoPlayCallback;
+
+
+- (void)setupSelectedVideo:(BOOL)selected;
 
 @end

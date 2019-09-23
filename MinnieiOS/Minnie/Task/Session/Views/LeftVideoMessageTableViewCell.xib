@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRe-Cg-6oF">
                         <rect key="frame" x="64" y="12" width="218" height="140"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F9Q-Zj-AoA" customClass="MaskImageView">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F9Q-Zj-AoA" customClass="MaskImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="218" height="140"/>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
@@ -62,6 +61,13 @@
                             <constraint firstAttribute="width" constant="44" id="oEQ-pq-xJr"/>
                         </constraints>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share_video_sel" translatesAutoresizingMaskIntoConstraints="NO" id="hfb-h3-Eiz">
+                        <rect key="frame" x="294" y="61" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="hfb-h3-Eiz" secondAttribute="height" multiplier="1:1" id="T92-KZ-B73"/>
+                            <constraint firstAttribute="width" constant="30" id="VOE-81-bcD"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
@@ -69,11 +75,14 @@
                     <constraint firstItem="85l-TQ-UxD" firstAttribute="top" secondItem="Tq0-ld-DbA" secondAttribute="top" constant="12" id="8dn-Ms-JAM"/>
                     <constraint firstItem="85l-TQ-UxD" firstAttribute="top" secondItem="yRe-Cg-6oF" secondAttribute="top" id="Gao-cp-HoC"/>
                     <constraint firstItem="85l-TQ-UxD" firstAttribute="leading" secondItem="Tq0-ld-DbA" secondAttribute="leading" constant="12" id="Ni6-zS-id9"/>
+                    <constraint firstItem="hfb-h3-Eiz" firstAttribute="leading" secondItem="yRe-Cg-6oF" secondAttribute="trailing" constant="12" id="gZc-mo-1Zd"/>
+                    <constraint firstItem="hfb-h3-Eiz" firstAttribute="centerY" secondItem="Tq0-ld-DbA" secondAttribute="centerY" id="owg-Eb-ep4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="85l-TQ-UxD" id="N40-18-pOv"/>
                 <outlet property="coverImageView" destination="F9Q-Zj-AoA" id="qMU-Um-NnG"/>
+                <outlet property="shareSelectImaV" destination="hfb-h3-Eiz" id="k8u-2l-WXC"/>
                 <outlet property="timeLabel" destination="hzu-js-odZ" id="UnZ-wV-6LO"/>
             </connections>
             <point key="canvasLocation" x="-553" y="-98"/>
@@ -81,5 +90,6 @@
     </objects>
     <resources>
         <image name="btn_play.png" width="48" height="48"/>
+        <image name="share_video_sel" width="22" height="22"/>
     </resources>
 </document>

@@ -126,6 +126,9 @@ HomeworkAnswersPickerViewControllerDelegate>
 @property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
 @property (nonatomic, strong) MBProgressHUD * mHud;
 
+// 指定分享到朋友圈的视频
+@property (nonatomic, copy) NSString *shareVideoUrl;
+@property (nonatomic, strong) NSIndexPath *currentSelectedIndexPath;
 
 @end
 
@@ -133,6 +136,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.currentSelectedIndexPath = nil;
     
     self.messages = [NSMutableArray array];
     self.sortedMessages = [NSMutableDictionary dictionary];
@@ -1727,7 +1731,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {// 作业内容
-        NSString *nibName =  @"SessionHomeworkTableViewCell";;
+        NSString *nibName =  @"SessionHomeworkTableViewCell";
         
         SessionHomeworkTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil] lastObject];
         
@@ -1945,6 +1949,24 @@ HomeworkAnswersPickerViewControllerDelegate>
         [videoCell setupWithUser:user message:message];
         
         WeakifySelf;
+        [videoCell setShareVideoUrlCallBack:^(NSString *shareVideoUrl) {
+           
+            weakSelf.shareVideoUrl = shareVideoUrl;
+            if (shareVideoUrl.length == 0) { // 取消
+                
+                weakSelf.currentSelectedIndexPath = nil;
+            } else {// 选中
+                
+                weakSelf.currentSelectedIndexPath = indexPath;
+            }
+            [weakSelf.messagesTableView reloadData];
+        }];
+        if (indexPath == self.currentSelectedIndexPath) {
+            [videoCell setupSelectedVideo:YES];
+        } else {
+            [videoCell setupSelectedVideo:NO];
+        }
+        
         [videoCell setVideoPlayCallback:^{
             [weakSelf playerVideoWithURL:message.file.url showSave:YES];
         }];

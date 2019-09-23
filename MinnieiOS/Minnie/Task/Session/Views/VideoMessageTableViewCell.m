@@ -17,16 +17,67 @@ NSString * const RightVideoMessageTableViewCellId = @"RightVideoMessageTableView
 
 @interface VideoMessageTableViewCell()
 
+@property (weak, nonatomic) IBOutlet UIImageView *shareSelectImaV;
+
 @property (nonatomic, weak) IBOutlet MaskImageView *coverImageView;
+
+@property (nonatomic, assign) BOOL shareSelected;
+
+@property (nonatomic, copy) NSString *currentVideoUrl;
+
 
 @end
 
 @implementation VideoMessageTableViewCell
 
+- (void)awakeFromNib{
+    
+    [super awakeFromNib];
+    self.coverImageView.userInteractionEnabled = YES;
+    
+    
+    if ([self.reuseIdentifier isEqualToString:LeftVideoMessageTableViewCellId]){
+        
+        [self.contentView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)]];
+    }
+}
+
+- (void)longPressGesture:(UILongPressGestureRecognizer *)longGest{
+    
+    // 教师端 长按学生发过来视频选中，指定当前选中视频为分享
+    if (longGest.state == UIGestureRecognizerStateEnded) {
+        
+        if (self.shareSelected) {
+            self.shareSelected = NO;
+            self.shareSelectImaV.hidden = YES;
+            
+            if (self.shareVideoUrlCallBack) {
+                self.shareVideoUrlCallBack(nil);
+            }
+        } else {
+            self.shareSelected = YES;
+            self.shareSelectImaV.hidden = NO;
+            
+            if (self.shareVideoUrlCallBack) {
+                self.shareVideoUrlCallBack(self.currentVideoUrl);
+            }
+        }
+    }
+}
+
+- (void)setupSelectedVideo:(BOOL)selected{
+    
+    if ([self.reuseIdentifier isEqualToString:LeftVideoMessageTableViewCellId]){
+        
+        self.shareSelected = selected;
+        self.shareSelectImaV.hidden = !selected;
+    }
+}
+
 - (void)setupWithUser:(User *)user message:(AVIMTypedMessage *)message {
     [super setupWithUser:user message:message];
     NSInteger secCount = [[message.attributes objectForKey:@"videoDuration"] integerValue];
-    
+    self.currentVideoUrl = message.file.url;
     if (secCount > 0)
     {
         NSInteger min = secCount / 60;
