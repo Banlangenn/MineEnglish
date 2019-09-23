@@ -58,15 +58,15 @@
 }
 
 - (YTKRequestMethod)requestMethod {
-    return YTKRequestMethodGET;
+    return YTKRequestMethodPOST;
 }
 
 - (NSString *)requestUrl {
-    return [NSString stringWithFormat:@"%@/message/noticeMessages", ServerProjectName];
+    return [NSString stringWithFormat:@"%@/message/delNoticeMessages", ServerProjectName];
 }
 
 - (id)requestArgument {
-    return @{@"id":@(self.messageId)};
+    return @{@"msgId":@(self.messageId)};
 }
 
 @end

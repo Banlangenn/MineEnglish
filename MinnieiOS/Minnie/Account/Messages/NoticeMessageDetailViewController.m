@@ -6,6 +6,7 @@
 //  Copyright © 2017年 mfox. All rights reserved.
 //
 
+#import "MIToastView.h"
 #import "NoticeMessageDetailViewController.h"
 #import "NoticeMessageHeadTableViewCell.h"
 #import "NoticeMessageTextItemTableViewCell.h"
@@ -42,15 +43,24 @@
 - (IBAction)deleteMessageAction:(id)sender {
     
     WeakifySelf;
-    [MessageService requestDeleteMessagesWithId:self.messageId callback:^(Result *result, NSError *error) {
-        
-        if (!error) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            if (weakSelf.deleteCallBack) {
-                weakSelf.deleteCallBack();
-            }
-        }
-    }];
+    [MIToastView setTitle:@"是否删除该条消息？"
+                  confirm:@"取消"
+                   cancel:@"确定"
+                superView:self.view
+             confirmBlock:^{
+                
+             } cancelBlock:^{
+                 
+                 [MessageService requestDeleteMessagesWithId:weakSelf.messageId callback:^(Result *result, NSError *error) {
+                     
+                     if (!error) {
+                         [weakSelf.navigationController popViewControllerAnimated:YES];
+                         if (weakSelf.deleteCallBack) {
+                             weakSelf.deleteCallBack();
+                         }
+                     }
+                 }];
+             }];
 }
 
 #pragma mark - Private Methods
