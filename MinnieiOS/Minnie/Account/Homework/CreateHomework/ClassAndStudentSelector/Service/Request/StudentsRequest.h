@@ -13,7 +13,7 @@
 // finish表示毕业的
 - (instancetype)initWithFinishState:(BOOL)finished;
 
-- (instancetype)initWithClassState:(BOOL)inClass;
+- (instancetype)initWithClassState:(NSInteger)inClass;
 
 - (instancetype)initWithNextUrl:(NSString *)nextUrl;
 

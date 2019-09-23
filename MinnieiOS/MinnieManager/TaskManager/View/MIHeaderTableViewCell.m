@@ -129,7 +129,7 @@ CGFloat const MIHeaderTableViewCellHeight = 60.f;
         FileInfo *subFileInfo = fileInfo;
         self.isSelected = selected;
         self.addBtn.enabled = NO;
-        [self.addBtn setTitle:@"23" forState:UIControlStateNormal];
+        [self.addBtn setTitle:[NSString stringWithFormat:@"%lu",subFileInfo.homeworkNum] forState:UIControlStateNormal];
         [self.addBtn setImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
         if (selected) {
             self.titleLabel.textColor = [UIColor mainColor];

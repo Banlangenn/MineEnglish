@@ -31,6 +31,10 @@
 // 文件夹深度 1一级文件夹 2二级文件夹
 @property (nonatomic ,assign) NSInteger depth;
 
+// 二级目录作业总数
+@property (nonatomic ,assign) NSInteger homeworkNum;
+
+
 // 一级文件夹展开、折叠
 @property (nonatomic ,assign) BOOL isOpen;
 

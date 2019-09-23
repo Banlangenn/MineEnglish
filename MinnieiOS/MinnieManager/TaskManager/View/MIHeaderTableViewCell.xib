@@ -26,10 +26,10 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYd-iW-Whx">
-                        <rect key="frame" x="15" y="26" width="125" height="18"/>
+                        <rect key="frame" x="15" y="26" width="120" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="uvq-rp-PVH"/>
-                            <constraint firstAttribute="width" constant="125" id="wmS-tX-m65"/>
+                            <constraint firstAttribute="width" constant="120" id="wmS-tX-m65"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <nil key="textColor"/>
@@ -44,10 +44,10 @@
                         <viewLayoutGuide key="safeArea" id="p50-CN-jiu"/>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPj-XD-Wjo">
-                        <rect key="frame" x="150" y="20" width="30" height="30"/>
+                        <rect key="frame" x="145" y="17.5" width="35" height="35"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="xPj-XD-Wjo" secondAttribute="height" multiplier="1:1" id="HZY-IN-mJN"/>
-                            <constraint firstAttribute="width" constant="30" id="VOv-MC-hky" userLabel="width = 30"/>
+                            <constraint firstAttribute="width" secondItem="xPj-XD-Wjo" secondAttribute="height" multiplier="1:1" id="v09-qP-vqP"/>
+                            <constraint firstAttribute="width" constant="35" id="xqm-ip-EgW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" image="ic_add_small.png">

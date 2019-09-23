@@ -11,7 +11,8 @@
 @interface StudentsRequest()
 
 @property(nonatomic, assign) BOOL finished;
-@property(nonatomic, assign) BOOL inClass;
+//0表示未入学；1表示已加入到班级；-1表示待处理
+@property(nonatomic, assign) NSInteger inClass;
 @property(nonatomic, assign) BOOL needsClassState;
 @property(nonatomic, copy) NSString *nextUrl;
 
@@ -29,7 +30,7 @@
     return self;
 }
 
-- (instancetype)initWithClassState:(BOOL)inClass {
+- (instancetype)initWithClassState:(NSInteger)inClass {
     self = [super init];
     if (self != nil) {
         _finished = 0;
@@ -59,7 +60,6 @@
     }
 
     return [NSString stringWithFormat:@"%@/students", ServerProjectName];
-//    return [NSString stringWithFormat:@"%@/teaching/students", ServerProjectName];
 }
 
 - (id)requestArgument {
@@ -71,7 +71,7 @@
     dict[@"finished"] = self.finished?@(1):@(0);
     
     if (self.needsClassState) {
-        dict[@"inClass"] = self.inClass?@(1):@(0);
+        dict[@"inClass"] = @(self.inClass);
     }
 
     return dict;

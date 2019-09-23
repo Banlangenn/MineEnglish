@@ -24,7 +24,7 @@
     return request;
 }
 
-+ (BaseRequest *)requestStudentsWithClassState:(BOOL)inClass
++ (BaseRequest *)requestStudentsWithClassState:(NSInteger)inClass
                                       callback:(RequestCallback)callback {
     StudentsRequest *request = [[StudentsRequest alloc] initWithClassState:inClass];
     

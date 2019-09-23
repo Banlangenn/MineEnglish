@@ -15,7 +15,8 @@
     return @{@"fileId":@"id",
              @"fileName":@"fileName",
              @"parentId":@"parentId",
-             @"depth":@"depth"
+             @"depth":@"depth",
+             @"homeworkNum":@"homeworkNum"
              };
 }
 @end

@@ -73,7 +73,7 @@
         self.studentsSelectorChildController = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
         self.studentsSelectorChildController.reviewMode = NO;
         self.studentsSelectorChildController.classStateMode = YES;
-        self.studentsSelectorChildController.inClass = NO;
+        self.studentsSelectorChildController.inClass = 0;
 
         WeakifySelf;
         self.studentsSelectorChildController.selectCallback = ^(NSInteger count) {

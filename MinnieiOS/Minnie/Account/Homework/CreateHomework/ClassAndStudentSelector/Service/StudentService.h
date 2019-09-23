@@ -17,7 +17,7 @@
 + (BaseRequest *)requestStudentsWithFinishState:(BOOL)finished
                                        callback:(RequestCallback)callback;
 
-+ (BaseRequest *)requestStudentsWithClassState:(BOOL)inClass
++ (BaseRequest *)requestStudentsWithClassState:(NSInteger)inClass
                                       callback:(RequestCallback)callback;
 
 + (BaseRequest *)requestStudentsWithNextUrl:(NSString *)nextUrl

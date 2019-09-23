@@ -404,7 +404,7 @@ UITableViewDataSource
 
     self.studentTableView.hidden = YES;
     WeakifySelf;
-    [StudentService requestStudentsWithClassState:YES
+    [StudentService requestStudentsWithClassState:1
                                          callback:^(Result *result, NSError *error) {
                                              StrongifySelf;
                                              [strongSelf handleStudentRequestResult:result error:error];

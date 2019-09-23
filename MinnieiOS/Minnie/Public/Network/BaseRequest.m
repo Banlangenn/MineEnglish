@@ -150,7 +150,9 @@ static NSString *accessToken = nil;
 
 - (void)requestCompletePreprocessor {
     if (self.responseData.length > 0) {
-        NSLog(@"Request Success:  %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
+        NSString *dataStr = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:nil];
+        NSLog(@"Request Success:  %@", dic);
         NSLog(@"Request: %@",self);
     }
     
