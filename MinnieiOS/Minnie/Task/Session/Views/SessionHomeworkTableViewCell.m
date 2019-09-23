@@ -36,8 +36,20 @@ UICollectionViewDelegateFlowLayout>
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewBottomConstraint;
 
 @property (nonatomic, strong) HomeworkSession *homeworkSession;
-@property (weak, nonatomic) IBOutlet UILabel *teremarkLabel;
 
+
+// 任务需提交
+@property (weak, nonatomic) IBOutlet UIView *needCommitBgView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *needCommitHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UILabel *videoCountlabel;
+@property (weak, nonatomic) IBOutlet UILabel *imageCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *videoSelectedImagV;
+@property (weak, nonatomic) IBOutlet UIImageView *imageSelectedImageV;
+
+
+// 任务标注
+@property (weak, nonatomic) IBOutlet UILabel *teremarkLabel;
 @end
 
 @implementation SessionHomeworkTableViewCell
@@ -69,6 +81,8 @@ UICollectionViewDelegateFlowLayout>
 - (void)setupWithHomeworkSession:(HomeworkSession *)homeworkSession {
     
     self.homeworkSession = homeworkSession;
+//    self.homeworkSession.homework.imageCount = 4;
+//    self.homeworkSession.homework.currentImageCount = 3;
     
     NSString *text = nil;
     for (HomeworkItem *item in self.homeworkSession.homework.items) {
@@ -96,6 +110,38 @@ UICollectionViewDelegateFlowLayout>
         self.sendTimeLabel.hidden = YES;
     }
     
+    // 任务需提交
+    if (homeworkSession.homework.imageCount + homeworkSession.homework.videoCount > 0) {
+        
+        self.needCommitBgView.hidden = NO;
+        if (homeworkSession.homework.imageCount <= 0) { // 隐藏
+            self.imageCountLabel.hidden = YES;
+            self.imageSelectedImageV.hidden = YES;
+        } else if (homeworkSession.homework.currentImageCount >= homeworkSession.homework.imageCount) {
+            self.imageCountLabel.hidden = NO;
+            self.imageSelectedImageV.hidden = NO;
+            self.imageCountLabel.textColor = [UIColor greenBgColor];
+        } else if (homeworkSession.homework.currentImageCount < homeworkSession.homework.imageCount) {
+            self.imageCountLabel.hidden = NO;
+            self.imageSelectedImageV.hidden = YES;
+            self.imageCountLabel.textColor = [UIColor redColor];
+        }
+        if (homeworkSession.homework.videoCount <= 0) {// 隐藏
+            self.videoCountlabel.hidden = YES;
+            self.videoSelectedImagV.hidden = YES;
+        } else if (homeworkSession.homework.currentVideoCount >= homeworkSession.homework.videoCount) {
+            self.videoCountlabel.hidden = NO;
+            self.videoSelectedImagV.hidden = NO;
+            self.videoCountlabel.textColor = [UIColor greenBgColor];
+        } else if (homeworkSession.homework.currentVideoCount < homeworkSession.homework.videoCount) {
+            self.videoCountlabel.hidden = NO;
+            self.videoSelectedImagV.hidden = YES;
+            self.videoCountlabel.textColor = [UIColor redColor];
+        }
+    } else {
+        self.needCommitBgView.hidden = YES;
+    }
+    
     // 批改备注 (仅教师端显示)
     NSString *teremark = @"";
 #if TEACHERSIDE || MANAGERSIDE
@@ -113,6 +159,7 @@ UICollectionViewDelegateFlowLayout>
         self.teremarkLabel.attributedText = teremarkAtt;
     }
     
+    // 规定时间
     NSInteger min = homeworkSession.homework.limitTimes / 60;
     NSInteger sec = homeworkSession.homework.limitTimes % 60;
     
@@ -149,19 +196,28 @@ UICollectionViewDelegateFlowLayout>
             self.collectionViewBottomConstraint.constant = 10.f;
         } else {
             self.collectionViewHeightConstraint.constant = 114.f;
-            self.collectionViewBottomConstraint.constant = 12.f;
+            self.collectionViewBottomConstraint.constant = 8.f;
         }
     } else {
         self.collectionViewHeightConstraint.constant = 114.f;
-        self.collectionViewBottomConstraint.constant = 12.f;
+        self.collectionViewBottomConstraint.constant = 8.f;
     }
+    
+    if (homeworkSession.homework.imageCount + homeworkSession.homework.videoCount > 0) {
+        self.needCommitHeightConstraint.constant = 44.f;
+    } else {
+        self.needCommitHeightConstraint.constant = 0.f;
+    }
+    
     [self.homeworksCollectionView reloadData];
 }
 
 + (CGFloat)heightWithHomeworkSession:(HomeworkSession *)homeworkSession {
+ 
     if (homeworkSession.homework.cellHeight > 0) {
         return homeworkSession.homework.cellHeight;
     }
+    
     
     static SessionHomeworkTableViewCell *cell = nil;
     static dispatch_once_t onceToken;
@@ -169,10 +225,22 @@ UICollectionViewDelegateFlowLayout>
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SessionHomeworkTableViewCell" owner:nil options:nil] lastObject];
     });
     
+//    homeworkSession.homework.imageCount = 4;
+//    homeworkSession.homework.currentImageCount = 3;
+    
     [cell setupWithHomeworkSession:homeworkSession];
     
     cell.collectionViewHeightConstraint.constant = 114.f;
-    cell.collectionViewBottomConstraint.constant = 12.f;
+    cell.collectionViewBottomConstraint.constant = 8.f;
+    
+    // 任务需提交
+    if (homeworkSession.homework.imageCount + homeworkSession.homework.videoCount > 0) {
+        cell.needCommitHeightConstraint.constant = 44.f;
+    } else {
+        cell.needCommitHeightConstraint.constant = 0.f;
+    }
+    
+    
     NSString *text = nil;
     for (HomeworkItem *item in homeworkSession.homework.items) {
         if ([item.type isEqualToString:HomeworkItemTypeText]) {
@@ -180,7 +248,7 @@ UICollectionViewDelegateFlowLayout>
             break;
         }
     }
-    if (text.length > 0) {
+    if (text.length > 0) {// 作业文本
         
         NSMutableAttributedString * mAttribute = [[NSMutableAttributedString alloc] initWithString:text];
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
@@ -206,12 +274,13 @@ UICollectionViewDelegateFlowLayout>
         [teremarkAtt addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, teremark.length)];
         cell.teremarkLabel.attributedText = teremarkAtt;
     }
-    
+
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     CGFloat height = size.height + 20;
+    
     if (![homeworkSession.homework.typeName isEqualToString: kHomeworkTaskFollowUpName]){
         if (homeworkSession.homework.items.count == 1) {
-            height -= (114.f + 12.f);
+            height -= (114.f + 8.f);
         }
     }
     homeworkSession.homework.cellHeight = height;
