@@ -692,6 +692,12 @@
 		12C39BA8233618CE0005DFBC /* EditContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BA7233618CD0005DFBC /* EditContentViewController.xib */; };
 		12C39BA923361E540005DFBC /* EditContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BA7233618CD0005DFBC /* EditContentViewController.xib */; };
 		12C39BAA23361E550005DFBC /* EditContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BA7233618CD0005DFBC /* EditContentViewController.xib */; };
+		12C39BAE233898940005DFBC /* MITaskSheetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39BAC233898940005DFBC /* MITaskSheetTableViewCell.m */; };
+		12C39BAF233898940005DFBC /* MITaskSheetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BAD233898940005DFBC /* MITaskSheetTableViewCell.xib */; };
+		12C39BB02338A54E0005DFBC /* MITaskSheetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39BAC233898940005DFBC /* MITaskSheetTableViewCell.m */; };
+		12C39BB12338A54E0005DFBC /* MITaskSheetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C39BAC233898940005DFBC /* MITaskSheetTableViewCell.m */; };
+		12C39BB22338A5520005DFBC /* MITaskSheetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BAD233898940005DFBC /* MITaskSheetTableViewCell.xib */; };
+		12C39BB32338A5530005DFBC /* MITaskSheetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C39BAD233898940005DFBC /* MITaskSheetTableViewCell.xib */; };
 		12CB736F22AB437D0064FB21 /* CSCustomSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12ED3B0B229C2E5E00255F8B /* CSCustomSplitViewController.m */; };
 		12CB737A22AB49C80064FB21 /* MIHomeworkManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */; };
 		12CB737B22AB49C80064FB21 /* MIHomeworkManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */; };
@@ -2365,6 +2371,9 @@
 		12C39B9E233606040005DFBC /* NSObject+BlockObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BlockObserver.m"; sourceTree = "<group>"; };
 		12C39B9F233606050005DFBC /* UIView+ViewDesc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewDesc.m"; sourceTree = "<group>"; };
 		12C39BA7233618CD0005DFBC /* EditContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditContentViewController.xib; sourceTree = "<group>"; };
+		12C39BAB233898940005DFBC /* MITaskSheetTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MITaskSheetTableViewCell.h; path = ../MITaskSheetTableViewCell.h; sourceTree = "<group>"; };
+		12C39BAC233898940005DFBC /* MITaskSheetTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MITaskSheetTableViewCell.m; path = ../MITaskSheetTableViewCell.m; sourceTree = "<group>"; };
+		12C39BAD233898940005DFBC /* MITaskSheetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MITaskSheetTableViewCell.xib; path = ../MITaskSheetTableViewCell.xib; sourceTree = "<group>"; };
 		12CB737722AB49C80064FB21 /* MIHomeworkManagerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIHomeworkManagerViewController.h; sourceTree = "<group>"; };
 		12CB737822AB49C80064FB21 /* MIHomeworkManagerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIHomeworkManagerViewController.m; sourceTree = "<group>"; };
 		12CB737922AB49C80064FB21 /* MIHomeworkManagerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIHomeworkManagerViewController.xib; sourceTree = "<group>"; };
@@ -3736,6 +3745,9 @@
 				12B5047023191B1D001880A9 /* MITagsTableViewCell.h */,
 				12B5047D23191B1D001880A9 /* MITagsTableViewCell.m */,
 				12B5048E23191B1D001880A9 /* MITagsTableViewCell.xib */,
+				12C39BAB233898940005DFBC /* MITaskSheetTableViewCell.h */,
+				12C39BAC233898940005DFBC /* MITaskSheetTableViewCell.m */,
+				12C39BAD233898940005DFBC /* MITaskSheetTableViewCell.xib */,
 			);
 			path = CreateTaskCell;
 			sourceTree = "<group>";
@@ -6206,6 +6218,7 @@
 				12B504B723191B1D001880A9 /* MITagsTableViewCell.xib in Resources */,
 				12A1569C2320FDFD0078C2E5 /* CircleCommentTableViewCell.xib in Resources */,
 				12E0798A231386600054A8CE /* MIFollowUpViewController.xib in Resources */,
+				12C39BAF233898940005DFBC /* MITaskSheetTableViewCell.xib in Resources */,
 				128F137E22D4699D00C9F5B7 /* UnfinishedStudentHomeworkSessionTableViewCell.xib in Resources */,
 				12961C70229E66EA0075B04A /* HomeworkImageCollectionViewCell.xib in Resources */,
 				12747C4622A7D1A9009C390E /* teacher@3x.png in Resources */,
@@ -6554,6 +6567,7 @@
 				97109A48207A158C00568785 /* RightEmojiMessageTableViewCell.xib in Resources */,
 				971096F9207A006D00568785 /* 三圆角_遮罩@3x.png in Resources */,
 				872C742421BE8FD40027F47C /* load背景01@3x.png in Resources */,
+				12C39BB32338A5530005DFBC /* MITaskSheetTableViewCell.xib in Resources */,
 				971097A3207A006D00568785 /* 缺省插画_无作业@2x.png in Resources */,
 				8764C99821F88AFF00FD7AAF /* 警告图片@2x.png in Resources */,
 				97109D37207A2F0400568785 /* SettingsViewController.xib in Resources */,
@@ -7229,6 +7243,7 @@
 				971097C2207A006D00568785 /* right_chat_talk2@2x.png in Resources */,
 				97109D34207A2F0400568785 /* SettingTableViewCell.xib in Resources */,
 				97109692207A006D00568785 /* 加载动画05@2x.png in Resources */,
+				12C39BB22338A5520005DFBC /* MITaskSheetTableViewCell.xib in Resources */,
 				97109748207A006D00568785 /* my_ic_medal_great@2x.png in Resources */,
 				9736494720AF2BBE00511A95 /* ic_manager_student@3x.png in Resources */,
 				97109C1B207A2E3E00568785 /* CircleContainerController.xib in Resources */,
@@ -7789,6 +7804,7 @@
 				12961C5F229E65C30075B04A /* NEPhotoBrowser.m in Sources */,
 				12B503EB2317DC05001880A9 /* WordInfo.m in Sources */,
 				12ED3B10229C2E5E00255F8B /* CSCustomSplitViewController.m in Sources */,
+				12C39BAE233898940005DFBC /* MITaskSheetTableViewCell.m in Sources */,
 				12B504382317DDC3001880A9 /* MIStudentDetailViewController.m in Sources */,
 				12ED3B02229C2E4D00255F8B /* MIRootSheetView.m in Sources */,
 				128F136922D37EB500C9F5B7 /* ExchangeRecord.m in Sources */,
@@ -7942,6 +7958,7 @@
 				12EAC65822B229F000F1F3DB /* UIImagePickerController+ImagePicker.m in Sources */,
 				1229813B22C5B38300C09750 /* HomeworkSendHistoryHeaderView.m in Sources */,
 				971098EE207A0BF500568785 /* EmojiInputView.m in Sources */,
+				12C39BB12338A54E0005DFBC /* MITaskSheetTableViewCell.m in Sources */,
 				87707871219AB5BA00940A88 /* SendHomeworkHistoryRequest.m in Sources */,
 				12CB73BD22ABFAD90064FB21 /* MIActivityBannerView.m in Sources */,
 				875C2629218ADA7D0047E32A /* FilterAlertView.m in Sources */,
@@ -8286,6 +8303,7 @@
 				97109B07207A1C0800568785 /* DatePickerView.m in Sources */,
 				973649E020AF2F8600511A95 /* HomeworksRequest.m in Sources */,
 				876D982221D0DC2000A0E06E /* CorrectHomeworkHisCommentTableViewCell.m in Sources */,
+				12C39BB02338A54E0005DFBC /* MITaskSheetTableViewCell.m in Sources */,
 				97109C25207A2E3E00568785 /* CircleService.m in Sources */,
 				97109929207A0BF600568785 /* SegmentControl.m in Sources */,
 				12CB739A22AB5BD50064FB21 /* MIHomeworkTaskListViewController.m in Sources */,

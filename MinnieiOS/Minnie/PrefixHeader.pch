@@ -125,6 +125,7 @@ typedef NS_ENUM(NSInteger, MIHomeworkCreateContentType) {
     MIHomeworkCreateContentType_Video,              // 视频
     MIHomeworkCreateContentType_Audio,              // 音频
     MIHomeworkCreateContentType_Image,              // 图片
+    MIHomeworkCreateContentType_TaskSheet           // 添加任务清单
 };
 
 // 作业类型

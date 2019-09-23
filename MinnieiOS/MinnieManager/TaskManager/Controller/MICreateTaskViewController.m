@@ -19,6 +19,7 @@
 #import "MITagsViewController.h"
 #import "MITagsTableViewCell.h"
 #import "MIAddTypeTableViewCell.h"
+#import "MITaskSheetTableViewCell.h"
 #import "MITitleTypeTableViewCell.h"
 #import "MIInPutTypeTableViewCell.h"
 #import "MISegmentTypeTableViewCell.h"
@@ -1016,6 +1017,22 @@ ClassAndStudentSelectorControllerDelegate
             cell = contentCell;
         }
             break;
+        case MIHomeworkCreateContentType_TaskSheet:
+        {
+            MITaskSheetTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MITaskSheetTableViewCellId forIndexPath:indexPath];
+            contentCell.videoCountCallback = ^(NSInteger count) {
+                
+                weakSelf.homework.imageCount = count;
+            };
+            contentCell.videoCountCallback = ^(NSInteger count) {
+                weakSelf.homework.videoCount = count;
+            };
+            [contentCell setupImageCount:self.homework.imageCount];
+            [contentCell setupVideoCount:self.homework.videoCount];
+            
+            cell = contentCell;
+        }
+            break;
         default:
             
             if (cell == nil) {
@@ -1042,6 +1059,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_CommitTime),
                           @(MIHomeworkCreateContentType_HomeworkDifficulty),
                           @(MIHomeworkCreateContentType_Materials),
+                          @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
                           @(MIHomeworkCreateContentType_TypeLabel)
                           ]];
@@ -1061,6 +1079,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_AddFollowMaterials),
                           @(MIHomeworkCreateContentType_Materials),
                           @(MIHomeworkCreateContentType_Answer),
+                          @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
                           @(MIHomeworkCreateContentType_TypeLabel)
                           ]];
@@ -1081,6 +1100,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_WordsTimeInterval),
                           @(MIHomeworkCreateContentType_AddBgMusic),
                           @(MIHomeworkCreateContentType_Materials),
+                          @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
                           @(MIHomeworkCreateContentType_TypeLabel)
                           ]];
@@ -1100,6 +1120,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_TimeLimit),
                           @(MIHomeworkCreateContentType_Materials),
                           @(MIHomeworkCreateContentType_Answer),
+                          @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
                           @(MIHomeworkCreateContentType_TypeLabel)
                           ]];
@@ -1136,6 +1157,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_HomeworkDifficulty),
                           @(MIHomeworkCreateContentType_Materials),
                           @(MIHomeworkCreateContentType_Answer),
+                          @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
                           @(MIHomeworkCreateContentType_TypeLabel)
                           ]];
@@ -1305,6 +1327,9 @@ ClassAndStudentSelectorControllerDelegate
         case MIHomeworkCreateContentType_Delete:
             rowHeight = MIAddTypeTableViewCellHeight;
             break;
+        case MIHomeworkCreateContentType_TaskSheet:
+            rowHeight = MITaskSheetTableViewHeight;
+            break;
         default:
             break;
     }
@@ -1329,6 +1354,7 @@ ClassAndStudentSelectorControllerDelegate
     [tableView registerNib:[UINib nibWithNibName:@"MIExpandSelectTypeTableViewCell" bundle:nil] forCellReuseIdentifier:MIExpandSelectTypeTableViewCellId];
     [tableView registerNib:[UINib nibWithNibName:@"MITagsTableViewCell" bundle:nil] forCellReuseIdentifier:MITagsTableViewCellId];
     [tableView registerNib:[UINib nibWithNibName:@"MIAddWordTableViewCell" bundle:nil] forCellReuseIdentifier:MIAddWordTableViewCellId];
+    [tableView registerNib:[UINib nibWithNibName:@"MITaskSheetTableViewCell" bundle:nil] forCellReuseIdentifier:MITaskSheetTableViewCellId];
 }
 
 #pragma mark - setter && getter

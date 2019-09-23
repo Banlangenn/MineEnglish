@@ -31,6 +31,19 @@ CGFloat const StudentSelectorTableViewCellHeight = 50.f;
     
     self.avatarImageView.layer.cornerRadius = 18.f;
     self.avatarImageView.layer.masksToBounds = YES;
+    
+    [self.contentView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)]];
+}
+
+
+- (void)longPressGesture:(UILongPressGestureRecognizer *)longGest{
+    
+    if (longGest.state == UIGestureRecognizerStateEnded) {
+        
+        if (self.longPressCallBack) {
+            self.longPressCallBack();
+        }
+    }
 }
 
 - (void)setChoice:(BOOL)choice {

@@ -16,11 +16,12 @@ typedef void(^StudentSelectorViewControllerPreviewCallback)(NSInteger);
 @property (nonatomic, copy) StudentSelectorViewControllerSelectCallback selectCallback;
 @property (nonatomic, copy) StudentSelectorViewControllerPreviewCallback previewCallback;
 
+
 @property (nonatomic, strong) NSMutableArray *selectedStudents;
 @property (nonatomic, assign) BOOL reviewMode;
 
 @property (nonatomic, assign) BOOL classStateMode;
-@property (nonatomic, assign) BOOL inClass; // 学生是否属于班级（0未入学，1已入学）
+@property (nonatomic, assign) NSInteger inClass; // 学生是否属于班级（0未入学，1已入学，-1待处理）
 
 // 是否显示班级名称
 @property (nonatomic, assign) BOOL showClassName;

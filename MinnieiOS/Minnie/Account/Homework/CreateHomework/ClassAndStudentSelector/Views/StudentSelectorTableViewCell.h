@@ -18,6 +18,8 @@ extern CGFloat const StudentSelectorTableViewCellHeight;
 @property (nonatomic, assign) BOOL reviewMode;
 @property (nonatomic, copy) NSString *className;
 
+@property (nonatomic,copy) void (^longPressCallBack) (void);
+
 - (void)setupWithStudent:(User *)student;
 
 

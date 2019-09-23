@@ -174,7 +174,6 @@
                 }
             };
         }
-        
         childPageViewController = self.classSelectorChildController;
     } else if (index == 1) {
         if (self.studentSelectorChildController == nil) {

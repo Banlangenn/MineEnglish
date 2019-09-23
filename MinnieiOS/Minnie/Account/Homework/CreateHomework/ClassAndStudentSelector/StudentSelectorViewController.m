@@ -32,7 +32,6 @@
     }
     
     [self registerCellNibs];
-    
     [self requestStudents];
 }
 
@@ -76,7 +75,7 @@
                 [strongSelf handleRequestResult:result error:error];
             }];
         } else {
-           // 未入学
+           // 未入学 、 待处理
             self.studentsRequest = [StudentService requestStudentsWithClassState:self.inClass
                                                                         callback:^(Result *result, NSError *error) {
                                                                             StrongifySelf;
@@ -85,6 +84,43 @@
         }
     }
     
+}
+
+- (void)requestMoveStudents {
+   
+    // 适配ipad版本
+    UIAlertControllerStyle alertStyle;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        alertStyle = UIAlertControllerStyleActionSheet;
+    } else {
+        alertStyle = UIAlertControllerStyleAlert;
+    }
+    NSString *title = @"移动到未入学";
+    if (self.inClass == 0) {
+        title = @"移动到待处理";
+    }
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil
+                                                                     message:nil
+                                                              preferredStyle:alertStyle];
+    
+    WeakifySelf;
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:title
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [weakSelf requestStudents];
+                                                         }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [weakSelf requestStudents];
+                                                         }];
+    
+    [alertVC addAction:sureAction];
+    [alertVC addAction:cancelAction];
+    [self presentViewController:alertVC
+                       animated:YES
+                     completion:nil];
 }
 
 - (void)handleRequestResult:(Result *)result error:(NSError *)error {
@@ -182,6 +218,12 @@
     [cell setupWithStudent:student];
     [cell setChoice:[self.selectedStudents containsObject:student]];
     [cell setReviewMode:self.reviewMode];
+    if (self.inClass != 1) {
+        WeakifySelf;
+        cell.longPressCallBack = ^{
+            [weakSelf requestMoveStudents];
+        };
+    }
     if (self.showClassName) {
         [cell setClassName:@"(武义1班)"];
     }

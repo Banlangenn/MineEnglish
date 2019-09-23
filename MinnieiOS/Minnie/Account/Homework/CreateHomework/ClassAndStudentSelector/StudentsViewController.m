@@ -19,6 +19,8 @@
 @property (nonatomic, strong) StudentSelectorViewController *studentsSelectorChildController;
 @property (nonatomic, strong) StudentSelectorViewController *enrollingStudentsSelectorChildController;
 
+@property (nonatomic, strong) StudentSelectorViewController *disposalStudentsSelectorChildController;
+
 @property (nonatomic, assign) BOOL ignoreScrollCallback;
 
 @property (nonatomic, weak) IBOutlet UIButton *backButton;
@@ -44,9 +46,8 @@
     if (isIPhoneX) {
         self.heightLayoutConstraint.constant = -(44 + [UIApplication sharedApplication].statusBarFrame.size.height);
     }
-    
-    self.segmentControl = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([SegmentControl class]) owner:nil options:nil] lastObject];
-    self.segmentControl.titles = @[@"已入学", @"未入学"];
+    self.segmentControl = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([SegmentControl class]) owner:nil options:nil] firstObject];
+    self.segmentControl.titles = @[@"已入学", @"未入学",@"待处理"];
     self.segmentControl.selectedIndex = 0;
 
     __weak typeof(self) weakSelf = self;
@@ -79,12 +80,12 @@
     BaseViewController *childPageViewController = nil;
     BOOL existed = YES;
     
-    if (index == 0) {
+    if (index == 0) {// 已入学
         if (self.studentsSelectorChildController == nil) {
             self.studentsSelectorChildController = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
             self.studentsSelectorChildController.reviewMode = YES;
             self.studentsSelectorChildController.classStateMode = YES;
-            self.studentsSelectorChildController.inClass = YES;
+            self.studentsSelectorChildController.inClass = 1;
             self.studentsSelectorChildController.showClassName = YES;
             existed = NO;
             
@@ -93,6 +94,7 @@
                 weakSelf.selectedClassesCount = count;
                 
                 [weakSelf.enrollingStudentsSelectorChildController unselectAll];
+                [weakSelf.disposalStudentsSelectorChildController unselectAll];
             };
             
             self.studentsSelectorChildController.previewCallback = ^(NSInteger userId) {
@@ -104,12 +106,12 @@
         }
         
         childPageViewController = self.studentsSelectorChildController;
-    } else if (index == 1) {
+    } else if (index == 1) {// 未入学
         if (self.enrollingStudentsSelectorChildController == nil) {
             self.enrollingStudentsSelectorChildController = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
             self.enrollingStudentsSelectorChildController.reviewMode = YES;
             self.enrollingStudentsSelectorChildController.classStateMode = YES;
-            self.enrollingStudentsSelectorChildController.inClass = NO;
+            self.enrollingStudentsSelectorChildController.inClass = 0;
 
             existed = NO;
             
@@ -118,6 +120,7 @@
                 weakSelf.selectedStudentsCount = count;
                 
                 [weakSelf.studentsSelectorChildController unselectAll];
+                [weakSelf.disposalStudentsSelectorChildController unselectAll];
             };
             
             self.enrollingStudentsSelectorChildController.previewCallback = ^(NSInteger userId) {
@@ -129,6 +132,32 @@
         }
         
         childPageViewController = self.enrollingStudentsSelectorChildController;
+    } else {// 待处理
+       
+        if (self.disposalStudentsSelectorChildController == nil) {
+            self.disposalStudentsSelectorChildController = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
+            self.disposalStudentsSelectorChildController.reviewMode = YES;
+            self.disposalStudentsSelectorChildController.classStateMode = YES;
+            self.disposalStudentsSelectorChildController.inClass = -1;
+            
+            existed = NO;
+            
+            WeakifySelf;
+            self.disposalStudentsSelectorChildController.selectCallback = ^(NSInteger count) {
+                weakSelf.selectedStudentsCount = count;
+                [weakSelf.studentsSelectorChildController unselectAll];
+                [weakSelf.enrollingStudentsSelectorChildController unselectAll];
+            };
+            
+            self.disposalStudentsSelectorChildController.previewCallback = ^(NSInteger userId) {
+                StudentDetailViewController *vc = [[StudentDetailViewController alloc] initWithNibName:@"StudentDetailViewController" bundle:nil];
+                vc.userId = userId;
+                
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            };
+        }
+        
+        childPageViewController = self.disposalStudentsSelectorChildController;
     }
     
     if (!existed) {
@@ -223,6 +252,7 @@
     }
     
     CGFloat offsetX = scrollView.contentOffset.x;
+    
     NSUInteger leftIndex = (NSInteger)MAX(0, offsetX)/(NSInteger)(ScreenWidth);
     NSUInteger rightIndex = (NSInteger)MAX(0, offsetX+ScreenWidth)/(NSInteger)(ScreenWidth);
     
@@ -230,7 +260,6 @@
     if (leftIndex != rightIndex) {
         [self showChildPageViewControllerWithIndex:rightIndex animated:NO shouldLocate:NO];
     }
-    
     [self updateSegmentControlWithOffsetX:offsetX];
 }
 
@@ -258,6 +287,21 @@
     }
     
     [self updateSegmentControlWhenScrollEnded];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+   
+    if (scrollView.contentOffset.x >= ScreenWidth * 2) {
+        [scrollView setContentOffset:CGPointMake(ScreenWidth *2, 0) animated:YES];
+        [self updateSegmentControlWhenScrollEnded];
+    }
+}
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+   
+    if (scrollView.contentOffset.x >= ScreenWidth * 2) {
+        [scrollView setContentOffset:CGPointMake(ScreenWidth *2, 0) animated:YES];
+        [self updateSegmentControlWhenScrollEnded];
+    }
 }
 
 @end
