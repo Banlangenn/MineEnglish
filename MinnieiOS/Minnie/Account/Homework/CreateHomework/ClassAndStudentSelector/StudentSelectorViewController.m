@@ -225,7 +225,10 @@
         };
     }
     if (self.showClassName) {
-        [cell setClassName:@"(武义1班)"];
+        if ([student isKindOfClass:[StudentsByName class]]) {
+            StudentsByName *stu = (StudentsByName *)student;
+            [cell setClassName:[NSString stringWithFormat:@"(%@)",stu.className]];
+        }
     }
     return cell;
 }

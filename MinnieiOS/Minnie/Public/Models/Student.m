@@ -60,7 +60,9 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{@"userId":@"userId",
              @"nickname":@"nickName",
-             @"avatarUrl":@"avatar"};
+             @"avatarUrl":@"avatar",
+             @"className":@"className"
+             };
 }
 @end
 
