@@ -30,9 +30,24 @@
 
 @end
 
-
+#pragma mark - 2.13.2    0分动态（ipad管理端）
 @interface StudentZeroTaskRequest : BaseRequest
 
+@end
+
+#pragma mark - 2.13.3    转发问题任务（ipad管理端）
+@interface StudentTroubleTaskRequest : BaseRequest
+
+- (instancetype)initWithHometaskId:(NSInteger)hometaskId
+                        homeworkId:(NSInteger)homeworkId
+                            userId:(NSInteger)userId
+                         teacherId:(NSInteger)teacherId
+                           content:(NSString *)content;
+
+@end
+
+#pragma mark - 2.13.4    问题任务（ipad管理端）
+@interface StudentTroubleTaskListRequest : BaseRequest
 @end
 
 

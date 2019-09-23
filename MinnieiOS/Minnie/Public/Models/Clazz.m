@@ -17,7 +17,7 @@
              @"startTime":@"startTime",
              @"endTime":@"endTime",
              @"trial":@"trial",
-             @"maxStudentsCount":@"maxStudentsCount",
+//             @"maxStudentsCount":@"maxStudentsCount",
              @"studentsCount":@"studentsCount",
              @"circleCount":@"goodHomeworksCount",
              @"homeworksCount":@"commitedHomeworksCount",
@@ -62,7 +62,7 @@
     dict[@"startTime"] = self.startTime;
     dict[@"endTime"] = self.endTime;
     dict[@"trial"] = @(self.trial);
-    dict[@"maxStudentsCount"] = @(self.maxStudentsCount);
+//    dict[@"maxStudentsCount"] = @(self.maxStudentsCount);
     dict[@"level"] = @(self.classLevel);
     dict[@"commitedHomeworksCount"] = @(self.commitedHomeworksCount);
     

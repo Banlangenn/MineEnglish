@@ -96,6 +96,36 @@
     return request;
 }
 
+#pragma mark - 2.13.3    转发问题任务（ipad管理端）
++ (BaseRequest *)requestTroubleTaskWithHomeaskId:(NSInteger)hometaskId
+                                      homeworkId:(NSInteger)homeworkId
+                                          userId:(NSInteger)userId
+                                       teacherId:(NSInteger)teacherId
+                                         content:(NSString *)content
+                                        callback:(RequestCallback)callback{
+    
+    StudentTroubleTaskRequest *request = [[StudentTroubleTaskRequest alloc] initWithHometaskId:hometaskId
+                                                                                    homeworkId:homeworkId
+                                                                                        userId:userId
+                                                                                     teacherId:teacherId
+                                                                                       content:content];
+    request.callback = callback;
+    [request start];
+    
+    return request;
+}
+
+#pragma mark - 2.13.4    问题任务（ipad管理端）
++ (BaseRequest *)requestTroubleTaskListWithCallback:(RequestCallback)callback{
+    
+    StudentTroubleTaskListRequest *request = [[StudentTroubleTaskListRequest alloc] init];
+    request.objectKey = @"list";
+    request.objectClassName = @"StudentZeroTask";
+    request.callback = callback;
+    [request start];
+    
+    return request;
+}
 
 + (BaseRequest *)requestStudentDetailTaskWithStuId:(NSInteger)stuId
                                           callback:(RequestCallback)callback{

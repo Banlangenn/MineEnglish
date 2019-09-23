@@ -111,7 +111,6 @@
 
 @implementation StudentZeroTaskRequest
 
-
 - (YTKRequestMethod)requestMethod {
     return YTKRequestMethodGET;
 }
@@ -121,10 +120,71 @@
     return [NSString stringWithFormat:@"%@/teaching/zerotasks", ServerProjectName];
 }
 
+@end
+
+#pragma mark - 2.13.3    转发问题任务（ipad管理端）
+@interface StudentTroubleTaskRequest ()
+
+@property (nonatomic,assign) NSInteger hometaskId;
+@property (nonatomic,assign) NSInteger homeworkId;
+@property (nonatomic,assign) NSInteger userId;
+@property (nonatomic,assign) NSInteger teacherId;
+@property (nonatomic,copy) NSString *content;
 
 @end
 
+@implementation StudentTroubleTaskRequest
 
+- (instancetype)initWithHometaskId:(NSInteger)hometaskId
+                        homeworkId:(NSInteger)homeworkId
+                            userId:(NSInteger)userId
+                         teacherId:(NSInteger)teacherId
+                           content:(NSString *)content;
+{
+    self = [super init];
+    if (self) {
+        self.hometaskId = hometaskId;
+        self.homeworkId = homeworkId;
+        self.userId = userId;
+        self.teacherId = teacherId;
+        self.content = content;
+    }
+    return self;
+}
+
+- (YTKRequestMethod)requestMethod {
+    return YTKRequestMethodPOST;
+}
+
+- (NSString *)requestUrl {
+    
+    return [NSString stringWithFormat:@"%@/teaching/createTroubletask", ServerProjectName];
+}
+
+
+- (id)requestArgument{
+    
+    return @{@"hometaskId":@(self.hometaskId),
+             @"homeworkId":@(self.homeworkId),
+             @"userId":@(self.userId),
+             @"teacherId":@(self.teacherId),
+             @"content":self.content
+             };
+}
+@end
+
+#pragma mark - 2.13.4    问题任务（ipad管理端）
+@implementation StudentTroubleTaskListRequest
+
+- (YTKRequestMethod)requestMethod {
+    return YTKRequestMethodGET;
+}
+
+- (NSString *)requestUrl {
+    
+    return [NSString stringWithFormat:@"%@/teaching/troubletasks", ServerProjectName];
+}
+@end
 
 
 @interface StudentDetailTaskRequest ()

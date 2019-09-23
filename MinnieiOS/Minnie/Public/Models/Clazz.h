@@ -21,7 +21,7 @@
 @property (nonatomic, assign) NSInteger trial; //
 @property (nonatomic, copy) NSString *location; // 位置
 @property (nonatomic, strong) Teacher *teacher; // 教师
-@property (nonatomic, assign) NSUInteger maxStudentsCount; // 上课人数规模
+//@property (nonatomic, assign) NSUInteger maxStudentsCount; // 上课人数规模
 @property (nonatomic, assign) NSUInteger studentsCount; // 上课人数
 @property (nonatomic, assign) NSUInteger homeworksCount; // 作业数
 @property (nonatomic, assign) NSUInteger circleCount; // 朋友圈数量

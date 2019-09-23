@@ -6,6 +6,7 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import "StudentService.h"
 #import "StudentAwardService.h"
 #import "EditContentViewController.h"
 
@@ -17,6 +18,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 @property (nonatomic, assign) EditContentType editType;
+
+// 转发
+@property (nonatomic, assign) NSInteger hometaskId;
+@property (nonatomic, assign) NSInteger homeworkId;
+@property (nonatomic, assign) NSInteger teacherId;
 
 @end
 
@@ -31,6 +37,15 @@
     self.textView.layer.masksToBounds = YES;
     self.textView.layer.borderWidth = 1.0;
     self.textView.layer.borderColor = [UIColor colorWithHex:0xECECEC].CGColor;
+    
+    
+    if (self.editType == EditContentType_StuRemark) {
+        self.titleLabel.text = @"编辑备注";
+        [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    } else {
+        self.titleLabel.text = @"问题备注";
+        [self.saveBtn setTitle:@"提交" forState:UIControlStateNormal];
+    }
 }
 - (IBAction)backAction:(id)sender {
     
@@ -53,7 +68,19 @@
         }];
     } else {
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [StudentService requestTroubleTaskWithHomeaskId:self.hometaskId
+                                             homeworkId:self.homeworkId
+                                                 userId:self.userId
+                                              teacherId:self.teacherId
+                                                content:self.textView.text
+                                               callback:^(Result *result, NSError *error) {
+            if (error != nil) {
+                
+                [HUD showErrorWithMessage:@"转发问题作业失败"];
+                return ;
+            }
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
     }
 }
 
@@ -69,13 +96,16 @@
     
     self.editType = editType;
     self.textView.text = content;
-    if (self.editType == EditContentType_StuRemark) {
-        self.titleLabel.text = @"编辑备注";
-        [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
-    } else {
-        self.titleLabel.text = @"问题备注";
-        [self.saveBtn setTitle:@"提交" forState:UIControlStateNormal];
-    }
+}
+
+- (void)setupWithHometaskId:(NSInteger)hometaskId
+                 homeworkId:(NSInteger)homeworkId
+                     userId:(NSInteger)userId
+                  teacherId:(NSInteger)teacherId{
     
+    self.hometaskId = hometaskId;
+    self.homeworkId = homeworkId;
+    self.userId = userId;
+    self.teacherId = teacherId;
 }
 @end

@@ -34,8 +34,20 @@
 + (BaseRequest *)requestStudentLisByClasstWithCallback:(RequestCallback)callback;
 
 
-// 分动态（ipad管理端）
+#pragma mark -  2.13.2    0分动态（ipad管理端）
 + (BaseRequest *)requestStudentZeroTaskCallback:(RequestCallback)callback;
+
+#pragma mark - 2.13.3    转发问题任务（ipad管理端）
++ (BaseRequest *)requestTroubleTaskWithHomeaskId:(NSInteger)hometaskId
+                                      homeworkId:(NSInteger)homeworkId
+                                          userId:(NSInteger)userId
+                                       teacherId:(NSInteger)teacherId
+                                         content:(NSString *)content
+                                        callback:(RequestCallback)callback;
+
+#pragma mark - 2.13.4    问题任务（ipad管理端）
++ (BaseRequest *)requestTroubleTaskListWithCallback:(RequestCallback)callback;
+
 
 //学生详情（ipad管理端）
 + (BaseRequest *)requestStudentDetailTaskWithStuId:(NSInteger)stuId

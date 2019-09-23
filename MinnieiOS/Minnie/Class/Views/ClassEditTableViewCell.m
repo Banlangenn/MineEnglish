@@ -54,11 +54,11 @@ CGFloat const ClassEditTableViewCellHeight = 276.f;
     [self.startTimeButton setTitle:clazz.startTime forState:UIControlStateNormal];
     [self.endTimeButton setTitle:clazz.endTime forState:UIControlStateNormal];
 
-    if (clazz.maxStudentsCount > 0) {
-        self.classStudentsTextField.text = [NSString stringWithFormat:@"%zd", clazz.maxStudentsCount];
-    } else {
-        self.classStudentsTextField.text = nil;
-    }
+//    if (clazz.maxStudentsCount > 0) {
+//        self.classStudentsTextField.text = [NSString stringWithFormat:@"%zd", clazz.maxStudentsCount];
+//    } else {
+//        self.classStudentsTextField.text = nil;
+//    }
     NSString *trial;
     if (clazz.trial == 1) {
         trial = @"春季";

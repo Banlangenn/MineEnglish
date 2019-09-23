@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger userId;
 
+- (void)setupWithHometaskId:(NSInteger)hometaskId
+                 homeworkId:(NSInteger)homeworkId
+                     userId:(NSInteger)userId
+                  teacherId:(NSInteger)teacherId;
+
 - (void)setupEditContentType:(EditContentType)editType
                    placeholder:(NSString *)placeholder
                      content:(NSString *)content;

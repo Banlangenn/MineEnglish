@@ -24,6 +24,7 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UIButton *qestionHomeworkBtn;
 
 @property (strong, nonatomic) NSMutableArray *zeroMessagesArray;
+@property (strong, nonatomic) NSMutableArray *troubleMessagesArray;
 
 @property (assign, nonatomic) HomeworkMessageType messageType;
 @property (assign, nonatomic) NSInteger currentIndex;
@@ -39,10 +40,16 @@ UITableViewDataSource
     self.view.backgroundColor = [UIColor emptyBgColor];
     self.tableView.tableFooterView = [UIView new];
     self.zeroMessagesArray = [NSMutableArray array];
+    self.troubleMessagesArray = [NSMutableArray array];
     
     self.currentIndex = -1;
     self.zeroMsgBtn.selected = YES;
-    [self requestStudentZeroTask];
+    
+    if (self.messageType == HomeworkMessageType_ZeroMessages) {
+        [self requestStudentZeroTask];
+    } else {
+        [self requestStudentTroubleTask];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -54,7 +61,11 @@ UITableViewDataSource
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.zeroMessagesArray.count + 1;
+    if (self.messageType == HomeworkMessageType_ZeroMessages) {
+        return self.zeroMessagesArray.count + 1;
+    } else {
+        return self.troubleMessagesArray.count +1;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -63,9 +74,14 @@ UITableViewDataSource
     
         return 30;
     } else {
-    
-        StudentZeroTask * zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
-        return [MIZeroMessagesTableViewCell cellHeightWithZeroMessage:zeroTaskData];
+        
+        if (self.messageType == HomeworkMessageType_ZeroMessages) {
+
+            StudentZeroTask * zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
+            return [MIZeroMessagesTableViewCell cellHeightWithZeroMessage:zeroTaskData];
+        } else {
+            StudentZeroTask * zeroTaskData = self.troubleMessagesArray[indexPath.row - 1];
+            return [MIZeroMessagesTableViewCell cellHeightWithZeroMessage:zeroTaskData];        }
     }
 }
 
@@ -97,7 +113,12 @@ UITableViewDataSource
         }
     } else {
         
-        StudentZeroTask * zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
+        StudentZeroTask * zeroTaskData;
+        if (self.messageType == HomeworkMessageType_ZeroMessages) {
+            zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
+        } else {
+            zeroTaskData = self.troubleMessagesArray[indexPath.row - 1];
+        }
         [cell setupImage:zeroTaskData.avatar
                     name:zeroTaskData.nickName
                taskTitle:zeroTaskData.title
@@ -112,7 +133,12 @@ UITableViewDataSource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    StudentZeroTask * zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
+    StudentZeroTask * zeroTaskData;
+    if (self.messageType == HomeworkMessageType_ZeroMessages) {
+        zeroTaskData = self.zeroMessagesArray[indexPath.row - 1];
+    } else {
+        zeroTaskData = self.troubleMessagesArray[indexPath.row - 1];
+    }
 #if MANAGERSIDE
     if (indexPath.row == self.currentIndex) {
         return;
@@ -160,8 +186,51 @@ UITableViewDataSource
 
 - (void)updateZeroMessages{
     
-    self.zeroMsgBtn.selected = YES;
-    [self requestStudentZeroTask];
+    if (self.messageType == HomeworkMessageType_ZeroMessages) {
+        
+        [self requestStudentZeroTask];
+    } else {
+        [self requestStudentTroubleTask];
+    }
+}
+
+- (void)requestStudentTroubleTask{
+    self.currentIndex = -1;
+    if (self.troubleMessagesArray.count == 0) {
+        self.tableView.hidden = YES;
+        [self.view showLoadingView];
+    }
+    WeakifySelf;
+    [StudentService requestTroubleTaskListWithCallback:^(Result *result, NSError *error) {
+        [weakSelf.view hideAllStateView];
+        if (error) {
+            if (weakSelf.troubleMessagesArray.count == 0) {
+                
+                [weakSelf.view showFailureViewWithRetryCallback:^{
+                    [weakSelf requestStudentTroubleTask];
+                }];
+            }
+            return ;
+        } ;
+        
+        NSDictionary *dictionary = (NSDictionary *)(result.userInfo);
+        [self.troubleMessagesArray removeAllObjects];
+        [self.troubleMessagesArray addObjectsFromArray:dictionary[@"list"]];
+        if (weakSelf.troubleMessagesArray.count == 0) {
+            
+            [weakSelf.view showEmptyViewWithImage:nil
+                                            title:@"暂问题动态"
+                                    centerYOffset:0 linkTitle:nil
+                                linkClickCallback:nil
+                                    retryCallback:^{
+                                        
+                                        [weakSelf requestStudentTroubleTask];
+                                    }];
+        } else {
+            weakSelf.tableView.hidden = NO;
+            [weakSelf.tableView reloadData];
+        }
+    }];
 }
 - (void)requestStudentZeroTask{
     self.currentIndex = -1;
@@ -204,21 +273,29 @@ UITableViewDataSource
 
 - (IBAction)zeroMsgAction:(id)sender {
     if (self.zeroMsgBtn.selected) {
+        self.qestionHomeworkBtn.selected = NO;
         return;
     }
     self.qestionHomeworkBtn.selected = NO;
     self.zeroMsgBtn.selected = YES;
     self.messageType = HomeworkMessageType_ZeroMessages;
+    if (self.zeroMessagesArray.count == 0) {
+        [self requestStudentZeroTask];
+    }
     [self.tableView reloadData];
 }
 - (IBAction)questionHomeworkAction:(id)sender {
    
     if (self.qestionHomeworkBtn.selected) {
+        self.zeroMsgBtn.selected = NO;
         return;
     }
     self.zeroMsgBtn.selected = NO;
     self.qestionHomeworkBtn.selected = YES;
     self.messageType = HomeworkMessageType_QuestionHomework;
+    if (self.troubleMessagesArray.count == 0) {
+        [self requestStudentTroubleTask];
+    }
     [self.tableView reloadData];
 }
 

@@ -606,6 +606,10 @@ HomeworkAnswersPickerViewControllerDelegate>
 - (IBAction)sendWarningButtonPressed:(id)sender {
     
     EditContentViewController *remarkVC = [[EditContentViewController alloc] initWithNibName:NSStringFromClass([EditContentViewController class]) bundle:nil];
+    [remarkVC setupWithHometaskId:self.homeworkSession.homeworkSessionId
+                       homeworkId:self.homeworkSession.homework.homeworkId
+                           userId:self.homeworkSession.student.userId
+                        teacherId:self.homeworkSession.correctTeacher.userId];
     [remarkVC setupEditContentType:EditContentType_QuestionHomework
                        placeholder:@"请描述该任务的问题"
                            content:@""];
