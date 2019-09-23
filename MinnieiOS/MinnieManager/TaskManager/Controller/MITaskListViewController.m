@@ -82,7 +82,7 @@ VIResourceLoaderManagerDelegate
 
 @property (nonatomic, assign) NSInteger currentSelectedIndex;
 
-// 当前任务列表类型 0按时间 1按名称
+// 当前任务列表类型 0按名称 1按时间
 @property (nonatomic, assign) NSInteger taskListtype;
 
 
@@ -94,7 +94,7 @@ VIResourceLoaderManagerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.taskListtype = 0;
     self.currentSelectedIndex = -1;
     _homeworks = [NSMutableArray array];
     _currentFileInfo = [[FileInfo alloc] init];
@@ -136,6 +136,9 @@ VIResourceLoaderManagerDelegate
                  forFliterArray:@[@"按名称",@"按时间"]
                  withAtionBlock:^(NSInteger index) {
                      StrongifySelf;
+                     if (strongSelf.pushVCCallBack) {
+                         strongSelf.pushVCCallBack(nil);
+                     }
                      strongSelf.taskListtype = index;
                      [strongSelf requestHomeworks];
                  }];
@@ -328,7 +331,10 @@ VIResourceLoaderManagerDelegate
         self.view.backgroundColor = [UIColor unSelectedColor];
         [self.view showLoadingView];
     }
-    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId nextUrl:nil callback:^(Result *result, NSError *error) {
+    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId
+                                                                   sortType:self.taskListtype+1
+                                                                    nextUrl:nil
+                                                                   callback:^(Result *result, NSError *error) {
 
         StrongifySelf;
         [weakSelf.view hideAllStateView];
@@ -344,8 +350,10 @@ VIResourceLoaderManagerDelegate
     if (self.emptyView.superview) {
         [self.emptyView removeFromSuperview];
     }
-    
-    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId nextUrl:self.nextUrl callback:^(Result *result, NSError *error) {
+    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId
+                                                                   sortType:self.taskListtype + 1
+                                                                    nextUrl:self.nextUrl
+                                                                   callback:^(Result *result, NSError *error) {
 
         StrongifySelf;
         [weakSelf.view hideAllStateView];
@@ -669,7 +677,6 @@ VIResourceLoaderManagerDelegate
     };
     scoreListVC.homework = homework;
     scoreListVC.currentFileInfo = self.currentFileInfo;
-//    [self.navigationController pushViewController:scoreListVC animated:YES];
     if (self.pushVCCallBack) {
         self.pushVCCallBack(scoreListVC);
     }
@@ -685,6 +692,7 @@ VIResourceLoaderManagerDelegate
         // 显示任务列表
         self.viewAnimated = YES;
         [self cancelEditMode];
+        self.taskListtype = 0;
         [self requestHomeworks];
     } else { // 显示为空
         [self showTaskList:NO];

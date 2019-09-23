@@ -184,6 +184,9 @@
 @interface HomeworksByFileRequest ()
 
 @property (nonatomic,assign) NSInteger fileId;
+//1:按名称2：按时间
+@property (nonatomic,assign) NSInteger sortType;
+
 
 @property (nonatomic,copy) NSString *nextUrl;
 @end
@@ -191,12 +194,15 @@
 @implementation HomeworksByFileRequest
 
 
-- (instancetype)initWithFileId:(NSInteger)fileId nextUrl:(NSString *_Nullable)nextUrl{
+- (instancetype)initWithFileId:(NSInteger)fileId
+                      sortType:(NSInteger)sortType
+                       nextUrl:(NSString *_Nullable)nextUrl{
     
     self = [super init];
     if (self != nil) {
         self.fileId = fileId;
         self.nextUrl = nextUrl;
+        self.sortType = sortType;
     }
     return self;
 }
@@ -214,7 +220,9 @@
 }
 
 - (id)requestArgument {
-    return @{@"fileId":@(self.fileId)};
+    return @{@"fileId":@(self.fileId),
+             @"sortType":@(self.sortType)
+             };
 }
 
 @end

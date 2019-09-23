@@ -54,10 +54,13 @@
 
 // 根据目录获取任务列表
 + (BaseRequest *)requesthomeworksByFileWithFileId:(NSInteger)fileId
+                                         sortType:(NSInteger)sortType
                                           nextUrl:(NSString *_Nullable)nextUrl
                                          callback:(RequestCallback)callback{
     
-    HomeworksByFileRequest * request = [[HomeworksByFileRequest alloc] initWithFileId:fileId nextUrl:nextUrl];
+    HomeworksByFileRequest * request = [[HomeworksByFileRequest alloc] initWithFileId:fileId
+                                                                             sortType:sortType
+                                                                              nextUrl:nextUrl];
     [request setCallback:callback];
     request.objectKey = @"list";
     request.objectClassName = @"Homework";

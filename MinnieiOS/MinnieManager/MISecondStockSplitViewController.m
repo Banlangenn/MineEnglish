@@ -276,8 +276,11 @@ MICampusManagerViewControllerDelegate
         };
         
         _taskManagerMasterVC.pushVCCallBack = ^(UIViewController *VC) {
+            
             [weakSelf.taskManagerDetailVC.navigationController popToRootViewControllerAnimated:NO];
-            [weakSelf.taskManagerDetailVC.navigationController pushViewController:VC animated:YES];
+            if (VC) {
+                [weakSelf.taskManagerDetailVC.navigationController pushViewController:VC animated:YES];
+            }
         };
     }
     return _taskManagerMasterVC;

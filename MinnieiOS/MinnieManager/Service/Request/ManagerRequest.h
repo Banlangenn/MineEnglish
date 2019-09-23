@@ -58,7 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeworksByFileRequest : BaseRequest
 
-- (instancetype)initWithFileId:(NSInteger)fileId nextUrl:(NSString *_Nullable)nextUrl;
+- (instancetype)initWithFileId:(NSInteger)fileId
+                      sortType:(NSInteger)sortType
+                       nextUrl:(NSString *_Nullable)nextUrl;
 
 @end
 

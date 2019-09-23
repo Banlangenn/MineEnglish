@@ -180,7 +180,9 @@ VIResourceLoaderManagerDelegate
     }
     self.footerView.hidden = YES;
     WeakifySelf;
-    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId nextUrl:nil callback:^(Result *result, NSError *error) {
+    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId
+                                                                   sortType:1
+                                                                    nextUrl:nil callback:^(Result *result, NSError *error) {
         
         StrongifySelf;
         [weakSelf.view hideAllStateView];
@@ -192,7 +194,10 @@ VIResourceLoaderManagerDelegate
         return;
     }
     WeakifySelf;
-    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId nextUrl:self.nextUrl callback:^(Result *result, NSError *error) {
+    self.homeworksRequest = [ManagerServce requesthomeworksByFileWithFileId:self.currentFileInfo.fileId
+                                                                   sortType:1
+                                                                    nextUrl:self.nextUrl
+                                                                   callback:^(Result *result, NSError *error) {
         
         StrongifySelf;
         [weakSelf.view hideAllStateView];

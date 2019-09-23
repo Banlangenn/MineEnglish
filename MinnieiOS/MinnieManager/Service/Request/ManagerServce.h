@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 根据目录获取任务列表
 + (BaseRequest *)requesthomeworksByFileWithFileId:(NSInteger)fileId
+                                         sortType:(NSInteger)sortType
                                           nextUrl:(NSString *_Nullable)nextUrl
                                          callback:(RequestCallback)callback;
 
