@@ -121,10 +121,12 @@ UICollectionViewDelegateFlowLayout>
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = NO;
             self.imageCountLabel.textColor = [UIColor greenBgColor];
+            self.videoCountlabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.imageCount,homeworkSession.homework.imageCount];
         } else if (homeworkSession.homework.currentImageCount < homeworkSession.homework.imageCount) {
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = YES;
             self.imageCountLabel.textColor = [UIColor redColor];
+            self.videoCountlabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
         }
         if (homeworkSession.homework.videoCount <= 0) {// 隐藏
             self.videoCountlabel.hidden = YES;
@@ -133,10 +135,14 @@ UICollectionViewDelegateFlowLayout>
             self.videoCountlabel.hidden = NO;
             self.videoSelectedImagV.hidden = NO;
             self.videoCountlabel.textColor = [UIColor greenBgColor];
+            
+            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu/%lu",homeworkSession.homework.videoCount,homeworkSession.homework.videoCount];
         } else if (homeworkSession.homework.currentVideoCount < homeworkSession.homework.videoCount) {
             self.videoCountlabel.hidden = NO;
             self.videoSelectedImagV.hidden = YES;
             self.videoCountlabel.textColor = [UIColor redColor];
+            
+            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu/%lu",homeworkSession.homework.currentVideoCount,homeworkSession.homework.videoCount];
         }
     } else {
         self.needCommitBgView.hidden = YES;

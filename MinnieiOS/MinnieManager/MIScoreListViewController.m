@@ -277,13 +277,12 @@ UITableViewDataSource
     [self.tableView reloadData];
 }
 
-#pragma mark - 获取作业详情 （包含文件夹，创建老师）
+#pragma mark - 获取作业详情 （任务列表未返回文件夹，创建老师，需单独拉取）
 - (void)requestHomeworkDetail{
     
     [HomeworkService requestHomeworkDetailWithId:self.homework.homeworkId callback:^(Result *result, NSError *error) {
        
-        NSDictionary *dict = (NSDictionary *)(result.userInfo);
-        Homework *homework = (Homework *)dict[@"data"];
+        Homework *homework = (Homework *)(result.userInfo);
         if (homework != nil) {
             self.homework = homework;
         }

@@ -104,7 +104,7 @@
 
 - (id)requestArgument {
 
-    return @{@"homeworkId":@(self.homeworkId)
+    return @{@"id":@(self.homeworkId)
              };
 }
 @end

@@ -1484,10 +1484,30 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     NSTimeInterval timeKey = 0;
     NSMutableArray *groupMessages = nil;
+    NSInteger videoCount = 0;
+    NSInteger imageCount = 0;
     for (NSInteger index=0; index<orderedMessages.count; index++) {
+      
         AVIMMessage *message = orderedMessages[index];
+    
+        // 匹配提交视频、图片数量
+        BOOL isStudentMessage;
+#if TEACHERSIDE | MANAGERSIDE
+        isStudentMessage = message.ioType==AVIMMessageIOTypeIn;
+#else
+        isStudentMessage = message.ioType==AVIMMessageIOTypeOut;
+#endif
+        if (isStudentMessage) {
+            
+            if ([message isKindOfClass:[AVIMVideoMessage class]]) {
+                videoCount++;
+            }
+            if ([message isKindOfClass:[AVIMImageMessage class]]) {
+                imageCount++;
+            }
+        }
+
         
-        NSLog(@"message: %@ ",((AVIMTextMessage *)message).text);
         if ([message isKindOfClass:[AVIMTextMessage class]] &&
             ((AVIMTextMessage *)message).text.length == 0) {
             if (index == orderedMessages.count-1) {
@@ -1526,12 +1546,10 @@ HomeworkAnswersPickerViewControllerDelegate>
             NSString *key = [NSString stringWithFormat:@"%.f", timeKey];
             self.sortedMessages[key] = groupMessages;
         }
-//
-//        NSLog(@"message:%lld %f, %@ ",message.sendTimestamp,timeKey,((AVIMTextMessage *)message).text);
-//        NSLog(@"message:1 %@",self.sortedMessages);
-//        NSLog(@"message:2 %@",groupMessages);
-        
     }
+    // 任务需提交
+    self.homeworkSession.homework.currentImageCount = imageCount;
+    self.homeworkSession.homework.currentVideoCount = videoCount;
     
     self.sortedKeys = [self.sortedMessages.allKeys sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         return
