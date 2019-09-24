@@ -49,8 +49,6 @@
     self.segmentControl.titles = @[@"已入学", @"未入学",@"待处理"];
     self.segmentControl.selectedIndex = 0;
     
-    self.containerScrollView.contentSize = CGSizeMake(ScreenWidth * 3, 725);
-
     __weak typeof(self) weakSelf = self;
     self.segmentControl.indexChangeHandler = ^(NSUInteger selectedIndex) {
         [weakSelf showChildPageViewControllerWithIndex:selectedIndex animated:YES shouldLocate:YES];
