@@ -71,7 +71,7 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LfF-Nk-ntF">
-                            <rect key="frame" x="0.0" y="0.0" width="750" height="603"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1125" height="603"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
@@ -88,7 +88,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="LfF-Nk-ntF" firstAttribute="width" secondItem="yWL-Km-kZo" secondAttribute="width" multiplier="2" id="6yN-jM-dw6"/>
+                <constraint firstItem="LfF-Nk-ntF" firstAttribute="width" secondItem="yWL-Km-kZo" secondAttribute="width" multiplier="3" id="6yN-jM-dw6"/>
                 <constraint firstAttribute="trailing" secondItem="ugd-N4-cwR" secondAttribute="trailing" id="8Dr-3S-RS7"/>
                 <constraint firstItem="ugd-N4-cwR" firstAttribute="top" secondItem="dfh-eq-Tl5" secondAttribute="bottom" id="Cp1-br-WtK"/>
                 <constraint firstItem="dfh-eq-Tl5" firstAttribute="leading" secondItem="yWL-Km-kZo" secondAttribute="leading" id="EAV-nC-4Yn"/>

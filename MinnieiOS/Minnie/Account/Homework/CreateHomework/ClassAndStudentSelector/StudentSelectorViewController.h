@@ -16,6 +16,7 @@ typedef void(^StudentSelectorViewControllerPreviewCallback)(NSInteger);
 @property (nonatomic, copy) StudentSelectorViewControllerSelectCallback selectCallback;
 @property (nonatomic, copy) StudentSelectorViewControllerPreviewCallback previewCallback;
 
+@property (nonatomic, copy) void (^updateStudentStatusCallBack) (void);
 
 @property (nonatomic, strong) NSMutableArray *selectedStudents;
 @property (nonatomic, assign) BOOL reviewMode;
@@ -27,5 +28,7 @@ typedef void(^StudentSelectorViewControllerPreviewCallback)(NSInteger);
 @property (nonatomic, assign) BOOL showClassName;
 
 - (void)unselectAll;
+
+- (void)updateStudents;
 
 @end

@@ -18,7 +18,6 @@
 
 @property (nonatomic, strong) StudentSelectorViewController *studentsSelectorChildController;
 @property (nonatomic, strong) StudentSelectorViewController *enrollingStudentsSelectorChildController;
-
 @property (nonatomic, strong) StudentSelectorViewController *disposalStudentsSelectorChildController;
 
 @property (nonatomic, assign) BOOL ignoreScrollCallback;
@@ -49,6 +48,8 @@
     self.segmentControl = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([SegmentControl class]) owner:nil options:nil] firstObject];
     self.segmentControl.titles = @[@"已入学", @"未入学",@"待处理"];
     self.segmentControl.selectedIndex = 0;
+    
+    self.containerScrollView.contentSize = CGSizeMake(ScreenWidth * 3, 725);
 
     __weak typeof(self) weakSelf = self;
     self.segmentControl.indexChangeHandler = ^(NSUInteger selectedIndex) {
@@ -129,6 +130,11 @@
                 
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             };
+            
+            self.enrollingStudentsSelectorChildController.updateStudentStatusCallBack = ^{
+              
+                [weakSelf.disposalStudentsSelectorChildController updateStudents];
+            };
         }
         
         childPageViewController = self.enrollingStudentsSelectorChildController;
@@ -154,6 +160,11 @@
                 vc.userId = userId;
                 
                 [weakSelf.navigationController pushViewController:vc animated:YES];
+            };
+            
+            self.disposalStudentsSelectorChildController.updateStudentStatusCallBack = ^{
+                
+                [weakSelf.enrollingStudentsSelectorChildController updateStudents];
             };
         }
         
@@ -236,8 +247,8 @@
 
 - (void)updateSegmentControlWhenScrollEnded {
     [self.segmentControl setPersent:self.containerScrollView.contentOffset.x / ScreenWidth];
-    
-    NSInteger index = MAX(0, ceil(2 * self.containerScrollView.contentOffset.x / ScreenWidth) - 1);
+
+    NSInteger index = MAX(0, ceil(self.segmentControl.titles.count * self.containerScrollView.contentOffset.x / ScreenWidth) - 1);
     [self indexDidChange:index];
 }
 
@@ -247,6 +258,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  
     if (self.ignoreScrollCallback) {
         return;
     }

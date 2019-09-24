@@ -52,6 +52,12 @@
     [self.studentsTableView reloadData];
 }
 
+
+- (void)updateStudents{
+    
+    [self requestStudents];
+}
+
 - (void)requestStudents {
     if (self.studentsRequest != nil) {
         return;
@@ -132,6 +138,9 @@
     WeakifySelf;
     [StudentService requestStudentChangeStatusWithInCalss:inClass studentIds:@[@(userId)] callback:^(Result *result, NSError *error) {
         [weakSelf requestStudents];
+        if (weakSelf.updateStudentStatusCallBack) {
+            weakSelf.updateStudentStatusCallBack();
+        }
     }];
 }
 
@@ -156,8 +165,9 @@
     // 停止加载
     self.studentsTableView.hidden = students.count==0;
     
-    
     if (students.count > 0) {
+        
+        [self.students removeAllObjects];
         self.studentsTableView.hidden = NO;
         
         [self.students addObjectsFromArray:students];
@@ -175,6 +185,8 @@
 - (void)sortStudents {
     if (self.studentDict == nil) {
         self.studentDict = [NSMutableDictionary dictionary];
+    } else {
+        [self.studentDict removeAllObjects];
     }
     HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];
     [outputFormat setToneType:ToneTypeWithoutTone];
