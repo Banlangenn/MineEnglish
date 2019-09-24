@@ -35,11 +35,13 @@ NSString * const RightVideoMessageTableViewCellId = @"RightVideoMessageTableView
     [super awakeFromNib];
     self.coverImageView.userInteractionEnabled = YES;
     
+#if TEACHERSIDE || MANAGERSIDE
     
     if ([self.reuseIdentifier isEqualToString:LeftVideoMessageTableViewCellId]){
         
         [self.contentView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)]];
     }
+#endif
 }
 
 - (void)longPressGesture:(UILongPressGestureRecognizer *)longGest{

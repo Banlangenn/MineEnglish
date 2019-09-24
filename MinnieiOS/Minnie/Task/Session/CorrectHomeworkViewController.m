@@ -152,6 +152,7 @@
 #endif
                                                                                                                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                                                     }
+                                                    [weakSelf updateShareVideo];
 //                                                    {
 //
 //                                                        [weakSelf modifyStarWithReviewText:reviewText];
@@ -188,6 +189,19 @@
                           }];
 }
 
+
+#pragma mark - 更新分享视频
+- (void)updateShareVideo{
+   
+    if (self.m_circle && self.shareVedioUrl) {
+        [HomeworkSessionService commitHomeworkWithId:self.homeworkSession.homeworkSessionId
+                                            imageUrl:nil
+                                            videoUrl:self.shareVedioUrl
+                                            callback:^(Result *result, NSError *error) {
+                                                
+                                            }];
+    }
+}
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification {
     NSValue *endValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];

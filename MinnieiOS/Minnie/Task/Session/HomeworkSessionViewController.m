@@ -619,6 +619,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 - (IBAction)correctButtonPressed:(id)sender {
     CorrectHomeworkViewController *vc = [[CorrectHomeworkViewController alloc] initWithNibName:@"CorrectHomeworkViewController" bundle:nil];
+    vc.shareVedioUrl = self.shareVideoUrl;
     vc.homeworkSession = self.homeworkSession;
     [self.navigationController pushViewController:vc animated:YES];
 }

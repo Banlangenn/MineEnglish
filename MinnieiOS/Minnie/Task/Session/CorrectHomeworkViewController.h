@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) HomeworkSession *homeworkSession;
 
+@property (nonatomic, copy) NSString *shareVedioUrl;
+
 @end
