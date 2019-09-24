@@ -49,8 +49,8 @@
 @property (nonatomic, assign) NSInteger examType; // 任务类型为成绩统计：1:周测；2:正式考试
 
 
-@property (nonatomic, assign) NSInteger imageCount; // 要求提交图片数量
-@property (nonatomic, assign) NSInteger videoCount; // 要求提交视频数量
+@property (nonatomic, assign) NSInteger imageCount;   // 要求提交图片数量
+@property (nonatomic, assign) NSInteger videoCount;     // 要求提交视频数量
 
 @property (nonatomic, assign) NSInteger currentImageCount; // 当前提交图片数量
 @property (nonatomic, assign) NSInteger currentVideoCount; // 当前提交视频数量

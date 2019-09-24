@@ -109,6 +109,48 @@
 @end
 
 
+
+#pragma mark - 2.3.9    学生状态修改（教师端）
+@interface StudentsChangeStatusRequest ()
+
+@property (nonatomic,assign) NSInteger inClass;
+@property (nonatomic,strong) NSArray *studentIds;
+
+
+@end
+
+@implementation StudentsChangeStatusRequest
+
+- (instancetype)initWithInCalss:(NSInteger)inClass
+                     studentIds:(NSArray *)studentIds{
+    
+    self = [super init];
+    if (self != nil) {
+        self.inClass = inClass;
+        self.studentIds = studentIds;
+    }
+    return self;
+}
+
+- (YTKRequestMethod)requestMethod {
+    return YTKRequestMethodPOST;
+}
+
+- (NSString *)requestUrl {
+    
+    return [NSString stringWithFormat:@"%@/user/changeClassStatus", ServerProjectName];
+}
+
+- (id)requestArgument {
+
+    return @{@"inClass":@(self.inClass),
+             @"studentIds":self.studentIds};
+}
+@end
+
+
+
+
 @implementation StudentZeroTaskRequest
 
 - (YTKRequestMethod)requestMethod {

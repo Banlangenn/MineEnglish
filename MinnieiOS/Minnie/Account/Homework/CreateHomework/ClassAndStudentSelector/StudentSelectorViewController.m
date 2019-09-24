@@ -86,7 +86,8 @@
     
 }
 
-- (void)requestMoveStudents {
+#pragma mark - 改变学生的状态
+- (void)requestMoveStudentsWithUserId:(NSInteger)userId {
    
     // 适配ipad版本
     UIAlertControllerStyle alertStyle;
@@ -107,13 +108,12 @@
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:title
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             [weakSelf requestStudents];
+                                                             [weakSelf requestStudentChangeStatusWithUserId:userId];
                                                          }];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             [weakSelf requestStudents];
                                                          }];
     
     [alertVC addAction:sureAction];
@@ -122,6 +122,19 @@
                        animated:YES
                      completion:nil];
 }
+
+- (void)requestStudentChangeStatusWithUserId:(NSInteger)userId{
+    
+    NSInteger inClass = 0;
+    if (self.inClass == 0) {
+        inClass = -1;
+    }
+    WeakifySelf;
+    [StudentService requestStudentChangeStatusWithInCalss:inClass studentIds:@[@(userId)] callback:^(Result *result, NSError *error) {
+        [weakSelf requestStudents];
+    }];
+}
+
 
 - (void)handleRequestResult:(Result *)result error:(NSError *)error {
     self.studentsRequest = nil;
@@ -221,7 +234,7 @@
     if (self.inClass != 1) {
         WeakifySelf;
         cell.longPressCallBack = ^{
-            [weakSelf requestMoveStudents];
+            [weakSelf requestMoveStudentsWithUserId:student.userId];
         };
     }
     if (self.showClassName) {

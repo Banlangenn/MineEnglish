@@ -53,4 +53,9 @@
 //增加警告
 + (BaseRequest *)sendWarnForStudent:(NSInteger)studentId callback:(RequestCallback)callback;
 
+
+#pragma mark - 2.3.2    获取作业详情
++ (BaseRequest *)requestHomeworkDetailWithId:(NSInteger)homeworkId
+                                    callback:(RequestCallback)callback;
+
 @end

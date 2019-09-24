@@ -138,6 +138,18 @@
     [request start];
     return request;
 }
+
+#pragma mark - 2.3.2    获取作业详情
++ (BaseRequest *)requestHomeworkDetailWithId:(NSInteger)homeworkId
+                                    callback:(RequestCallback)callback{
+    
+    HomeworkDetailRequest *request = [[HomeworkDetailRequest alloc] initWithHomeworkId:homeworkId];
+    request.objectClassName = @"Homework";
+    request.callback = callback;
+    [request start];
+    return request;
+}
+
 @end
 
 

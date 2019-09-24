@@ -25,10 +25,18 @@
 @end
 
 
-
 @interface StudentsByClassRequest : BaseRequest
+@end
+
+
+#pragma mark - 2.3.9    学生状态修改（教师端）
+@interface StudentsChangeStatusRequest : BaseRequest
+
+- (instancetype)initWithInCalss:(NSInteger)inClass
+                     studentIds:(NSArray *)studentIds;
 
 @end
+
 
 #pragma mark - 2.13.2    0分动态（ipad管理端）
 @interface StudentZeroTaskRequest : BaseRequest

@@ -74,3 +74,38 @@
 
 @end
 
+#pragma mark - 2.3.2    获取作业详情
+@interface HomeworkDetailRequest ()
+
+@property (nonatomic, assign) NSInteger homeworkId;
+
+@end
+
+@implementation  HomeworkDetailRequest
+
+- (instancetype)initWithHomeworkId:(NSInteger)homeworkId{
+  
+    self = [super init];
+    if (self != nil) {
+
+        self.homeworkId = homeworkId;
+    }
+    return self;
+}
+
+- (YTKRequestMethod)requestMethod {
+    return YTKRequestMethodGET;
+}
+
+- (NSString *)requestUrl {
+    
+    return [NSString stringWithFormat:@"%@/homework/detail", ServerProjectName];
+}
+
+- (id)requestArgument {
+
+    return @{@"homeworkId":@(self.homeworkId)
+             };
+}
+@end
+

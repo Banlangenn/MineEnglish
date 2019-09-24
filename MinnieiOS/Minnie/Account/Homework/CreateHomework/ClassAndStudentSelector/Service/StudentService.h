@@ -34,6 +34,12 @@
 + (BaseRequest *)requestStudentLisByClasstWithCallback:(RequestCallback)callback;
 
 
+#pragma mark - 2.3.9    学生状态修改（教师端）
++ (BaseRequest *)requestStudentChangeStatusWithInCalss:(NSInteger)inClass
+                                            studentIds:(NSArray *)studentIds
+                                              callback:(RequestCallback)callback;
+
+
 #pragma mark -  2.13.2    0分动态（ipad管理端）
 + (BaseRequest *)requestStudentZeroTaskCallback:(RequestCallback)callback;
 

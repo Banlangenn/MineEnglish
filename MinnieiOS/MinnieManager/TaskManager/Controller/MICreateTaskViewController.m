@@ -1020,8 +1020,7 @@ ClassAndStudentSelectorControllerDelegate
         case MIHomeworkCreateContentType_TaskSheet:
         {
             MITaskSheetTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MITaskSheetTableViewCellId forIndexPath:indexPath];
-            contentCell.videoCountCallback = ^(NSInteger count) {
-                
+            contentCell.imageCountCallback = ^(NSInteger count) {
                 weakSelf.homework.imageCount = count;
             };
             contentCell.videoCountCallback = ^(NSInteger count) {

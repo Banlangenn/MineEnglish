@@ -84,6 +84,18 @@
     return request;
 }
 
+#pragma mark - 2.3.9    学生状态修改（教师端）
++ (BaseRequest *)requestStudentChangeStatusWithInCalss:(NSInteger)inClass
+                                            studentIds:(NSArray *)studentIds
+                                              callback:(RequestCallback)callback{
+    
+    StudentsChangeStatusRequest *request = [[StudentsChangeStatusRequest alloc] initWithInCalss:inClass studentIds:studentIds];
+    request.callback = callback;
+    [request start];
+    
+    return request;
+}
+
 
 + (BaseRequest *)requestStudentZeroTaskCallback:(RequestCallback)callback{
    

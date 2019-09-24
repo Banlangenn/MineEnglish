@@ -27,7 +27,9 @@
              @"fileInfos":@"fileInfos",
              @"typeName":@"typeName",
              @"examType":@"examType",
-             @"otherItem":@"otherItem"
+             @"otherItem":@"otherItem",
+             @"videoCount":@"videoCount",
+             @"imageCount":@"pictureCount"
              };
 }
 
@@ -171,6 +173,8 @@
     dict[@"teremark"] = self.teremark;
     dict[@"typeName"] = self.typeName;
     dict[@"examType"] = @(self.examType);
+    dict[@"pictureCount"] = @(self.imageCount);
+    dict[@"videoCount"] = @(self.videoCount);
     
     return dict;
 }
@@ -203,6 +207,8 @@
     tempHomework.fileInfos = [self newFileInfo:self.fileInfos];
     tempHomework.typeName = self.typeName;
     tempHomework.examType = self.examType;
+    tempHomework.videoCount = self.videoCount;
+    tempHomework.imageCount = self.imageCount;
     tempHomework.cellHeight = self.cellHeight;
     
     return tempHomework;

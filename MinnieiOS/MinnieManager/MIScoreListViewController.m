@@ -9,6 +9,7 @@
 #import "IMManager.h"
 #import "ScoreInfo.h"
 #import "ManagerServce.h"
+#import "HomeworkService.h"
 #import "HomeworkSessionService.h"
 #import "HomeworkSessionService.h"
 #import "UIScrollView+Refresh.h"
@@ -53,6 +54,7 @@ UITableViewDataSource
     [self configureUI];
     [self requestScoreListIsLoadMore:NO];
     self.headViewConstraintHeight.constant = kNaviBarHeight;
+    [self requestHomeworkDetail];
 }
 
 -(void)configureUI{
@@ -275,6 +277,18 @@ UITableViewDataSource
     [self.tableView reloadData];
 }
 
+#pragma mark - 获取作业详情 （包含文件夹，创建老师）
+- (void)requestHomeworkDetail{
+    
+    [HomeworkService requestHomeworkDetailWithId:self.homework.homeworkId callback:^(Result *result, NSError *error) {
+       
+        NSDictionary *dict = (NSDictionary *)(result.userInfo);
+        Homework *homework = (Homework *)dict[@"data"];
+        if (homework != nil) {
+            self.homework = homework;
+        }
+    }];
+}
 
 - (FileInfo *)currentFileInfo{
     
