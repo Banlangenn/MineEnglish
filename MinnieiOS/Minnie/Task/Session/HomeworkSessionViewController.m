@@ -1490,13 +1490,11 @@ HomeworkAnswersPickerViewControllerDelegate>
       
         AVIMMessage *message = orderedMessages[index];
     
-        // 匹配提交视频、图片数量
-        BOOL isStudentMessage;
-#if TEACHERSIDE | MANAGERSIDE
-        isStudentMessage = message.ioType==AVIMMessageIOTypeIn;
-#else
-        isStudentMessage = message.ioType==AVIMMessageIOTypeOut;
-#endif
+        // 匹配需要提交视频、图片数量
+        BOOL isStudentMessage = NO;
+        if (message.clientId.integerValue == self.homeworkSession.student.userId) {
+            isStudentMessage = YES;
+        }
         if (isStudentMessage) {
             
             if ([message isKindOfClass:[AVIMVideoMessage class]]) {
