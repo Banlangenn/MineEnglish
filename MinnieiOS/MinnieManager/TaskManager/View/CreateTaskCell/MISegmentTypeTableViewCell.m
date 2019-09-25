@@ -91,6 +91,13 @@ NSString * const MISegmentTypeTableViewCellId = @"MISegmentTypeTableViewCellId";
         self.titleLabel.text = @"统计类型:";
         [self.btn1 setTitle:@"普通" forState:UIControlStateNormal];
         [self.btn2 setTitle:@"附加" forState:UIControlStateNormal];
+    } else if (self.createType == MIHomeworkCreateContentType_RandomWordsType){
+
+        // 单词展示顺序：0 顺序  1随机
+         self.btnNum =2;
+         self.titleLabel.text = @"单词展示顺序:";
+         [self.btn1 setTitle:@"顺序播放" forState:UIControlStateNormal];
+         [self.btn2 setTitle:@"随机播放" forState:UIControlStateNormal];
     } else if (self.createType == MIHomeworkCreateContentType_CommitTime){
         //提交时间：1/2/3/4天
         self.btnNum =4;

@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) Homework *homework;
 
+@property (nonatomic,strong) NSArray *randomDictWords;
+
 @end
 
 NS_ASSUME_NONNULL_END

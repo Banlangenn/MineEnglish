@@ -2041,6 +2041,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                     NSString *fileUrl = message.file.url;
                     taskVC.audioUrl = fileUrl;
                     taskVC.homework = weakSelf.homeworkSession.homework;
+                    taskVC.randomDictWords = message.attributes[@"randomWords"];
                     [weakSelf.navigationController pushViewController:taskVC animated:YES];
                 }
             }];

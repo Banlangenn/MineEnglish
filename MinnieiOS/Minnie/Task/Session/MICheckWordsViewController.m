@@ -35,6 +35,10 @@ CAAnimationDelegate
 @property (nonatomic, strong) AudioPlayerManager *audioPlayer;
 @property (weak, nonatomic) IBOutlet UIView *recordAniBgView;
 
+
+@property (strong,nonatomic) HomeworkItem *currentWordItem;
+
+
 @end
 
 @implementation MICheckWordsViewController
@@ -52,6 +56,25 @@ CAAnimationDelegate
     [super viewDidLoad];
  
     self.titleLabel.text = kHomeworkTaskWordMemoryName;
+  
+    HomeworkItem *wordItem = self.homework.items.lastObject;
+    wordItem.isRandom = YES;
+    
+    // 处理要显示的随机数组
+    if (wordItem.isRandom) {
+        NSMutableArray *array = [NSMutableArray array];
+        for (NSDictionary *wordDict in self.randomDictWords) {
+            WordInfo *wordInfo = [[WordInfo alloc] init];
+            wordInfo.chinese = wordDict[@"chinese"];
+            wordInfo.english = wordDict[@"english"];
+            [array addObject:wordInfo];
+        }
+        wordItem.randomWords = (NSArray<WordInfo> *)array;
+    } else {
+        wordItem.randomWords = wordItem.words;
+    }
+    self.currentWordItem = wordItem;
+    
     [self configureUI];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
@@ -64,7 +87,7 @@ CAAnimationDelegate
     [self.startRecordBtn setBackgroundImage:[UIImage imageNamed:@"btn_stop_green"] forState:UIControlStateSelected];
     self.startRecordLabel.text = @"点击查看录音";
     
-    self.wordsView.wordsItem = self.homework.items.lastObject;
+    self.wordsView.wordsItem = self.currentWordItem;
     self.wordsView.hidden = NO;
     [self.vedioBgView addSubview:self.wordsView];
     [self.wordsView mas_makeConstraints:^(MASConstraintMaker *make) {

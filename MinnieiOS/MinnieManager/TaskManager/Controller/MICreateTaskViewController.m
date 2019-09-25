@@ -525,6 +525,17 @@ ClassAndStudentSelectorControllerDelegate
             cell = contentCell;
         }
             break;
+        case MIHomeworkCreateContentType_RandomWordsType:
+            {
+                MISegmentTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MISegmentTypeTableViewCellId forIndexPath:indexPath];
+                WeakifySelf;
+                contentCell.callback = ^(NSInteger selectIndex) {
+                    weakSelf.wordsItem.isRandom = selectIndex - 1;
+                };
+                [contentCell setupWithSelectIndex:self.wordsItem.isRandom + 1 createType:createType];
+                cell = contentCell;
+            }
+            break;
         case MIHomeworkCreateContentType_CommitTime:
         {
             MISegmentTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MISegmentTypeTableViewCellId forIndexPath:indexPath];
@@ -1093,6 +1104,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_Content),
                           @(MIHomeworkCreateContentType_MarkingRemarks),
                           @(MIHomeworkCreateContentType_StatisticalType),
+                          @(MIHomeworkCreateContentType_RandomWordsType),
                           @(MIHomeworkCreateContentType_CommitTime),
                           @(MIHomeworkCreateContentType_HomeworkDifficulty),
                           @(MIHomeworkCreateContentType_AddWords),
@@ -1201,6 +1213,7 @@ ClassAndStudentSelectorControllerDelegate
             break;
         case MIHomeworkCreateContentType_CommitCount:
         case MIHomeworkCreateContentType_StatisticalType:
+        case MIHomeworkCreateContentType_RandomWordsType:
         case MIHomeworkCreateContentType_CommitTime:
         case MIHomeworkCreateContentType_HomeworkDifficulty:
         case MIHomeworkCreateContentType_ExaminationType:

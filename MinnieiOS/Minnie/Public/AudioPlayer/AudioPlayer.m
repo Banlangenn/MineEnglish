@@ -142,8 +142,11 @@ NSString * const kNotificationOfAudioPlayerStateDidChange = @"kNotificationOfAud
         return;
     }
     NSString *path = [[NSBundle mainBundle] pathForResource:url ofType:@"mp3"];
-    [self playWithLocalFileURL:[NSURL fileURLWithPath:path]];
-    self.player.volume = 0.5;
+    if (path.length > 0) {
+
+        [self playWithLocalFileURL:[NSURL fileURLWithPath:path]];
+        self.player.volume = 0.5;
+    }
 }
 
 - (void)playWithLocalFileURL:(NSURL *)fileURL {

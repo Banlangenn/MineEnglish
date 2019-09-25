@@ -6,6 +6,7 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import <NSArray+YYAdd.h>
 #import "MIToastView.h"
 #import "AppDelegate.h"
 #import "IMManager.h"
@@ -80,17 +81,29 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
- 
     _progressViews = [NSMutableArray array];
     HomeworkItem *tempWordItem =  self.homework.items.lastObject;
+    tempWordItem.isRandom = YES;
+    // 处理单词随机
     if ([tempWordItem.type isEqualToString:@"word"]) {
-      
+       
         self.wordsItem = tempWordItem;
+        if (self.wordsItem.isRandom) {
+
+            NSMutableArray * randomWords = [NSMutableArray arrayWithArray:self.wordsItem.words];
+            [randomWords shuffle];
+            self.wordsItem.randomWords = (NSArray<WordInfo> *)randomWords;
+        } else {
+            self.wordsItem.randomWords = self.wordsItem.words;
+        }
     }
+    
     // 准备播放
     [self.musicPlayer play:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
+
 }
+
 
 - (void)configureUI{
     
@@ -100,13 +113,13 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
     self.progressHeight.constant = progressHeight;
     // 进度条
-    CGFloat proWidth = ScreenWidth /self.wordsItem.words.count;
-    for (NSInteger i = 0; i < self.wordsItem.words.count; i++) {
+    CGFloat proWidth = ScreenWidth /self.wordsItem.randomWords.count;
+    for (NSInteger i = 0; i < self.wordsItem.randomWords.count; i++) {
       
         UIView *progress = [[UIView alloc] init];
         if (i == 0) {
             progress.frame = CGRectMake(0, 0, proWidth - 1, progressHeight);
-        } else if (i == self.wordsItem.words.count - 1) {
+        } else if (i == self.wordsItem.randomWords.count - 1) {
             progress.frame = CGRectMake(i * proWidth + 1, 0, proWidth - 1, progressHeight);
         } else {
             progress.frame = CGRectMake(i * proWidth + 1, 0, proWidth - 2, progressHeight);
@@ -154,7 +167,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 #pragma mark - 1.开始倒计时 ，播放单词
 - (void)startCountTime{
    
-    if (self.wordsItem.words.count == 0) {
+    if (self.wordsItem.randomWords.count == 0) {
         [HUD showErrorWithMessage:@"无单词内容"];
         return;
     }
@@ -311,11 +324,20 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     AVFile *file = [AVFile fileWithRemoteURL:audioURL];
     NSInteger d = (NSInteger)duration;
     NSString *typeName =  kHomeworkTaskWordMemoryName;
+    
+    // 随机后的单词
+    NSMutableArray *wordsArray = [NSMutableArray array];
+    for (WordInfo *info in self.wordsItem.randomWords) {
+        NSDictionary *dict = @{@"english":info.english,
+                               @"chinese":info.chinese};
+        [wordsArray addObject:dict];
+    }
     AVIMAudioMessage *message = [AVIMAudioMessage messageWithText:@"audio"
                                                              file:file
                                                        attributes:@{kKeyOfCreateTimestamp:@(timestamp),
                                                                     kKeyOfAudioDuration:@(d),
-                                                                    @"typeName":typeName}];
+                                                                    @"typeName":typeName,
+                                                                    @"randomWords":wordsArray}];
     [self sendMessage:message];
 }
 
@@ -419,7 +441,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         }
         if (index == 0) {
             
-            WordInfo *tempWord = self.wordsItem.words.firstObject;
+            WordInfo *tempWord = self.wordsItem.randomWords.firstObject;
             self.wordLabel.text = tempWord.english;
             UIView *view = self.progressViews.firstObject;
             view.backgroundColor = [UIColor mainColor];
@@ -430,14 +452,12 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         }
     } else { // 播放单词
         
-        NSLog(@"countTimeMethod::::%d %@,%@",index,[NSDate date],self.wordLabel.text);
-
-        if (index > 0 && index - 1 < self.wordsItem.words.count) {
+        if (index > 0 && index - 1 < self.wordsItem.randomWords.count) {
             
             self.wordLabel.hidden = NO;
             self.timeLabel.hidden = YES;
             
-            WordInfo *tempWord = self.wordsItem.words[index - 1];
+            WordInfo *tempWord = self.wordsItem.randomWords[index - 1];
             self.wordLabel.text = tempWord.english;
             
             if (index - 1 < self.progressViews.count) {
@@ -450,14 +470,14 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             }
         }
         
-        if (index - 1 == self.wordsItem.words.count) {
+        if (index - 1 == self.wordsItem.randomWords.count) {
             
             // 停止背景音乐
             [self.musicPlayer play:NO];
             // 停止录音
             [self stopRecordFound];
             [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
-        } else if (index - 1 > self.wordsItem.words.count) {
+        } else if (index - 1 > self.wordsItem.randomWords.count) {
             
             _recordState = 2;
             [self invalidateTimer];
@@ -469,7 +489,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)showFirstWord{
     
-    WordInfo *tempWord = self.wordsItem.words.firstObject;
+    WordInfo *tempWord = self.wordsItem.randomWords.firstObject;
     self.wordLabel.text = tempWord.english;
 }
 
