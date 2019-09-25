@@ -48,8 +48,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 // 1:正在录制  2:录制完成
 @property (assign,nonatomic) NSInteger recordState;
 // 背景音乐
-@property (nonatomic, strong) AVPlayer *bgMusicPlayer;
-
 @property (nonatomic, strong) AudioPlayerManager *musicPlayer;
 
 // 录音
@@ -75,7 +73,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     [self stopRecordFound];
     [self removeRecordSound];
     [self stopTask];
-    [self.bgMusicPlayer pause];
 }
 
 - (void)viewDidLoad {
@@ -183,19 +180,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         progress.backgroundColor = [UIColor detailColor];
     }
 }
-
-#pragma mark - 2.开始播放单词,播放背景音乐,并录音
-//- (void)startPlayWords{
-//
-//    // 播放背景音乐
-//    if (self.wordsItem.bgmusicUrl.length) {
-//        self.bgMusicPlayer = [self getPlayerWith:self.wordsItem.bgmusicUrl isLocal:NO];
-//        self.bgMusicPlayer.volume = 0.0;
-//        [self.bgMusicPlayer play];
-//        NSLog(@"startPlayWords");
-//    }
-//}
-
 
 - (AudioPlayerManager *)musicPlayer{
     
@@ -445,8 +429,11 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             self.wordLabel.text = tempWord.english;
             UIView *view = self.progressViews.firstObject;
             view.backgroundColor = [UIColor mainColor];
-            
-            [self.musicPlayer seekToTime:1.0];
+            if (self.wordsItem.bgmusicUrl.length > 0) {
+                [self startTask];
+            } else {
+                [self.musicPlayer seekToTime:1.0];
+            }
             // 开始录音
             [self starRecoreFound];
         }
