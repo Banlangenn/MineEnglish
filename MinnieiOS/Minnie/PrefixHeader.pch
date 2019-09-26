@@ -100,6 +100,7 @@ typedef NS_ENUM(NSInteger, MIHomeworkCreateContentType) {
     MIHomeworkCreateContentType_Content,            // 内容
     MIHomeworkCreateContentType_MarkingRemarks,     // 批改备注
     MIHomeworkCreateContentType_StatisticalType,    // 统计类型
+    MIHomeworkCreateContentType_RandomWordsType,    // 单词随机
     MIHomeworkCreateContentType_CommitTime,         // 选择提交时间
     MIHomeworkCreateContentType_HomeworkDifficulty, // 选择作业难度（选择星级）
     MIHomeworkCreateContentType_Label,              // 标签（任务类型）

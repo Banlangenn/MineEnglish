@@ -59,12 +59,20 @@ didFinishDownloadingToURL:(NSURL *)location{
     NSString *file = [cache stringByAppendingPathComponent:downloadTask.response.suggestedFilename];
     NSError *error;
     [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:file] error:&error];
-    
+
     if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(file)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(file, self, nil, nil);
+        UISaveVideoAtPathToSavedPhotosAlbum(file, self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         [HUD showWithMessage:@"保存成功"];
     }
 }
 
+//保存视频完成之后的回调
+- (void)savedPhotoImage:(UIImage*)image didFinishSavingWithError:(NSError *)error contextInfo: (void *)contextInfo {
+    if (error) {
+        [HUD showErrorWithMessage:@"视频保存失败"];
+    } else {
+        [HUD showWithMessage:@"保存视频成功"];
+    }
+}
 
 @end
