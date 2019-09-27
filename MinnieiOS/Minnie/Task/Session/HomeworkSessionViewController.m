@@ -1486,7 +1486,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     NSMutableArray *groupMessages = nil;
     NSInteger videoCount = 0;
     NSInteger imageCount = 0;
-    for (NSInteger index=0; index<orderedMessages.count; index++) {
+    for (NSInteger index = 0; index < orderedMessages.count; index++) {
       
         AVIMMessage *message = orderedMessages[index];
     

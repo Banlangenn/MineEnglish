@@ -81,8 +81,6 @@ UICollectionViewDelegateFlowLayout>
 - (void)setupWithHomeworkSession:(HomeworkSession *)homeworkSession {
     
     self.homeworkSession = homeworkSession;
-//    self.homeworkSession.homework.imageCount = 4;
-//    self.homeworkSession.homework.currentImageCount = 3;
     
     NSString *text = nil;
     for (HomeworkItem *item in self.homeworkSession.homework.items) {
@@ -121,12 +119,12 @@ UICollectionViewDelegateFlowLayout>
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = NO;
             self.imageCountLabel.textColor = [UIColor greenBgColor];
-            self.videoCountlabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.imageCount,homeworkSession.homework.imageCount];
+            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
         } else if (homeworkSession.homework.currentImageCount < homeworkSession.homework.imageCount) {
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = YES;
             self.imageCountLabel.textColor = [UIColor redColor];
-            self.videoCountlabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
+            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
         }
         if (homeworkSession.homework.videoCount <= 0) {// 隐藏
             self.videoCountlabel.hidden = YES;
@@ -230,9 +228,6 @@ UICollectionViewDelegateFlowLayout>
     dispatch_once(&onceToken, ^{
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SessionHomeworkTableViewCell" owner:nil options:nil] lastObject];
     });
-    
-//    homeworkSession.homework.imageCount = 4;
-//    homeworkSession.homework.currentImageCount = 3;
     
     [cell setupWithHomeworkSession:homeworkSession];
     
