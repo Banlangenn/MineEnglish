@@ -29,6 +29,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 @property (weak, nonatomic) IBOutlet UIView *recordRedView;
 @property (weak, nonatomic) IBOutlet UIView *startRecordView;
 @property (weak, nonatomic) IBOutlet UIButton *startRecordBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 
 @property (strong,nonatomic) HomeworkItem *followItem;
 
@@ -94,7 +96,25 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     self.recordRedView.layer.cornerRadius = 7.5;
     self.recordRedView.layer.masksToBounds = YES;
     
-    [self.coverImageV sd_setImageWithURL:[self.followItem.audioCoverUrl imageURLWithWidth:ScreenWidth] placeholderImage:[UIImage imageNamed:@"attachment_placeholder"]];
+//    [self.coverImageV sd_setImageWithURL:[self.followItem.audioCoverUrl imageURLWithWidth:ScreenWidth] placeholderImage:[UIImage imageNamed:@"attachment_placeholder"]];
+    
+    WeakifySelf;
+    [self.coverImageV sd_setImageWithURL:[NSURL URLWithString:self.followItem.audioCoverUrl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+       
+        if (image.size.width > 0) {
+            // 图片显示区域高度
+            CGFloat contentHeight = ScreenHeight- kNaviBarHeight - kTabBarHeight - 12;
+            CGFloat imageHeight = ScreenWidth * image.size.height / image.size.width;
+            CGFloat pointY = 0;
+            if (imageHeight < contentHeight) {
+             
+                pointY = (contentHeight - imageHeight)/2.0;
+            }
+            weakSelf.imageTopConstraint.constant = pointY;
+            weakSelf.imageHeightConstraint.constant = imageHeight;
+        }
+    }];
+    
     
     if (self.isChecking) {
         self.recordingView.hidden = YES;
