@@ -6,6 +6,7 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "StudentService.h"
 #import "StudentAwardService.h"
 #import "EditContentViewController.h"
@@ -16,8 +17,13 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+//
+//@property (strong, nonatomic) UILabel *titleLabel;
 
 @property (nonatomic, assign) EditContentType editType;
+
+@property (nonatomic, copy) NSString *contentText;
+@property (nonatomic, copy) NSString *placeholder;
 
 // 转发
 @property (nonatomic, assign) NSInteger hometaskId;
@@ -46,6 +52,19 @@
         self.titleLabel.text = @"问题备注";
         [self.saveBtn setTitle:@"提交" forState:UIControlStateNormal];
     }
+    
+
+    self.textView.text = self.contentText;
+    
+    UILabel *placeHolderLabel = [[UILabel alloc] init];
+    placeHolderLabel.text = self.placeholder;
+    placeHolderLabel.numberOfLines = 0;
+    placeHolderLabel.textColor = [UIColor lightGrayColor];
+    [placeHolderLabel sizeToFit];
+    [self.textView addSubview:placeHolderLabel];
+    self.textView.font = [UIFont systemFontOfSize:13.f];
+    placeHolderLabel.font = [UIFont systemFontOfSize:13.f];
+    [self.textView setValue:placeHolderLabel forKey:@"_placeholderLabel"];
 }
 - (IBAction)backAction:(id)sender {
     
@@ -95,7 +114,8 @@
                      content:(NSString *)content{
     
     self.editType = editType;
-    self.textView.text = content;
+    self.placeholder = placeholder;
+    self.contentText = content;
 }
 
 - (void)setupWithHometaskId:(NSInteger)hometaskId
