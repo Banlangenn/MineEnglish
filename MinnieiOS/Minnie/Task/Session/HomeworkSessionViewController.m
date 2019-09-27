@@ -2042,6 +2042,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                     taskVC.audioUrl = fileUrl;
                     taskVC.homework = weakSelf.homeworkSession.homework;
                     taskVC.randomDictWords = message.attributes[@"randomWords"];
+                    taskVC.commitPlayTime = message.attributes[@"playtime"];
                     [weakSelf.navigationController pushViewController:taskVC animated:YES];
                 }
             }];

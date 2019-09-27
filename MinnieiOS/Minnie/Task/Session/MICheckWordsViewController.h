@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) NSArray *randomDictWords;
 
+@property (nonatomic,strong) NSNumber *commitPlayTime;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -47,6 +47,8 @@ extern NSString * const HomeworkItemTypeWord;
 @property (nonatomic, assign) NSInteger isRandom;
 // 随机单词数组（本地使用）
 @property (nonatomic, strong) NSArray<WordInfo> *randomWords;
+// 提交作业时播放间隔时间（毫秒）
+@property (nonatomic, assign) NSInteger commitPlaytime;
 
 @end
 

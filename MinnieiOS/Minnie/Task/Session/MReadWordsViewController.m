@@ -40,7 +40,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 @property (strong,nonatomic) NSTimer *wordsTimer;
 
-@property (assign,nonatomic) NSInteger currentWordIndex;
+@property (assign,nonatomic) int currentWordIndex;
 @property (nonatomic,strong) HomeworkItem *wordsItem;
 
 @property (nonatomic,strong) NSMutableArray *progressViews;
@@ -48,7 +48,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 // 1:正在录制  2:录制完成
 @property (assign,nonatomic) NSInteger recordState;
 // 背景音乐
-@property (nonatomic, strong) AudioPlayerManager *musicPlayer;
+//@property (nonatomic, strong) AudioPlayerManager *musicPlayer;
 
 // 录音
 @property (nonatomic, strong) NSDate *startTime;
@@ -80,7 +80,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     // Do any additional setup after loading the view.
     _progressViews = [NSMutableArray array];
     HomeworkItem *tempWordItem =  self.homework.items.lastObject;
-    tempWordItem.isRandom = YES;
+//    tempWordItem.isRandom = YES;
     // 处理单词随机
     if ([tempWordItem.type isEqualToString:@"word"]) {
        
@@ -95,8 +95,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         }
     }
     
-    // 准备播放
-    [self.musicPlayer play:YES];
+    [self startTask];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
 }
@@ -181,49 +181,50 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
 }
 
-- (AudioPlayerManager *)musicPlayer{
-    
-    if (self.wordsItem.bgmusicUrl.length == 0) {
-        return nil;
-    }
-    if (!_musicPlayer) {
-        
-        _musicPlayer = [[AudioPlayerManager alloc] initWithUrl:self.wordsItem.bgmusicUrl];
-        WeakifySelf;
-        _musicPlayer.statusBlock = ^(AVPlayerItemStatus status) {
-            
-            if (status == AVPlayerItemStatusReadyToPlay) {
-                
-                if (weakSelf.recordState != 1) {
-                    [weakSelf.musicPlayer play:NO];
-                }
-                [weakSelf startTask];
-            } else {
-                
-                if (weakSelf.recordState != 1) {
-                [weakSelf.musicPlayer play:YES];
-                }
-            }
-        };
-        _musicPlayer.finishedBlock = ^{
-            if (weakSelf.recordState == 1) {
-                
-                [weakSelf.musicPlayer play:YES];
-            }
-        };
-    }
-    return _musicPlayer;
-}
+//- (AudioPlayerManager *)musicPlayer{
+//
+//    if (self.wordsItem.bgmusicUrl.length == 0) {
+//        return nil;
+//    }
+//    if (!_musicPlayer) {
+//
+//        _musicPlayer = [[AudioPlayerManager alloc] initWithUrl:self.wordsItem.bgmusicUrl];
+//        WeakifySelf;
+//        _musicPlayer.statusBlock = ^(AVPlayerItemStatus status) {
+//
+//            if (status == AVPlayerItemStatusReadyToPlay) {
+//
+//                if (weakSelf.recordState != 1) {
+//                    [weakSelf.musicPlayer play:NO];
+//                }
+//                [weakSelf startTask];
+//            } else {
+//
+//                if (weakSelf.recordState != 1) {
+//                [weakSelf.musicPlayer play:YES];
+//                }
+//            }
+//        };
+//        _musicPlayer.finishedBlock = ^{
+//            if (weakSelf.recordState == 1) {
+//
+//                [weakSelf.musicPlayer play:YES];
+//            }
+//        };
+//    }
+//    return _musicPlayer;
+//}
 - (void)starRecoreFound{
     
     [self removeRecordSound];
-    
     // 开始录音
     NSString *soundFilePath = [self getRecordSoundPath];
-    [[NSFileManager defaultManager] removeItemAtPath:soundFilePath error:nil];
     NSURL *url = [NSURL fileURLWithPath:soundFilePath];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
+//    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    
+    [self setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord
+                          options:AVAudioSessionCategoryOptionDefaultToSpeaker];
     
     NSError *error = nil;
     self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:[self audioRecordingSettings] error:&error];
@@ -236,18 +237,139 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
 }
 
+
+- (void)setAudioSessionCategory:(AVAudioSessionCategory)category
+                        options:(AVAudioSessionCategoryOptions)options{
+    
+    [[AVAudioSession sharedInstance] setCategory:category withOptions:options error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
 - (void)stopRecordFound{
     
+    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
     WeakifySelf;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    // 停止录制
+    [[AudioPlayer sharedPlayer] stop];
+    [weakSelf.audioRecorder stop];
+    weakSelf.audioRecorder = nil;
+    self.duration = [[NSDate date] timeIntervalSinceDate:self.startTime];
+
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+//    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    [self setAudioSessionCategory:AVAudioSessionCategorySoloAmbient
+                          options:AVAudioSessionCategoryOptionDefaultToSpeaker];
+}
+
+#pragma mark - 定时播放任务
+- (void)countTimeMethod {
+
+    NSLog(@"计时器录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
+    NSInteger index = 0;
+    if (_currentWordIndex <= 0) {
+        index = _currentWordIndex;
+        _currentWordIndex ++;
+    } else {
+     
+        NSInteger playTime = self.wordsItem.playtime/1000;
+        if (playTime == 0) {
+            playTime = 1;
+        }
+ 
+        if (_currentWordIndex%playTime == 0) {
+            index = _currentWordIndex/playTime;
+            _currentWordIndex ++;
+           
+            if (_currentWordIndex - 2 == self.wordsItem.randomWords.count * playTime) {
+                    // 停止录音
+                    NSLog(@"停止录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
+                    [self stopRecordFound];
+                    [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
+            } else if (_currentWordIndex - 2 > self.wordsItem.randomWords.count * playTime) {
+                
+                _recordState = 2;
+                [self invalidateTimer];
+                
+                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.5];
+            }
+        } else {
+
+           _currentWordIndex ++;
+            if (_currentWordIndex - 2 == self.wordsItem.randomWords.count * playTime) {
+                // 停止录音
+                NSLog(@"停止录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
+                [self stopRecordFound];
+                [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
+            } else if (_currentWordIndex - 2 > self.wordsItem.randomWords.count * playTime) {
+                
+                _recordState = 2;
+                [self invalidateTimer];
+                
+                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.5];
+            }
+            return;
+        }
+    }
+    
+    if (index <= 0) {// 倒计时
         
-        // 停止录制
-        [[AudioPlayer sharedPlayer] stop];
-        [weakSelf.audioRecorder stop];
-        weakSelf.audioRecorder = nil;
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-        [[AVAudioSession sharedInstance] setActive:NO error:nil];
-    });
+        // 倒计时：4,3, 2, 1, 0  ready,3,2,1,go
+        if (index >= -5 && index < 0) {// 播放
+            
+            NSString *url = [NSString stringWithFormat:@"count_%lu",-(index + 1)];
+//            if (-(index + 1) == 4 || -(index + 1) == 0) {
+//                url = @"count_2";
+//            }
+            [[AudioPlayer sharedPlayer] playLocalURL:url];
+        }
+        if (index == -5){
+            
+            self.wordLabel.hidden = NO;
+            self.timeLabel.hidden = YES;
+            self.wordLabel.text = [NSString stringWithFormat:@"Ready"];
+        } else if (index >= -4 && index < -1) {
+            
+            self.wordLabel.hidden = YES;
+            self.timeLabel.hidden = NO;
+            self.timeLabel.text = [NSString stringWithFormat:@"%lu",-(index + 1)];
+        } else if (index == -1){
+            
+            self.wordLabel.hidden = NO;
+            self.timeLabel.hidden = YES;
+            self.wordLabel.text = [NSString stringWithFormat:@"Go!"];
+        }
+        if (index == 0) {
+            
+            WordInfo *tempWord = self.wordsItem.randomWords.firstObject;
+            self.wordLabel.text = tempWord.english;
+            UIView *view = self.progressViews.firstObject;
+            view.backgroundColor = [UIColor mainColor];
+            // 开始录音
+            [self starRecoreFound];
+            NSLog(@"开始录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
+        }
+    } else { // 播放单词
+        
+        if (index > 0 && index - 1 < self.wordsItem.randomWords.count) {
+            
+            self.wordLabel.hidden = NO;
+            self.timeLabel.hidden = YES;
+            
+            WordInfo *tempWord = self.wordsItem.randomWords[index - 1];
+            self.wordLabel.text = tempWord.english;
+            
+            if (index - 1 < self.progressViews.count) {
+                WeakifySelf;
+                [UIView animateWithDuration:0.5 animations:^{
+                    
+                    UIView *view = weakSelf.progressViews[index - 1];
+                    view.backgroundColor = [UIColor mainColor];
+                }];
+            }
+        }
+        
+
+    }
 }
 
 #pragma mark - 3.是否提交
@@ -289,12 +411,13 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                                        [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在上传语音%@%%...", @(number)]];
                                    }
                                  completionBlock:^(NSString * _Nullable audioUrl, NSError * _Nullable error) {
+                                     NSLog(@"audioUrl::%@",audioUrl);
                                      if (audioUrl.length > 0) {
                                          [[NSFileManager defaultManager] removeItemAtPath:soundFilePath
                                                                                     error:nil];
                                          
                                          [HUD hideAnimated:YES];
-                                         [weakSelf sendAudioMessage:[NSURL URLWithString:audioUrl] duration:weakSelf. duration];
+                                         [weakSelf sendAudioMessage:[NSURL URLWithString:audioUrl] duration:weakSelf.duration];
                                      } else {
                                          [HUD showErrorWithMessage:@"音频上传失败"];
                                          [weakSelf finishedToast];
@@ -321,7 +444,9 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                                                        attributes:@{kKeyOfCreateTimestamp:@(timestamp),
                                                                     kKeyOfAudioDuration:@(d),
                                                                     @"typeName":typeName,
-                                                                    @"randomWords":wordsArray}];
+                                                                    @"randomWords":wordsArray,
+                                                                    @"playtime":@(self.wordsItem.playtime)
+                                                       }];
     [self sendMessage:message];
 }
 
@@ -375,103 +500,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 - (void)invalidateTimer{
     [self.wordsTimer invalidate];
     self.wordsTimer = nil;
-}
-
-#pragma mark - 定时播放任务
-- (void)countTimeMethod {
-
-    NSInteger index = 0;
-    if (_currentWordIndex < 0) {
-        index = _currentWordIndex;
-        _currentWordIndex ++;
-    } else {
-     
-        NSInteger playTime = self.wordsItem.playtime/1000;
-        if (playTime < 1) {
-            playTime = 1;
-        }
-        if (_currentWordIndex%playTime == 0) {
-            index = _currentWordIndex/playTime;
-            _currentWordIndex ++;
-        } else {
-            _currentWordIndex ++;
-            return;
-        }
-    }
-    
-    if (index <= 0) {// 倒计时
-        
-        // 倒计时：4,3, 2, 1, 0  ready,3,2,1,go
-        if (index >= -5 && index < 0) {// 播放
-            
-            NSString *url = [NSString stringWithFormat:@"count_%lu",-(index + 1)];
-            [[AudioPlayer sharedPlayer] playLocalURL:url];
-        }
-        if (index == -5){
-            
-            self.wordLabel.hidden = NO;
-            self.timeLabel.hidden = YES;
-            self.wordLabel.text = [NSString stringWithFormat:@"Ready"];
-        } else if (index >= -4 && index < -1) {
-            
-            self.wordLabel.hidden = YES;
-            self.timeLabel.hidden = NO;
-            self.timeLabel.text = [NSString stringWithFormat:@"%lu",-(index + 1)];
-        } else if (index == -1){
-            
-            self.wordLabel.hidden = NO;
-            self.timeLabel.hidden = YES;
-            self.wordLabel.text = [NSString stringWithFormat:@"Go!"];
-        }
-        if (index == 0) {
-            
-            WordInfo *tempWord = self.wordsItem.randomWords.firstObject;
-            self.wordLabel.text = tempWord.english;
-            UIView *view = self.progressViews.firstObject;
-            view.backgroundColor = [UIColor mainColor];
-            if (self.wordsItem.bgmusicUrl.length > 0) {
-                [self startTask];
-            } else {
-                [self.musicPlayer seekToTime:1.0];
-            }
-            // 开始录音
-            [self starRecoreFound];
-        }
-    } else { // 播放单词
-        
-        if (index > 0 && index - 1 < self.wordsItem.randomWords.count) {
-            
-            self.wordLabel.hidden = NO;
-            self.timeLabel.hidden = YES;
-            
-            WordInfo *tempWord = self.wordsItem.randomWords[index - 1];
-            self.wordLabel.text = tempWord.english;
-            
-            if (index - 1 < self.progressViews.count) {
-                WeakifySelf;
-                [UIView animateWithDuration:0.5 animations:^{
-                    
-                    UIView *view = weakSelf.progressViews[index - 1];
-                    view.backgroundColor = [UIColor mainColor];
-                }];
-            }
-        }
-        
-        if (index - 1 == self.wordsItem.randomWords.count) {
-            
-            // 停止背景音乐
-            [self.musicPlayer play:NO];
-            // 停止录音
-            [self stopRecordFound];
-            [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
-        } else if (index - 1 > self.wordsItem.randomWords.count) {
-            
-            _recordState = 2;
-            [self invalidateTimer];
-            
-            [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.5];
-        }
-    }
 }
 
 - (void)showFirstWord{
@@ -532,8 +560,11 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 - (void)removeRecordSound{
     
     NSString *soundFilePath = [self getRecordSoundPath];
-    [[NSFileManager defaultManager] removeItemAtPath:soundFilePath
-                                               error:nil];
+    if ([NSData dataWithContentsOfURL:[NSURL URLWithString:soundFilePath]].length) {
+
+        [[NSFileManager defaultManager] removeItemAtPath:soundFilePath
+                                                error:nil];
+    }
 }
 
 - (NSString *)getRecordSoundPath{

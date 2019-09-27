@@ -156,7 +156,7 @@ NSString * const kNotificationOfAudioPlayerStateDidChange = @"kNotificationOfAud
     [self addNotificationObserver];
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
     
     [self.player play];
 }

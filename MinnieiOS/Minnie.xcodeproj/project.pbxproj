@@ -138,6 +138,8 @@
 		124ABC4B233B5E5900FE13FA /* Replay.m in Sources */ = {isa = PBXBuildFile; fileRef = 124ABC49233B5E5800FE13FA /* Replay.m */; };
 		124ABC4C233B5E5900FE13FA /* Replay.m in Sources */ = {isa = PBXBuildFile; fileRef = 124ABC49233B5E5800FE13FA /* Replay.m */; };
 		124ABC4D233B5E5900FE13FA /* Replay.m in Sources */ = {isa = PBXBuildFile; fileRef = 124ABC49233B5E5800FE13FA /* Replay.m */; };
+		124ABC51233C8F1C00FE13FA /* count_4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A55231FC0720045206C /* count_4.mp3 */; };
+		124ABC52233C8F2E00FE13FA /* count_0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A57231FC0840045206C /* count_0.mp3 */; };
 		12747BD022A7C86D009C390E /* HomeworkSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 971099FC207A158C00568785 /* HomeworkSessionViewController.m */; };
 		12747BD122A7C876009C390E /* HomeworkSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 971099FD207A158C00568785 /* HomeworkSessionViewController.xib */; };
 		12747BD222A7CC0F009C390E /* WBGImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C52FAA2164AC47004288F4 /* WBGImageEditorViewController.m */; };
@@ -6158,6 +6160,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				124ABC52233C8F2E00FE13FA /* count_0.mp3 in Resources */,
+				124ABC51233C8F1C00FE13FA /* count_4.mp3 in Resources */,
 				12FD85C722BB2F5F0026B7E2 /* label_ic_eye_hide@3x.png in Resources */,
 				12EAC63422AD405E00F1F3DB /* MISutdentActDetailViewController.m in Resources */,
 				128B70882302A89E00A2A187 /* MITeacherAuthorTableViewCell.xib in Resources */,

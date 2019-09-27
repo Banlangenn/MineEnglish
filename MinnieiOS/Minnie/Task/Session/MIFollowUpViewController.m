@@ -89,9 +89,9 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     
     self.recordGrayView.layer.cornerRadius = 15;
     self.recordGrayView.layer.masksToBounds = YES;
-    self.recordGrayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    self.recordGrayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     
-    self.recordRedView.layer.cornerRadius = 5;
+    self.recordRedView.layer.cornerRadius = 7.5;
     self.recordRedView.layer.masksToBounds = YES;
     
     [self.coverImageV sd_setImageWithURL:[self.followItem.audioCoverUrl imageURLWithWidth:ScreenWidth] placeholderImage:[UIImage imageNamed:@"attachment_placeholder"]];
