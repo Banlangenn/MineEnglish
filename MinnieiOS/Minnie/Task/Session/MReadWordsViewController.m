@@ -312,13 +312,10 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     
     if (index <= 0) {// 倒计时
         
-        // 倒计时：4,3, 2, 1, 0  ready,3,2,1,go
+        // 倒计时：5,4,3, 2, 1,  ready,3,2,1,go
         if (index >= -5 && index < 0) {// 播放
             
-            NSString *url = [NSString stringWithFormat:@"count_%lu",-(index + 1)];
-//            if (-(index + 1) == 4 || -(index + 1) == 0) {
-//                url = @"count_2";
-//            }
+            NSString *url = [NSString stringWithFormat:@"count_%ld",-(index)];
             [[AudioPlayer sharedPlayer] playLocalURL:url];
         }
         if (index == -5){
@@ -330,7 +327,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             
             self.wordLabel.hidden = YES;
             self.timeLabel.hidden = NO;
-            self.timeLabel.text = [NSString stringWithFormat:@"%lu",-(index + 1)];
+            self.timeLabel.text = [NSString stringWithFormat:@"%ld",-(index + 1)];
         } else if (index == -1){
             
             self.wordLabel.hidden = NO;
