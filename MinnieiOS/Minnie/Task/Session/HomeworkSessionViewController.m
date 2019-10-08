@@ -345,7 +345,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     {
         self.homeworkSession.reviewText = @"";
     }
-    
+    text = [NSString stringWithFormat:@"该任务已通过，%@",text];
     [self sendTextMessage:text attributes:@{@"score":@(self.homeworkSession.score), @"reviewText":self.homeworkSession.reviewText,@"isRedo":@(self.homeworkSession.isRedo)}];
     [self.conversation setObject:@(YES) forKey:@"taskfinished"];
     WeakifySelf;
@@ -356,7 +356,7 @@ HomeworkAnswersPickerViewControllerDelegate>
             }];
         }
     }];
-    [PushManager pushText:@"你有作业已通过" toUsers:@[@(self.homeworkSession.student.userId)]];
+//    [PushManager pushText:@"你有作业已通过" toUsers:@[@(self.homeworkSession.student.userId)]];
 }
 
 #pragma mark - IBActions

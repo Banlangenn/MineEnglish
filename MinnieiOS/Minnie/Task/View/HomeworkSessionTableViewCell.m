@@ -153,48 +153,69 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
             {
                 NSInteger day = (hours - maxHours) % 24 == 0 ? (hours - maxHours) / 24 : (hours - maxHours) / 24 + 1;
                 
-                [self updateUnfinishTime:day type:@"天"];
                 [self updateImageWithOutTime:isOutTime
+                                        time:day
+                                        type:@"天"
                                    limitTime:homeworkSession.homework.style
-                                 surplusTime:1];
+                                  imageIndex:1];
             }
             else
             {
-                [self updateUnfinishTime:hours - maxHours type:@"时"];
+                
                 // 小于一天
                 [self updateImageWithOutTime:isOutTime
+                                        time:hours - maxHours
+                                        type:@"时"
                                    limitTime:homeworkSession.homework.style
-                                 surplusTime:1];
+                                  imageIndex:1];
             }
         }
         else
         {
-            [self updateUnfinishTime:maxHours- hours type:@"时"];
             // 小于一天
             [self updateImageWithOutTime:isOutTime
+                                    time:maxHours- hours
+                                    type:@"时"
                                limitTime:homeworkSession.homework.style
-                             surplusTime:1];
+                              imageIndex:1];
         }
     }
     else
     {
         NSInteger day = (maxHours - hours) % 24 == 0 ? (maxHours - hours) / 24 : (maxHours - hours) / 24 + 1;
         
-        [self updateUnfinishTime:day type:@"天"];
         [self updateImageWithOutTime:isOutTime
+                                time:day
+                                type:@"天"
                            limitTime:homeworkSession.homework.style
-                         surplusTime:day];
+                          imageIndex:day];
     }
 }
 
-- (void)updateUnfinishTime:(NSInteger)time
-                      type:(NSString *)type{
-    
+- (void)updateImageWithOutTime:(BOOL)isOutTime      // 是否超时
+                          time:(NSInteger)time      // 显示剩余时间
+                          type:(NSString *)type     // 显示时间类型
+                     limitTime:(NSInteger)limitTime // 规定时间
+                    imageIndex:(NSInteger)imageIndex{
 #if MANAGERSIDE
-    
+    // 显示剩余时间
     self.unfinishTimeLabel.text = [NSString stringWithFormat:@"%ld",time];
     self.unfiishTimeTypeLabel.text = type;
 #else
+   
+    //imageIndex 当前距离提交或距离超时剩余时间
+    if (isOutTime){ // 超过规定时间
+        
+        NSString *imageStr = [NSString stringWithFormat:@"day_%lu",imageIndex];
+        self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
+    } else {// 在作业时限之内
+        NSString *imageStr = [NSString stringWithFormat:@"day_%lu%lu",limitTime,imageIndex];
+        self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
+    }
+    // 学生端教师端显示黄色剩余和电池图片一致，管理端不变
+    if ([self.unfinishTipLabel.text isEqualToString:@"黄色还剩"]) {
+        time -= 1;
+    }
     
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld %@",time,type]];
     [attrStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:24]}
@@ -203,24 +224,6 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
                      range:NSMakeRange( attrStr.length - 1,1)];
     
     self.unfinishTimeLabel.attributedText = attrStr;
-#endif
-}
-
-- (void)updateImageWithOutTime:(BOOL)isOutTime
-                     limitTime:(NSInteger)limitTime
-                   surplusTime:(NSInteger)surpluseTime{
-#if MANAGERSIDE
-#else
-   
-    //surpluseTime 当前距离提交或距离超时剩余时间
-    if (isOutTime){ // 超过规定时间
-        
-        NSString *imageStr = [NSString stringWithFormat:@"day_%lu",surpluseTime];
-        self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
-    } else {// 在作业时限之内
-        NSString *imageStr = [NSString stringWithFormat:@"day_%lu%lu",limitTime,surpluseTime];
-        self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
-    }
 #endif
 }
 
