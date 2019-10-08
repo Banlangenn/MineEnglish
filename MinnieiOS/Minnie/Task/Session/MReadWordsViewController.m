@@ -169,8 +169,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
     [self stopTask];
     _recordState = 1;
-    _currentWordIndex = -5;
-    
+    _currentWordIndex = -1;
+
     // 启动定时器
     [self invalidateTimer];
     [self.wordsTimer fireDate];
@@ -180,50 +180,15 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
 }
 
-//- (AudioPlayerManager *)musicPlayer{
-//
-//    if (self.wordsItem.bgmusicUrl.length == 0) {
-//        return nil;
-//    }
-//    if (!_musicPlayer) {
-//
-//        _musicPlayer = [[AudioPlayerManager alloc] initWithUrl:self.wordsItem.bgmusicUrl];
-//        WeakifySelf;
-//        _musicPlayer.statusBlock = ^(AVPlayerItemStatus status) {
-//
-//            if (status == AVPlayerItemStatusReadyToPlay) {
-//
-//                if (weakSelf.recordState != 1) {
-//                    [weakSelf.musicPlayer play:NO];
-//                }
-//                [weakSelf startTask];
-//            } else {
-//
-//                if (weakSelf.recordState != 1) {
-//                [weakSelf.musicPlayer play:YES];
-//                }
-//            }
-//        };
-//        _musicPlayer.finishedBlock = ^{
-//            if (weakSelf.recordState == 1) {
-//
-//                [weakSelf.musicPlayer play:YES];
-//            }
-//        };
-//    }
-//    return _musicPlayer;
-//}
 - (void)starRecoreFound{
     
     [self removeRecordSound];
     // 开始录音
     NSString *soundFilePath = [self getRecordSoundPath];
     NSURL *url = [NSURL fileURLWithPath:soundFilePath];
-//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
-//    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
-    [self setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord
-                          options:AVAudioSessionCategoryOptionDefaultToSpeaker];
     
     NSError *error = nil;
     self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:[self audioRecordingSettings] error:&error];
@@ -236,14 +201,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
 }
 
-
-- (void)setAudioSessionCategory:(AVAudioSessionCategory)category
-                        options:(AVAudioSessionCategoryOptions)options{
-    
-    [[AVAudioSession sharedInstance] setCategory:category withOptions:options error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
-}
-
 - (void)stopRecordFound{
     
     NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
@@ -254,10 +211,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     weakSelf.audioRecorder = nil;
     self.duration = [[NSDate date] timeIntervalSinceDate:self.startTime];
 
-//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
-//    [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    [self setAudioSessionCategory:AVAudioSessionCategorySoloAmbient
-                          options:AVAudioSessionCategoryOptionDefaultToSpeaker];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 #pragma mark - 定时播放任务
@@ -312,23 +267,25 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     
     if (index <= 0) {// 倒计时
         
-        // 倒计时：5,4,3, 2, 1,  ready,3,2,1,go
-        if (index >= -5 && index < 0) {// 播放
-            
-            NSString *url = [NSString stringWithFormat:@"count_%ld",-(index)];
-            [[AudioPlayer sharedPlayer] playLocalURL:url];
-        }
-        if (index == -5){
-            
-            self.wordLabel.hidden = NO;
-            self.timeLabel.hidden = YES;
-            self.wordLabel.text = [NSString stringWithFormat:@"Ready"];
-        } else if (index >= -4 && index < -1) {
-            
-            self.wordLabel.hidden = YES;
-            self.timeLabel.hidden = NO;
-            self.timeLabel.text = [NSString stringWithFormat:@"%ld",-(index + 1)];
-        } else if (index == -1){
+        // 倒计时：2, 1,  ready,go
+//        if (index >= -2 && index < 0) {// 播放
+//
+//            NSString *url = [NSString stringWithFormat:@"count_%ld",-(index)];
+//            [[AudioPlayer sharedPlayer] playLocalURL:url];
+//        }
+//        if (index == -2){
+//
+//            self.wordLabel.hidden = NO;
+//            self.timeLabel.hidden = YES;
+//            self.wordLabel.text = [NSString stringWithFormat:@"Ready"];
+//        }
+//        else if (index >= -4 && index < -1) {
+//
+//            self.wordLabel.hidden = YES;
+//            self.timeLabel.hidden = NO;
+//            self.timeLabel.text = [NSString stringWithFormat:@"%ld",-(index + 1)];
+//        } else
+        if (index == -1){
             
             self.wordLabel.hidden = NO;
             self.timeLabel.hidden = YES;
@@ -363,8 +320,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                 }];
             }
         }
-        
-
     }
 }
 
