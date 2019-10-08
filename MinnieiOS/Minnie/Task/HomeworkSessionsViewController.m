@@ -214,8 +214,9 @@ MIActivityBannerViewDelegate
                     homeworkSession.lastSessionContent = ((AVIMTextMessage *)message).text;
                 } else if ([message isKindOfClass:[AVIMAudioMessage class]]) {
                     
-                    if ([((AVIMTextMessage *)message).text isEqualToString:kHomeworkTaskFollowUpName] ||
-                        [((AVIMTextMessage *)message).text isEqualToString:kHomeworkTaskWordMemoryName]) {
+                    NSString *typeName = ((AVIMTypedMessage *)message).attributes[@"typeName"];
+                    if ([typeName isEqualToString:kHomeworkTaskFollowUpName] ||
+                        [typeName isEqualToString:kHomeworkTaskWordMemoryName]) {
                         
                         homeworkSession.lastSessionContent = @"[链接]";
                     } else {
