@@ -154,6 +154,7 @@ VIResourceLoaderManagerDelegate
     }
 
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -181,6 +182,7 @@ VIResourceLoaderManagerDelegate
         player = [AVPlayer playerWithPlayerItem:playerItem];
     }
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -211,7 +213,7 @@ VIResourceLoaderManagerDelegate
                                                          }];
     
     [alertVC addAction:cancelAction];
-    
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];

@@ -530,9 +530,9 @@ ClassAndStudentSelectorControllerDelegate
                 MISegmentTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MISegmentTypeTableViewCellId forIndexPath:indexPath];
                 WeakifySelf;
                 contentCell.callback = ^(NSInteger selectIndex) {
-                    weakSelf.wordsItem.isRandom = selectIndex - 1;
+                    weakSelf.wordsItem.playMode = selectIndex - 1;
                 };
-                [contentCell setupWithSelectIndex:self.wordsItem.isRandom + 1 createType:createType];
+                [contentCell setupWithSelectIndex:self.wordsItem.playMode + 1 createType:createType];
                 cell = contentCell;
             }
             break;
@@ -986,6 +986,7 @@ ClassAndStudentSelectorControllerDelegate
                         ClassAndStudentSelectorController *vc = [[ClassAndStudentSelectorController alloc] init];
                         vc.delegate = weakSelf;
                         vc.isCreateActivityTask = YES;
+                        vc.modalPresentationStyle = UIModalPresentationFullScreen;
                         [weakSelf.navigationController presentViewController:vc animated:YES completion:nil];
                     } else {
                        
@@ -1466,6 +1467,7 @@ ClassAndStudentSelectorControllerDelegate
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

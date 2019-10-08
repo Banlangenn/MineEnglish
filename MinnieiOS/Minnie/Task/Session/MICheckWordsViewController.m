@@ -58,10 +58,9 @@ CAAnimationDelegate
     self.titleLabel.text = kHomeworkTaskWordMemoryName;
   
     HomeworkItem *wordItem = self.homework.items.lastObject;
-//    wordItem.isRandom = YES;
     
     // 处理要显示的随机数组
-    if (wordItem.isRandom) {
+    if (wordItem.playMode) {
         NSMutableArray *array = [NSMutableArray array];
         for (NSDictionary *wordDict in self.randomDictWords) {
             WordInfo *wordInfo = [[WordInfo alloc] init];

@@ -130,6 +130,7 @@
     [alertVC addAction:teacherAction];
     [alertVC addAction:assistantAction];
     [alertVC addAction:cancelAction];
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
 #if MANAGERSIDE
     [self.view.window.rootViewController presentViewController:alertVC
                                                       animated:YES
@@ -193,7 +194,8 @@
     [alertVC addAction:managerAction];
     [alertVC addAction:teacherAction];
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
 #if MANAGERSIDE
     
     [self.view.window.rootViewController presentViewController:alertVC

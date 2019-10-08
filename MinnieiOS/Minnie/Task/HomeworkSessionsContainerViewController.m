@@ -196,6 +196,8 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appinfo.appUrl]];
         }
     }]];
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

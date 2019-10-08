@@ -49,6 +49,8 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"零分过多，无法兑换礼物\n请先将零分任务数减少到15以下" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         }]];
+        
+        alertController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:alertController animated:YES completion:^{
         }];
     }

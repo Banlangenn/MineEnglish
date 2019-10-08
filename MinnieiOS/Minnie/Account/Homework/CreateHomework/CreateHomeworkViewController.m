@@ -272,7 +272,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     [alertVC addAction:videoAction];
     [alertVC addAction:imageAction];
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:alertVC
                                             animated:YES
                                           completion:nil];
@@ -285,7 +286,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     
     objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -296,7 +298,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeMovie];
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -307,7 +310,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeImage];
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -358,7 +362,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     [alertVC addAction:videoAction];
     [alertVC addAction:imageAction];
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:alertVC
                                             animated:YES
                                           completion:nil];
@@ -372,7 +377,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     
     objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -383,7 +389,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeMovie];
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -394,7 +401,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeImage];
-    
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -417,7 +425,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -446,7 +455,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -474,7 +484,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -497,7 +508,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -519,7 +531,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

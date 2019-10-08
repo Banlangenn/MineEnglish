@@ -47,7 +47,8 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
+    imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
 }
 

@@ -342,6 +342,7 @@ NSString * const kColorPanRemoveNotificaiton = @"kColorPanRemoveNotificaiton";
         [alertVC addAction:sendAction];
         [alertVC addAction:saveAction];
         [alertVC addAction:cancel];
+        alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         [self presentViewController:alertVC
                            animated:YES

@@ -506,7 +506,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     photoPicker.delegate = self;
     photoPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     photoPicker.mediaTypes = @[(NSString *)kUTTypeImage];
-    
+    photoPicker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:photoPicker animated:YES completion:nil];
 #else
     self.isCommitingHomework = YES;
@@ -552,7 +552,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         [strongSelf sendImageMessageWithImages:photos withSendIndex:0];
 
     }];
-    
+    imagePickerVc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:imagePickerVc animated:YES completion:nil];
  #endif
 }
@@ -569,7 +569,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     videoPicker.delegate = self;
     videoPicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     videoPicker.mediaTypes =  @[(NSString *)kUTTypeMovie];
-    
+    videoPicker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:videoPicker animated:YES completion:nil];
 }
 
@@ -1252,6 +1252,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         [editVC setSendCallback:^(UIImage *image) {
             [self sendImageMessageWithImage:image];
         }];
+        editVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.navigationController presentViewController:editVC animated:YES completion:nil];
 #endif
     }];
@@ -1370,6 +1371,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     }
     
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -1401,6 +1403,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         player = [AVPlayer playerWithPlayerItem:playerItem];
     }
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -1695,6 +1698,7 @@ HomeworkAnswersPickerViewControllerDelegate>
             [weakSelf sendImageMessageWithImage:image];
         }
     }];
+    editVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [weakSelf.navigationController presentViewController:editVC animated:YES completion:nil];
     
     self.dontScrollWhenAppeard = YES;
@@ -1948,6 +1952,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                     [weakSelf sendImageMessageWithImage:image];
                 }
             }];
+            editVC.modalPresentationStyle = UIModalPresentationFullScreen;
             [weakSelf.navigationController presentViewController:editVC animated:YES completion:nil];
             
             weakSelf.dontScrollWhenAppeard = YES;
@@ -2185,6 +2190,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     [alertVC addAction:cancelAction];
 
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                      animated:YES
                    completion:nil];

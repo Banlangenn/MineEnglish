@@ -374,7 +374,8 @@ UITableViewDelegate> {
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

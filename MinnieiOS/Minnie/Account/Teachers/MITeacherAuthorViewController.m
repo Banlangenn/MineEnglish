@@ -656,6 +656,7 @@ UITableViewDataSource>
     [alertVC addAction:teacherAction];
     [alertVC addAction:assistantAction];
     [alertVC addAction:cancelAction];
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
 #if MANAGERSIDE
     
     [self.view.window.rootViewController presentViewController:alertVC
@@ -727,6 +728,7 @@ UITableViewDataSource>
     [alertVC addAction:managerAction];
     [alertVC addAction:teacherAction];
     [alertVC addAction:cancelAction];
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     
 #if MANAGERSIDE
     

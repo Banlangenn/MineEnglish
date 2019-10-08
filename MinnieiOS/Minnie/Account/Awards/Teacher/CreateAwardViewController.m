@@ -82,7 +82,8 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
- 
+
+    imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
 #if MANAGERSIDE
     [self.view.window.rootViewController presentViewController:imagePickerController animated:YES completion:nil];
 #else

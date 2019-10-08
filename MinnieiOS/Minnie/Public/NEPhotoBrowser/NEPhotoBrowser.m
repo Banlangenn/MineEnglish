@@ -91,6 +91,7 @@ static NSInteger const kTagOfCustomPhotoBrowserView = 1100;
 
 - (void)showInContext:(UIViewController * __nonnull)context {
     self.appearViewController = context;
+    self.modalPresentationStyle = UIModalPresentationFullScreen;
     [context presentViewController:self animated:NO completion:nil];
 }
 

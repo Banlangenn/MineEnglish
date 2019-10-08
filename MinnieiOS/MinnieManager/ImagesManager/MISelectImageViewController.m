@@ -219,6 +219,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeImage];
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 

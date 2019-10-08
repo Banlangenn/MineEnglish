@@ -79,7 +79,8 @@
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -94,7 +95,8 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
+    imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
 }
 
@@ -124,7 +126,8 @@
     
     [alertVC addAction:maleAction];
     [alertVC addAction:femaleAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:alertVC
                                             animated:YES
                                           completion:nil];
@@ -207,7 +210,8 @@
     [alertVC addAction:action7];
     [alertVC addAction:action8];
     [alertVC addAction:action9];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:alertVC
                                             animated:YES
                                           completion:nil];

@@ -8562,6 +8562,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MinnieManager/MinnieManager.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ZHIGANG DONG (TVGPPVPKBF)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
@@ -8591,7 +8592,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MinnieManager/MinnieManager.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHIGANG DONG (7ZN897DBZ8)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";

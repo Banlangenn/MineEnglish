@@ -301,6 +301,7 @@ UINavigationControllerDelegate
     }
     
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -328,6 +329,7 @@ UINavigationControllerDelegate
         player = [AVPlayer playerWithPlayerItem:playerItem];
     }
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -358,7 +360,8 @@ UINavigationControllerDelegate
                                                          }];
     
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];
@@ -420,6 +423,8 @@ UINavigationControllerDelegate
     
     [alertVC addAction:videoAction];
     [alertVC addAction:cancelAction];
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:alertVC
                                            animated:YES
                                          completion:nil];
@@ -431,6 +436,8 @@ UINavigationControllerDelegate
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeMovie];
+
+    picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:picker animated:YES completion:nil];
 }
 

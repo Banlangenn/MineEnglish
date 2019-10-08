@@ -101,6 +101,7 @@
     weakSelf.tableView.hidden = YES;
     [ManagerServce requestGetFilesWithFileId:0 callback:^(Result *result, NSError *error) {
        
+        [weakSelf.view hideAllStateView];
         [weakSelf.tableView headerEndRefreshing];
         if (error) {
             [weakSelf.view showFailureViewWithRetryCallback:^{
@@ -167,7 +168,8 @@
     [alertVC addAction:action4];
     [alertVC addAction:action6];
     [alertVC addAction:action7];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];

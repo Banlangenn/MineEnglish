@@ -32,7 +32,8 @@ NSString * const HomeworkItemTypeWord = @"word";
              @"itemTime":@"itemTime",
              @"words":@"words",
              @"bgmusicUrl":@"bgmusicUrl",
-             @"playtime":@"playtime"
+             @"playtime":@"playtime",
+             @"playMode":@"playMode"
              };
 }
 

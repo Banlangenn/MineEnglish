@@ -237,7 +237,8 @@
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.tabBarController presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -387,6 +388,7 @@
         player = [AVPlayer playerWithPlayerItem:playerItem];
     }
     playerViewController.player = player;
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
@@ -415,17 +417,11 @@
     
     
     playerViewController.player = player;
+
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
-//    VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
-//    self.resourceLoaderManager = resourceLoaderManager;
-//    AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
-//    AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
-//    playerViewController.player = player;
-//    [self presentViewController:playerViewController animated:YES completion:nil];
-//    playerViewController.view.frame = self.view.frame;
-//    [playerViewController.player play];
     [playerViewController setOverlyViewCoverUrl:coverUrl];
 }
 
@@ -452,7 +448,8 @@
                                                          }];
     
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];
@@ -531,6 +528,7 @@
         ClassAndStudentSelectorController *vc = [[ClassAndStudentSelectorController alloc] init];
         [vc setHomeworks:@[homework]];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
         [weakSelf.tabBarController presentViewController:nav animated:YES completion:nil];
     }];
     

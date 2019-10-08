@@ -132,6 +132,7 @@
                                       vc.homeworks = weakSelf.homeworks;
                                       vc.students = weakSelf.studentSelectorChildController.selectedStudents;
                                       vc.teacher = teacher;
+                                      vc.modalPresentationStyle = UIModalPresentationFullScreen;
                                       [weakSelf.navigationController presentViewController:vc animated:YES completion:nil];
                                   } cancelback:nil];
     }

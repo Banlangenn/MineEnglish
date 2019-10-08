@@ -210,7 +210,8 @@ ClassAndStudentSelectorControllerDelegate>
     imagePickerController.delegate = self;
     //    imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
+    imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
 }
 
@@ -235,6 +236,7 @@ ClassAndStudentSelectorControllerDelegate>
     // 发送消息
     ClassAndStudentSelectorController *vc = [[ClassAndStudentSelectorController alloc] init];
     vc.delegate = self;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:vc animated:YES completion:nil];
 
     self.seletorVC = vc;

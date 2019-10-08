@@ -72,6 +72,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)saveAction:(id)sender {
+    
+    if (self.textView.text.length == 0) {
+        [HUD showErrorWithMessage:@"请输入内容"];
+        return;
+    }
     WeakifySelf;
     [self.textView resignFirstResponder];
     

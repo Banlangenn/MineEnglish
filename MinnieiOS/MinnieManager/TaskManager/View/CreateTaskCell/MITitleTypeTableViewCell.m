@@ -331,9 +331,6 @@ UIDocumentPickerDelegate
         [alertVC addAction:imageAction];
         [alertVC addAction:cancelAction];
     }
-//    [self.vc.navigationController presentViewController:alertVC
-//                                            animated:YES
-//                                          completion:nil];
     [self presentVC:alertVC];
 
 }
@@ -343,8 +340,11 @@ UIDocumentPickerDelegate
 #if MANAGERSIDE
     
     UIViewController *rootController = self.window.rootViewController;
+    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
     [rootController presentViewController:VC animated:YES completion:nil];
 #else
+    
+//    VC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.vc presentViewController:VC
                           animated:YES
                         completion:nil];
@@ -357,7 +357,6 @@ UIDocumentPickerDelegate
     UIDocumentPickerViewController * picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:allowedUTIs inMode:UIDocumentPickerModeImport];
     picker.delegate = self;
     objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
     
 }
@@ -369,7 +368,6 @@ UIDocumentPickerDelegate
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeMovie];
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
 }
 
@@ -380,7 +378,6 @@ UIDocumentPickerDelegate
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeImage];
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
 }
 
@@ -404,7 +401,6 @@ UIDocumentPickerDelegate
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-//    [self.vc presentViewController:alertController animated:YES completion:nil];
     [self presentVC:alertController];
 }
 
@@ -433,7 +429,6 @@ UIDocumentPickerDelegate
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-//    [self.vc presentViewController:alertController animated:YES completion:nil];
     [self presentVC:alertController];
 }
 - (void)deleteAnswerMp3ForItem:(HomeworkAnswerItem *)item
@@ -461,7 +456,6 @@ UIDocumentPickerDelegate
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-//    [self.vc presentViewController:alertController animated:YES completion:nil];
     [self presentVC:alertController];
 }
 - (void)deleteAnswerItem:(HomeworkAnswerItem *)item {
@@ -485,7 +479,6 @@ UIDocumentPickerDelegate
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
     
-//    [self.vc presentViewController:alertController animated:YES completion:nil];
     [self presentVC:alertController];
 }
 
@@ -529,9 +522,6 @@ UIDocumentPickerDelegate
     [alertVC addAction:imageAction];
     [alertVC addAction:cancelAction];
     
-//    [self.vc.navigationController presentViewController:alertVC
-//                                            animated:YES
-//                                          completion:nil];
     
     [self presentVC:alertVC];
 }
@@ -545,7 +535,6 @@ UIDocumentPickerDelegate
     
     objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
 }
 
@@ -557,7 +546,6 @@ UIDocumentPickerDelegate
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeMovie];
     
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
 }
 
@@ -569,7 +557,6 @@ UIDocumentPickerDelegate
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.mediaTypes = @[(NSString *)kUTTypeImage];
     
-//    [self.vc.navigationController presentViewController:picker animated:YES completion:nil];
     [self presentVC:picker];
 }
 
@@ -590,7 +577,6 @@ UIDocumentPickerDelegate
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-//    [self.vc presentViewController:alertController animated:YES completion:nil];
     [self presentVC:alertController];
 }
 

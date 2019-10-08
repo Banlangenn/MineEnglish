@@ -171,6 +171,8 @@
     [alertVC addAction:femaleAction];
     
     UIViewController *vc = (UIViewController *)(self.nextResponder.nextResponder);
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [vc presentViewController:alertVC
                      animated:YES
                    completion:nil];
@@ -254,6 +256,8 @@
     [alertVC addAction:action9];
     
     UIViewController *vc = (UIViewController *)(self.nextResponder.nextResponder);
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [vc presentViewController:alertVC
                      animated:YES
                    completion:nil];

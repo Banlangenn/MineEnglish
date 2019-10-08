@@ -78,6 +78,8 @@
     
     PortraitNavigationController *nc = [[PortraitNavigationController alloc] initWithRootViewController:studentsVC];
     [nc setNavigationBarHidden:YES];
+
+    nc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:nc
                                             animated:YES
                                           completion:^{
@@ -157,7 +159,8 @@
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

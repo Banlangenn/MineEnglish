@@ -136,6 +136,7 @@ VIResourceLoaderManagerDelegate
     ClassAndStudentSelectorController *vc = [[ClassAndStudentSelectorController alloc] init];
     [vc setHomeworks:homeworks];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 - (IBAction)deleteAction:(id)sender {
@@ -326,6 +327,7 @@ VIResourceLoaderManagerDelegate
     }
     playerViewController.player = player;
     [self presentViewController:playerViewController animated:YES completion:nil];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
 }
@@ -353,6 +355,7 @@ VIResourceLoaderManagerDelegate
     
     playerViewController.player = player;
     [self presentViewController:playerViewController animated:YES completion:nil];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     playerViewController.view.frame = self.view.frame;
     [playerViewController.player play];
     [playerViewController setOverlyViewCoverUrl:coverUrl];
@@ -382,7 +385,8 @@ VIResourceLoaderManagerDelegate
                                                          }];
     
     [alertVC addAction:cancelAction];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];
@@ -465,6 +469,7 @@ VIResourceLoaderManagerDelegate
         ClassAndStudentSelectorController *vc = [[ClassAndStudentSelectorController alloc] init];
         [vc setHomeworks:@[homework]];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
         [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
     }];
     

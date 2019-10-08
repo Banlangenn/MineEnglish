@@ -124,6 +124,7 @@
     
     [alertVC addAction:sureAction];
     [alertVC addAction:cancelAction];
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];

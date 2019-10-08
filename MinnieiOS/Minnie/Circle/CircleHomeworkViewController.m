@@ -181,6 +181,7 @@
     AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
     NSString *url = homework.videoUrl;
     playerViewController.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.view.frame = [UIScreen mainScreen].bounds;
     [playerViewController.player play];
@@ -277,7 +278,8 @@
     
     [alertVC addAction:deleteAction];
     [alertVC addAction:cancel];
-    
+
+    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
                        animated:YES
                      completion:nil];
@@ -334,6 +336,7 @@
         [alertVC addAction:deleteAction];
         [alertVC addAction:cancel];
         
+        alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:alertVC
                            animated:YES
                          completion:nil];

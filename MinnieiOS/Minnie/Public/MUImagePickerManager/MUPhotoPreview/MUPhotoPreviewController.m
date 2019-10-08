@@ -289,6 +289,7 @@
         weakSelf.currentVideoPlayerViewController.moviePlayer.shouldAutoplay = YES;
         weakSelf.currentVideoPlayerViewController.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
         weakSelf.currentVideoPlayerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        weakSelf.currentVideoPlayerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         [weakSelf presentViewController:weakSelf.currentVideoPlayerViewController animated:YES completion:nil];
     });
     
@@ -301,6 +302,7 @@
         // Setup player
         self.playerViewController.player = [AVPlayer playerWithURL:videoURL];
         self.playerViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+        self.playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         // Show
         __weak typeof(self)weakSelf = self;
         [self presentViewController:weakSelf.playerViewController animated:YES completion:^{

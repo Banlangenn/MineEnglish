@@ -119,6 +119,7 @@
             itemDict[@"words"] = words;
             itemDict[@"bgmusicUrl"] = item.bgmusicUrl;
             itemDict[@"playtime"] = @(item.playtime);
+            itemDict[@"playMode"] = @(item.playMode);
         }
         [items addObject:itemDict];
     }
@@ -265,6 +266,7 @@
         
         tempItem.bgmusicUrl = item.bgmusicUrl;
         tempItem.playtime = item.playtime;
+        tempItem.playMode = item.playMode;
         [tempItems addObject:tempItem];
     }
     return tempItems;

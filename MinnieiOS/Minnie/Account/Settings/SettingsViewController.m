@@ -75,7 +75,8 @@
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
-    
+
+    alertController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -225,6 +226,8 @@
         [alertVC addAction:cacheAction];
         [alertVC addAction:noCacheAction];
         [alertVC addAction:cancelAction];
+        
+        alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:alertVC
                          animated:YES
                        completion:nil];

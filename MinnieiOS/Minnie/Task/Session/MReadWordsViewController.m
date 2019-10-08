@@ -80,12 +80,11 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     // Do any additional setup after loading the view.
     _progressViews = [NSMutableArray array];
     HomeworkItem *tempWordItem =  self.homework.items.lastObject;
-//    tempWordItem.isRandom = YES;
     // 处理单词随机
     if ([tempWordItem.type isEqualToString:@"word"]) {
        
         self.wordsItem = tempWordItem;
-        if (self.wordsItem.isRandom) {
+        if (self.wordsItem.playMode) {
 
             NSMutableArray * randomWords = [NSMutableArray arrayWithArray:self.wordsItem.words];
             [randomWords shuffle];
