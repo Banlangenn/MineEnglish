@@ -19,11 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^sliderValueChangedCallback)(BOOL sliding, CGFloat value);
 
-//
-//@property (nonatomic,copy) void(^readingWordsProgressCallBack)(NSInteger index);
-
-//- (void)startPlayWords;
-//- (void)stopPlayWords;
 
 - (void)showWordsWithIndex:(NSInteger)index;
 
