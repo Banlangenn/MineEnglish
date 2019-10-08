@@ -99,6 +99,12 @@
 
 - (IBAction)confirmButtonPressed:(id)sender {
     
+    UIButton *confirmBtn = sender;
+    if (confirmBtn.selected) {
+        return;
+    }
+    confirmBtn.selected = YES;
+
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     
     if (self.currentScore == -1) {
@@ -135,6 +141,8 @@
                                                     text:reviewText
                                                    scope:self.m_scope
                                                 callback:^(Result *result, NSError *error) {
+
+                                                    confirmBtn.selected = NO;
                                                     if (error != nil) {
                                                         if (error.code == 202) {
                                                             [HUD showErrorWithMessage:@"学生未提交作业"];
@@ -148,6 +156,9 @@
                                                         weakSelf.homeworkSession.score = weakSelf.currentScore;
                                                         weakSelf.homeworkSession.isRedo = 0;
 #if TEACHERSIDE | MANAGERSIDE
+                                                        if (weakSelf.correctHomeworkCallBack) {
+                                                            weakSelf.correctHomeworkCallBack(weakSelf.homeworkSession);
+                                                        }
                                                         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationKeyOfCorrectHomework object:nil userInfo:@{@"HomeworkSession":weakSelf.homeworkSession}];
 #endif
                                                                                                                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];

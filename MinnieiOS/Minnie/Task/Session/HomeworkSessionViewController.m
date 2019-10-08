@@ -175,13 +175,6 @@ HomeworkAnswersPickerViewControllerDelegate>
                                              selector:@selector(messageDidReceive:)
                                                  name:kIMManagerContentMessageDidReceiveNotification
                                                object:nil];
-    
-    // 老师批改作业
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(homeworkDidFinishCorrect:)
-                                                 name:kNotificationKeyOfCorrectHomework
-                                               object:nil];
-    
 }
 
 
@@ -305,17 +298,14 @@ HomeworkAnswersPickerViewControllerDelegate>
     [self reloadDataAndScrollToBottom];
 }
 
-- (void)homeworkDidFinishCorrect:(NSNotification *)notification {
+
+- (void)homeworkDidFinishCorrect:(HomeworkSession *)session {
 #if TEACHERSIDE || MANAGERSIDE
 #else
     return ;
 #endif
-    NSDictionary *data = notification.userInfo;
-    HomeworkSession *session = data[@"HomeworkSession"];
     NSLog(@"correct:%@",session.conversation.conversationId);
     if (session.conversation.conversationId != self.conversation.conversationId) {
-        
-        NSLog(@"correct:not correct");
         return;
     }
     
@@ -336,8 +326,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         text = [@"5星 " stringByAppendingString:self.homeworkSession.reviewText];
     }
     else
-    {
-        //text = @"报错";
+    { //text = @"报错";
         return;
     }
     
@@ -621,6 +610,11 @@ HomeworkAnswersPickerViewControllerDelegate>
     CorrectHomeworkViewController *vc = [[CorrectHomeworkViewController alloc] initWithNibName:@"CorrectHomeworkViewController" bundle:nil];
     vc.shareVedioUrl = self.shareVideoUrl;
     vc.homeworkSession = self.homeworkSession;
+    WeakifySelf;
+    vc.correctHomeworkCallBack = ^(HomeworkSession *homeworkSession) {
+        
+        [weakSelf homeworkDidFinishCorrect:homeworkSession];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
