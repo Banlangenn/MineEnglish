@@ -28,7 +28,7 @@ static NSString * const kKeyOfCreateTimestamp = @"createTimestamp";
 static NSString * const kKeyOfAudioDuration = @"audioDuration";
 static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
-@interface MReadWordsViewController ()
+@interface MReadWordsViewController ()<AVAudioRecorderDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -93,11 +93,18 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             self.wordsItem.randomWords = self.wordsItem.words;
         }
     }
-    
-    [self startTask];
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+    if (authStatus == AVAuthorizationStatusAuthorized) {
+
+        [self startTask];
+    } else {
+        
+        [HUD showWithMessage:@"请先打开您的麦克风"];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
-
 }
 
 
@@ -192,6 +199,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     
     NSError *error = nil;
     self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:[self audioRecordingSettings] error:&error];
+    self.audioRecorder.delegate = self;
     self.audioRecorder.meteringEnabled = YES;
     if ([self.audioRecorder prepareToRecord]){
         self.audioRecorder.meteringEnabled = YES;
@@ -203,7 +211,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)stopRecordFound{
     
-    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
     WeakifySelf;
     // 停止录制
     [[AudioPlayer sharedPlayer] stop];
@@ -213,6 +220,11 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+    
+    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
 }
 
 #pragma mark - 定时播放任务
@@ -225,42 +237,31 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         _currentWordIndex ++;
     } else {
      
-        NSInteger playTime = self.wordsItem.playtime/1000;
+        NSInteger playTime = (int)self.wordsItem.playtime/1000;
         if (playTime == 0) {
             playTime = 1;
         }
- 
-        if (_currentWordIndex%playTime == 0) {
-            index = _currentWordIndex/playTime;
-            _currentWordIndex ++;
-           
-            if (_currentWordIndex - 2 == self.wordsItem.randomWords.count * playTime) {
-                    // 停止录音
-                    NSLog(@"停止录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
-                    [self stopRecordFound];
-                    [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
-            } else if (_currentWordIndex - 2 > self.wordsItem.randomWords.count * playTime) {
-                
-                _recordState = 2;
-                [self invalidateTimer];
-                
-                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.5];
-            }
-        } else {
 
-           _currentWordIndex ++;
-            if (_currentWordIndex - 2 == self.wordsItem.randomWords.count * playTime) {
+        NSInteger totalTime = self.wordsItem.randomWords.count * playTime;
+        if (_currentWordIndex - 1 == totalTime) {
                 // 停止录音
                 NSLog(@"停止录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
                 [self stopRecordFound];
-                [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.5];
-            } else if (_currentWordIndex - 2 > self.wordsItem.randomWords.count * playTime) {
-                
-                _recordState = 2;
-                [self invalidateTimer];
-                
-                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.5];
-            }
+                [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.2];
+        } else if ((_currentWordIndex - 1) > totalTime) {
+            
+            _recordState = 2;
+            [self invalidateTimer];
+            [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.2];
+            return;
+        }
+        
+        if (_currentWordIndex%playTime == 0) {
+            index = _currentWordIndex/playTime;
+            _currentWordIndex ++;
+        } else {
+
+           _currentWordIndex ++;
             return;
         }
     }
@@ -362,7 +363,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                                        [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在上传语音%@%%...", @(number)]];
                                    }
                                  completionBlock:^(NSString * _Nullable audioUrl, NSError * _Nullable error) {
-                                     NSLog(@"audioUrl::%@",audioUrl);
+            
                                      if (audioUrl.length > 0) {
                                          [[NSFileManager defaultManager] removeItemAtPath:soundFilePath
                                                                                     error:nil];
