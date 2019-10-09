@@ -159,6 +159,16 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)startTask{
     
+    self.wordLabel.hidden = NO;
+    self.timeLabel.hidden = YES;
+    self.wordLabel.text = [NSString stringWithFormat:@"Ready"];
+    
+     if (self.wordsItem.randomWords.count == 0) {
+         [HUD showErrorWithMessage:@"无单词内容"];
+         [self.navigationController popViewControllerAnimated:YES];
+         return;
+     }
+    
     [self startCountTime];
 }
 
@@ -169,14 +179,10 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 #pragma mark - 1.开始倒计时 ，播放单词
 - (void)startCountTime{
-   
-    if (self.wordsItem.randomWords.count == 0) {
-        [HUD showErrorWithMessage:@"无单词内容"];
-        return;
-    }
+
     [self stopTask];
     _recordState = 1;
-    _currentWordIndex = -1;
+    _currentWordIndex = 0;
 
     // 启动定时器
     [self invalidateTimer];
@@ -232,9 +238,18 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
     NSLog(@"计时器录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
     NSInteger index = 0;
+    
     if (_currentWordIndex <= 0) {
         index = _currentWordIndex;
         _currentWordIndex ++;
+
+        if (index == 0) {
+
+            self.wordLabel.hidden = NO;
+            self.timeLabel.hidden = YES;
+            self.wordLabel.text = [NSString stringWithFormat:@"Go!"];
+        }
+        return;
     } else {
      
         NSInteger playTime = (int)self.wordsItem.playtime/1000;
@@ -256,7 +271,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             return;
         }
         
-        if (_currentWordIndex%playTime == 0) {
+        if (_currentWordIndex%playTime == 1) {
             index = _currentWordIndex/playTime;
             _currentWordIndex ++;
         } else {
@@ -267,7 +282,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     }
     
     if (index <= 0) {// 倒计时
-        
+
         // 倒计时：2, 1,  ready,go
 //        if (index >= -2 && index < 0) {// 播放
 //
@@ -285,15 +300,14 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 //            self.wordLabel.hidden = YES;
 //            self.timeLabel.hidden = NO;
 //            self.timeLabel.text = [NSString stringWithFormat:@"%ld",-(index + 1)];
-//        } else
-        if (index == -1){
-            
-            self.wordLabel.hidden = NO;
-            self.timeLabel.hidden = YES;
-            self.wordLabel.text = [NSString stringWithFormat:@"Go!"];
-        }
+//        } else if (index == -1){
+//
+//            self.wordLabel.hidden = NO;
+//            self.timeLabel.hidden = YES;
+//            self.wordLabel.text = [NSString stringWithFormat:@"Go!"];
+//        }
         if (index == 0) {
-            
+
             WordInfo *tempWord = self.wordsItem.randomWords.firstObject;
             self.wordLabel.text = tempWord.english;
             UIView *view = self.progressViews.firstObject;
@@ -302,26 +316,29 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             [self starRecoreFound];
             NSLog(@"开始录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
         }
-    } else { // 播放单词
+    } else
+    { // 播放单词
         
-        if (index > 0 && index - 1 < self.wordsItem.randomWords.count) {
+        if (index > 0 && index < self.wordsItem.randomWords.count) {
             
             self.wordLabel.hidden = NO;
             self.timeLabel.hidden = YES;
             
-            WordInfo *tempWord = self.wordsItem.randomWords[index - 1];
+            WordInfo *tempWord = self.wordsItem.randomWords[index];
             self.wordLabel.text = tempWord.english;
             
-            if (index - 1 < self.progressViews.count) {
+            if (index < self.progressViews.count) {
                 WeakifySelf;
                 [UIView animateWithDuration:0.5 animations:^{
                     
-                    UIView *view = weakSelf.progressViews[index - 1];
+                    UIView *view = weakSelf.progressViews[index];
                     view.backgroundColor = [UIColor mainColor];
                 }];
             }
         }
     }
+    
+    NSLog(@"word  %@",self.wordLabel.text);
 }
 
 #pragma mark - 3.是否提交
