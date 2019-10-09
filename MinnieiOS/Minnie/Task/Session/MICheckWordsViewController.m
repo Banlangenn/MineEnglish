@@ -190,9 +190,9 @@ CAAnimationDelegate
         _audioPlayer.progressBlock = ^(CGFloat time, CGFloat duration) {
  
             if (weakSelf.currentWordItem.commitPlaytime > 0) {
-                if (time > 0) {
-                    time = time -1;
-                }
+//                if (time > 0) {
+//                    time = time -1;
+//                }
                 NSInteger currentIndex = time/(weakSelf.currentWordItem.commitPlaytime/1000);
                 [weakSelf.wordsView showWordsWithIndex:currentIndex];
             }

@@ -53,6 +53,8 @@
     [super awakeFromNib];
     
     self.sliderView = [[WordSlider alloc] init];
+    self.sliderView.minimumValue = 0.f;
+    self.sliderView.maximumValue = 1.f;
     self.sliderView.value = 0.f;
     [self.bgProgressView addSubview:self.sliderView];
     [self.sliderView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,10 +95,10 @@
         return;
     }
     if (index < self.wordsItem.randomWords.count) {
-
+        // index 从0开始
         WordInfo *tempWord = _wordsItem.randomWords[index];
         self.englishLabel.text = tempWord.english;
-        self.sliderView.value = (CGFloat)index/self.wordsItem.randomWords.count;
+        self.sliderView.value = (CGFloat)(index + 1)/self.wordsItem.randomWords.count;
     } else {
 
         WordInfo *tempWord = _wordsItem.randomWords.lastObject;
