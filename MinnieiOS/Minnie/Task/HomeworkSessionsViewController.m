@@ -218,7 +218,7 @@ MIActivityBannerViewDelegate
                     if ([typeName isEqualToString:kHomeworkTaskFollowUpName] ||
                         [typeName isEqualToString:kHomeworkTaskWordMemoryName]) {
                         
-                        homeworkSession.lastSessionContent = @"[链接]";
+                        homeworkSession.lastSessionContent = @"[录制]";
                     } else {
                         homeworkSession.lastSessionContent = @"[音频]";
                     }
@@ -307,7 +307,7 @@ MIActivityBannerViewDelegate
                                              selector:@selector(reloadWhenHomeworkCorrected:)
                                                  name:kNotificationKeyOfCorrectHomework
                                                object:nil];
-//    以下为需要刷新网络
+    // 以下为需要刷新网络
     // 教师删除一个班级
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateHomeworkSessions:)
@@ -646,21 +646,24 @@ MIActivityBannerViewDelegate
     } else {
         // 停止加载
         [self.homeworkSessionsTableView headerEndRefreshing];
-        self.homeworkSessionsTableView.hidden = homeworkSessions.count==0;
-        
         if (error != nil) {
             if (homeworkSessions.count > 0) {
                 [TIP showText:@"加载失败" inView:self.view];
             } else {
-                WeakifySelf;
-                [self.view showFailureViewWithRetryCallback:^{
+              
+                if (self.homeworkSessions.count == 0) {
                     
-                    [weakSelf requestHomeworkSessions];
-                }];
+                    WeakifySelf;
+                    [self.view showFailureViewWithRetryCallback:^{
+                        
+                        [weakSelf requestHomeworkSessions];
+                    }];
+                }
             }
             return;
         }
         
+        self.homeworkSessionsTableView.hidden = homeworkSessions.count==0;
         [self.homeworkSessions removeAllObjects];
         self.nextUrl = nil;
         

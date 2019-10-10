@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DownloadVideo : NSObject
 
+@property (nonatomic,copy) void (^successCallBack) (BOOL success);
+
+@property (nonatomic,copy) void (^progressCallBack) (CGFloat progress);
+
+
 - (void)startDownloadVedioWithUrl:(NSString *)vedioUrl;
 
 @end

@@ -47,8 +47,11 @@
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
     
-//    CGFloat progress = totalBytesWritten / (double)totalBytesExpectedToWrite;
-//    NSLog(@"progress %f",progress);
+    CGFloat progress = totalBytesWritten / (double)totalBytesExpectedToWrite;
+    NSLog(@"progress %f",progress);
+    if (self.progressCallBack) {
+        self.progressCallBack(progress);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session
@@ -70,8 +73,14 @@ didFinishDownloadingToURL:(NSURL *)location{
 - (void)savedPhotoImage:(UIImage*)image didFinishSavingWithError:(NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
         [HUD showErrorWithMessage:@"视频保存失败"];
+        if (self.successCallBack) {
+            self.successCallBack(NO);
+        }
     } else {
-        [HUD showWithMessage:@"保存视频成功"];
+        [HUD showWithMessage:@"视频保存成功"];
+        if (self.successCallBack) {
+            self.successCallBack(YES);
+        }
     }
 }
 

@@ -76,7 +76,7 @@
                 CGFloat margin = isIPhoneX ? 110 : 89;
                 [self.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.right.mas_equalTo(avTouchIgnoringView).offset(-margin);
-                    make.top.mas_equalTo(avTouchIgnoringView).offset(isIPhoneX ? 56 : 26);
+                    make.top.mas_equalTo(avTouchIgnoringView).offset(isIPhoneX ? 50 : 26);
                     make.width.mas_equalTo(44);
                     make.height.mas_equalTo(44);
                 }];
@@ -102,11 +102,21 @@
     self.currentUrl = url;
 }
 
-- (void)saveVideoClicked:(UIControl *)control{
-    
+- (void)saveVideoClicked:(UIButton *)btn{
+  
+
     if (self.currentUrl.length > 0) {
         
         DownloadVideo *download = [[DownloadVideo alloc] init];
+        WeakifySelf;
+        download.successCallBack = ^(BOOL success) {
+            weakSelf.saveButton.selected = NO;
+            [HUD hideAnimated:YES];
+        };
+        download.progressCallBack = ^(CGFloat progress) {
+            
+            [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在保存视频%.f%%...", progress * 100]];
+        };
         [download startDownloadVedioWithUrl:self.currentUrl];
     } else {
         [HUD showErrorWithMessage:@"视频地址错误"];

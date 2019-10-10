@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,11 +13,11 @@
             <rect key="frame" x="0.0" y="0.0" width="858" height="622"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TXp-jm-vgY" id="KAH-SK-JnP">
-                <rect key="frame" x="0.0" y="0.0" width="858" height="621.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="858" height="622"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xVf-tV-d9V">
-                        <rect key="frame" x="0.0" y="0.0" width="858" height="621.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="858" height="622"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="任务详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNi-j7-9rn" userLabel="作业题目">
                                 <rect key="frame" x="12" y="15" width="50" height="15"/>
@@ -37,7 +35,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="rAo-pL-Z1Y">
-                                <rect key="frame" x="12" y="487.5" width="834" height="114"/>
+                                <rect key="frame" x="12" y="488" width="834" height="114"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="114" id="VQn-P1-67w"/>
@@ -60,7 +58,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHM-iA-FU1" userLabel="作业文字">
-                                <rect key="frame" x="12" y="37" width="834" height="438.5"/>
+                                <rect key="frame" x="12" y="37" width="834" height="439"/>
                                 <attributedString key="attributedText"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -71,7 +69,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRx-u9-Uzg">
-                                <rect key="frame" x="10" y="611.5" width="838" height="0.0"/>
+                                <rect key="frame" x="10" y="612" width="838" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="750" constant="21" id="Z3I-oV-k1A"/>
                                 </constraints>
@@ -80,7 +78,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aAL-Bt-1kV" userLabel="needCommitView">
-                                <rect key="frame" x="12" y="601.5" width="834" height="0.0"/>
+                                <rect key="frame" x="12" y="602" width="834" height="0.0"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAv-e9-FcT">
                                         <rect key="frame" x="0.0" y="5" width="834" height="1"/>
@@ -89,8 +87,8 @@
                                             <constraint firstAttribute="height" constant="1" id="lot-P8-O3p"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="任务需提交:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3B-Mc-QnD">
-                                        <rect key="frame" x="12" y="-2.5" width="575" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="任务需提交:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3B-Mc-QnD">
+                                        <rect key="frame" x="0.0" y="-2.5" width="587" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -145,7 +143,6 @@
                                     <constraint firstItem="mKm-zh-e6e" firstAttribute="leading" secondItem="osX-PR-iSR" secondAttribute="trailing" constant="15" id="fa6-fk-4d1"/>
                                     <constraint firstItem="osX-PR-iSR" firstAttribute="width" secondItem="osX-PR-iSR" secondAttribute="height" multiplier="1:1" id="hq8-K7-Ki0"/>
                                     <constraint firstAttribute="trailing" secondItem="lmM-jn-kVO" secondAttribute="trailing" constant="20" id="qua-03-QFa"/>
-                                    <constraint firstItem="f3B-Mc-QnD" firstAttribute="leading" secondItem="aAL-Bt-1kV" secondAttribute="leading" constant="12" id="rCE-bY-fRG"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -161,6 +158,7 @@
                             <constraint firstItem="PZ9-bk-Z7A" firstAttribute="trailing" secondItem="9cW-b1-vz7" secondAttribute="trailing" constant="12" id="LSh-sr-7Gb"/>
                             <constraint firstItem="PZ9-bk-Z7A" firstAttribute="trailing" secondItem="yHM-iA-FU1" secondAttribute="trailing" constant="12" id="VDs-jT-wow"/>
                             <constraint firstItem="9cW-b1-vz7" firstAttribute="centerY" secondItem="sNi-j7-9rn" secondAttribute="centerY" id="Wwq-1z-rlO"/>
+                            <constraint firstItem="f3B-Mc-QnD" firstAttribute="leading" secondItem="sNi-j7-9rn" secondAttribute="leading" id="X4j-ZJ-k5Y"/>
                             <constraint firstItem="rAo-pL-Z1Y" firstAttribute="leading" secondItem="PZ9-bk-Z7A" secondAttribute="leading" constant="12" id="Zym-Oz-ra6"/>
                             <constraint firstItem="sNi-j7-9rn" firstAttribute="top" secondItem="PZ9-bk-Z7A" secondAttribute="top" constant="15" id="bms-WE-UTY"/>
                             <constraint firstItem="KRx-u9-Uzg" firstAttribute="leading" secondItem="PZ9-bk-Z7A" secondAttribute="leading" constant="10" id="bzX-Tv-1jk"/>

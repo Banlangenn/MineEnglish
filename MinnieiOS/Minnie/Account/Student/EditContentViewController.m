@@ -103,6 +103,7 @@
                 [HUD showErrorWithMessage:@"转发问题作业失败"];
                 return ;
             }
+            [HUD showWithMessage:@"转发成功"];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
     }

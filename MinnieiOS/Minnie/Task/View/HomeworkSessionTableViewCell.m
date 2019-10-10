@@ -124,7 +124,7 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         isOutTime = NO;
 //        self.unfinishTipLabel.text = @"距离提交";
         self.unfinishTipLabel.text = @"绿色还剩";
-        self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0X00CE00] colorWithAlphaComponent:0.7];
+        self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0X00CE00] colorWithAlphaComponent:0.6];
     }
     else
     {
@@ -133,12 +133,12 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         if (hours <= 144)
         {
             self.unfinishTipLabel.text = @"黄色还剩";
-            self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0XFFAD27] colorWithAlphaComponent:0.7];
+            self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0XFFAD27] colorWithAlphaComponent:0.6];
         }
         else
         {
             self.unfinishTipLabel.text = @"距离过期";
-            self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0XFF4858] colorWithAlphaComponent:0.7];
+            self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0XFF4858] colorWithAlphaComponent:0.6];
         }
         maxHours = 168;
     }
@@ -206,10 +206,10 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     //imageIndex 当前距离提交或距离超时剩余时间
     if (isOutTime){ // 超过规定时间
         
-        NSString *imageStr = [NSString stringWithFormat:@"day_%lu",imageIndex];
+        NSString *imageStr = [NSString stringWithFormat:@"day_%ld",(long)imageIndex];
         self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
     } else {// 在作业时限之内
-        NSString *imageStr = [NSString stringWithFormat:@"day_%lu%lu",limitTime,imageIndex];
+        NSString *imageStr = [NSString stringWithFormat:@"day_%ld%lu",(long)limitTime,imageIndex];
         self.unfinishTimeImaV.image = [UIImage imageNamed:imageStr];
     }
     // 学生端教师端显示黄色剩余和电池图片一致，管理端不变
@@ -217,8 +217,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         time -= 1;
     }
     
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld %@",time,type]];
-    [attrStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:24]}
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld %@",(long)time,type]];
+    [attrStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]}
                      range:NSMakeRange(0, attrStr.length - 1)];
     [attrStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
                      range:NSMakeRange( attrStr.length - 1,1)];
@@ -286,7 +286,10 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     NSMutableAttributedString * mAttribute = [[NSMutableAttributedString alloc] initWithString:homeworkTitle];
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 5;
-    [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)];
+    [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)]; // PingFangSC-Ultraligh
+    [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, homeworkTitle.length)];
+    [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, homeworkTitle.length)];
+    
     self.homeworkTitleLabel.attributedText = mAttribute;
     if (homeworkSession.shouldColorLastSessionContent) {
         self.lastSessionLabel.textColor = [UIColor colorWithHex:0x0098FE];
@@ -313,6 +316,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
             NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
             paragraphStyle.lineSpacing = 5;
             [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
+            [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, attrStr.length)];
+            [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, attrStr.length)];
             self.homeworkTitleLabel.attributedText = mAttribute;
         }
         else
@@ -322,6 +327,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
             NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
             paragraphStyle.lineSpacing = 5;
             [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)];
+            [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, homeworkTitle.length)];
+            [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, homeworkTitle.length)];
             self.homeworkTitleLabel.attributedText = mAttribute;
         }
         
@@ -333,6 +340,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineSpacing = 5;
         [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, homeworkTitle.length)];
         self.homeworkTitleLabel.attributedText = mAttribute;
     }
     
@@ -464,6 +473,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineSpacing = 5;
         [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, homeworkTitle.length)];
         unfinishedCell.homeworkTitleLabel.attributedText = mAttribute;
         unfinishedCell.lastSessionLabel.text = homeworkSession.lastSessionContent;
         
@@ -493,6 +504,8 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineSpacing = 5;
         [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Medium" size:16] range:NSMakeRange(0, homeworkTitle.length)];
+        [mAttribute addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, homeworkTitle.length)];
         finishedCell.homeworkTitleLabel.attributedText = mAttribute;
         finishedCell.lastSessionLabel.text = homeworkSession.lastSessionContent;
         

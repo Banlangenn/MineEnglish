@@ -45,9 +45,9 @@ NSString * const RightTextMessageTableViewCellId = @"RightTextMessageTableViewCe
     
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
-    if (![message isKindOfClass:[AVIMTextMessage class]]) {
-        size.height = 95;
-    }
+//    if (![message isKindOfClass:[AVIMTextMessage class]]) {
+//        size.height = 95;
+//    }
     return size.height + 5;
 }
 

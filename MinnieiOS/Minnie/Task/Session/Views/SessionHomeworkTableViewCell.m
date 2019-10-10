@@ -119,7 +119,7 @@ UICollectionViewDelegateFlowLayout>
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = NO;
             self.imageCountLabel.textColor = [UIColor greenBgColor];
-            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
+            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.imageCount,homeworkSession.homework.imageCount];
         } else if (homeworkSession.homework.currentImageCount < homeworkSession.homework.imageCount) {
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = YES;
