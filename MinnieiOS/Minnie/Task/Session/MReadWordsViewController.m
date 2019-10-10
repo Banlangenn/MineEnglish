@@ -21,7 +21,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioPlayerViewController.h"
 #import "MReadWordsViewController.h"
-#import "AudioPlayerManager.h"
 
 
 static NSString * const kKeyOfCreateTimestamp = @"createTimestamp";
@@ -47,8 +46,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 // 1:正在录制  2:录制完成
 @property (assign,nonatomic) NSInteger recordState;
-// 背景音乐
-//@property (nonatomic, strong) AudioPlayerManager *musicPlayer;
 
 // 录音
 @property (nonatomic, strong) NSDate *startTime;

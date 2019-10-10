@@ -136,6 +136,7 @@ CAAnimationDelegate
 - (IBAction)rightButtonAction:(id)sender {
     
     [self.audioPlayer play:NO];
+
     if (self.audioPlayer.current + self.currentWordItem.commitPlaytime/1000 >= self.audioPlayer.duration) {
         [self.audioPlayer seekToTime:0];
     } else {
@@ -156,12 +157,15 @@ CAAnimationDelegate
 
                 [weakSelf.audioPlayer play:NO];
             } else {
+               
                 if (value * weakSelf.audioPlayer.duration >= self.audioPlayer.duration) {
                      
                      [weakSelf.audioPlayer seekToTime:weakSelf.audioPlayer.duration];
                  } else {
                      [weakSelf.audioPlayer seekToTime:value * weakSelf.audioPlayer.duration];
                  }
+                 weakSelf.startRecordBtn.selected = YES;
+                 weakSelf.startRecordLabel.text = @"点击停止播放";
             }
                      
         };
@@ -184,15 +188,15 @@ CAAnimationDelegate
                 weakSelf.startRecordLabel.text = @"点击查看录音";
             } else if (status == AVPlayerItemStatusReadyToPlay) {
                 NSLog(@"AVPlayerItemStatusReadyToPlay");
+                weakSelf.startRecordBtn.selected = YES;
+                weakSelf.startRecordLabel.text = @"点击停止播放";
             }
         };
         
         _audioPlayer.progressBlock = ^(CGFloat time, CGFloat duration) {
  
             if (weakSelf.currentWordItem.commitPlaytime > 0) {
-//                if (time > 0) {
-//                    time = time -1;
-//                }
+
                 NSInteger currentIndex = time/(weakSelf.currentWordItem.commitPlaytime/1000);
                 [weakSelf.wordsView showWordsWithIndex:currentIndex];
             }
@@ -203,7 +207,6 @@ CAAnimationDelegate
             weakSelf.startRecordBtn.selected = NO;
             weakSelf.startRecordLabel.text = @"点击查看录音";
             [weakSelf.audioPlayer play:NO];
-//            [weakSelf.wordsView stopPlayWords];
         };
     }
     return _audioPlayer;
@@ -224,7 +227,6 @@ CAAnimationDelegate
     
     [self.audioPlayer play:NO];
     
-//    [self.wordsView stopPlayWords];
     self.startRecordBtn.selected = NO;
     self.startRecordLabel.text = @"点击查看录音";
 }

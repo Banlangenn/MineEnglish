@@ -58,6 +58,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     
     self.followItem = self.homework.otherItem.firstObject;
     [self configureUI];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
@@ -157,8 +158,15 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             }
         }
     } else {
-      
-        [self startTask];
+        
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+        if (authStatus == AVAuthorizationStatusAuthorized) {
+
+            [self startTask];
+        } else {
+
+            [HUD showWithMessage:@"请先打开您的麦克风"];
+        }
     }
 }
 

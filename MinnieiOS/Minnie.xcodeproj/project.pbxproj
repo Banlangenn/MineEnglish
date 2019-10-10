@@ -432,9 +432,6 @@
 		12961CD0229FD6AB0075B04A /* CreateTagRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 973649B320AF2F8500511A95 /* CreateTagRequest.m */; };
 		12961CDC229FD7100075B04A /* HomeworkSessionsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971099F1207A158C00568785 /* HomeworkSessionsRequest.m */; };
 		12961CDD229FD72D0075B04A /* TagsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 973649B020AF2F8500511A95 /* TagsRequest.m */; };
-		12A15693231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A15692231FFB6E0078C2E5 /* AVAudioSession+Audio.m */; };
-		12A15694231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A15692231FFB6E0078C2E5 /* AVAudioSession+Audio.m */; };
-		12A15695231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A15692231FFB6E0078C2E5 /* AVAudioSession+Audio.m */; };
 		12A156962320FD9F0078C2E5 /* CircleVideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97109C0E207A2E3E00568785 /* CircleVideoTableViewCell.m */; };
 		12A156972320FDB90078C2E5 /* CircleVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97109C01207A2E3E00568785 /* CircleVideoTableViewCell.xib */; };
 		12A156982320FDD10078C2E5 /* CircleBottomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97109C0F207A2E3E00568785 /* CircleBottomTableViewCell.m */; };
@@ -2219,8 +2216,6 @@
 		128CF0C522C46645004FBC91 /* HomeworkConfirmView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeworkConfirmView.h; path = ../HomeworkConfirmView.h; sourceTree = "<group>"; };
 		128CF0C622C46645004FBC91 /* HomeworkConfirmView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeworkConfirmView.m; path = ../HomeworkConfirmView.m; sourceTree = "<group>"; };
 		128CF0CA22C4665C004FBC91 /* HomeworkConfirmView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeworkConfirmView.xib; path = ../HomeworkConfirmView.xib; sourceTree = "<group>"; };
-		12A15691231FFB6E0078C2E5 /* AVAudioSession+Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+Audio.h"; sourceTree = "<group>"; };
-		12A15692231FFB6E0078C2E5 /* AVAudioSession+Audio.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+Audio.m"; sourceTree = "<group>"; };
 		12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
 		12AF64F4228E4A790031E1F6 /* EqualSpaceFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualSpaceFlowLayout.h; sourceTree = "<group>"; };
 		12B503C42317C34D001880A9 /* MISecondTeachersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MISecondTeachersView.h; sourceTree = "<group>"; };
@@ -3866,8 +3861,6 @@
 				1950D7E822775641004F7291 /* sendMessage.mp3 */,
 				1204264523000EA5008B90C9 /* AudioPlayerManager.h */,
 				1204264423000EA4008B90C9 /* AudioPlayerManager.m */,
-				12A15691231FFB6E0078C2E5 /* AVAudioSession+Audio.h */,
-				12A15692231FFB6E0078C2E5 /* AVAudioSession+Audio.m */,
 			);
 			path = PlayAudio;
 			sourceTree = "<group>";
@@ -7674,7 +7667,6 @@
 				1226F3252298327600BAB1C9 /* RegisterViewController.m in Sources */,
 				12B504372317DDC3001880A9 /* MIStudentRecordViewController.m in Sources */,
 				12ED3B46229D8FE300255F8B /* SendHomeworkRequest.m in Sources */,
-				12A15695231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */,
 				12CB73C622AC0DD60064FB21 /* MISutdentActDetailViewController.m in Sources */,
 				1226F3082297F3C700BAB1C9 /* AppDelegate.m in Sources */,
 				12CB739422AB59000064FB21 /* MIHomeworkSubFileViewController.m in Sources */,
@@ -8118,7 +8110,6 @@
 				1923CB1E2283E6620056B2AD /* StarLogs.m in Sources */,
 				122F798222AC9ABC00D2AA53 /* MISutActDetailTableViewCell.m in Sources */,
 				97109D5F207A2F0400568785 /* NoticeMessageImageItemTableViewCell.m in Sources */,
-				12A15693231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */,
 				12E0797F230E2C0C0054A8CE /* AwardsService.m in Sources */,
 				1229814822C5B46400C09750 /* SendHomeworkRequest.m in Sources */,
 				97109E90207A7BDD00568785 /* Award.m in Sources */,
@@ -8408,7 +8399,6 @@
 				8709C31821A26C4E00970757 /* DeleteFormTagsRequest.m in Sources */,
 				9710990F207A0BF500568785 /* ChatRefreshHeader.m in Sources */,
 				971098F9207A0BF500568785 /* NEPhotoBrowserView.m in Sources */,
-				12A15694231FFB6E0078C2E5 /* AVAudioSession+Audio.m in Sources */,
 				12E07980230E2C0C0054A8CE /* AwardsService.m in Sources */,
 				97109C15207A2E3E00568785 /* CircleHomeworkViewController.m in Sources */,
 				973649DF20AF2F8600511A95 /* SendHomeworkRequest.m in Sources */,

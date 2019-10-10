@@ -54,6 +54,9 @@
             }
         } else {
             
+            if (self.current >= self.duration) {
+                [self.audioPlayer seekToTime:kCMTimeZero];
+            }
             [self.audioPlayer play];
             self.isPlaying = [self playState];
         }
@@ -142,7 +145,10 @@
 - (void)playbackFinished:(NSNotification *)notice{
     
     _preparePlay = NO;
-    [self.audioPlayer seekToTime:CMTimeMake(0, 1)];
+//    [self.audioPlayer seekToTime:kCMTimeZero];
+    [self play:NO];
+    self.current = self.duration;
+    NSLog(@"current %f",self.current);
     if (self.finishedBlock) {
         self.finishedBlock();
     }

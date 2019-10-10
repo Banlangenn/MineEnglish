@@ -6,6 +6,7 @@
 //  Copyright © 2017年 mfox. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "LoginViewController.h"
 #import "InputPhoneNumberViewController.h"
 #import "AuthService.h"
@@ -37,6 +38,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+      AVAudioSession* sharedSession = [AVAudioSession sharedInstance];
+      [sharedSession requestRecordPermission:^(BOOL granted) {
+      }];
+    
     
     [self.navigationController setNavigationBarHidden:YES];
     
