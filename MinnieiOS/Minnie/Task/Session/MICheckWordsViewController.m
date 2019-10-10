@@ -75,6 +75,9 @@ CAAnimationDelegate
     if (self.commitPlayTime.integerValue > 0) {
         wordItem.commitPlaytime = self.commitPlayTime.integerValue;
     } else {
+        if (wordItem.playtime == 0) {
+            wordItem.playtime = 1000;
+        }
         wordItem.commitPlaytime = wordItem.playtime;
     }
     self.currentWordItem = wordItem;
@@ -126,8 +129,16 @@ CAAnimationDelegate
 - (IBAction)leftButtonAction:(id)sender {
    
     [self.audioPlayer play:NO];
-    if (self.audioPlayer.current - self.currentWordItem.commitPlaytime/1000 >= 0) {
-         [self.audioPlayer seekToTime:self.audioPlayer.current - self.currentWordItem.commitPlaytime/1000];
+    if (self.audioPlayer.current >= self.audioPlayer.duration) {
+        // 播放倒数第二个
+        CGFloat tempTime = (self.currentWordItem.words.count - 2) * self.currentWordItem.commitPlaytime/1000;
+        [self.audioPlayer seekToTime:tempTime];
+        return;
+    }
+    
+    CGFloat previousTime = self.audioPlayer.current - self.currentWordItem.commitPlaytime/1000;
+    if (previousTime >= 0) {
+         [self.audioPlayer seekToTime:previousTime];
     } else {
         [self.audioPlayer seekToTime:0];
     }
@@ -136,11 +147,13 @@ CAAnimationDelegate
 - (IBAction)rightButtonAction:(id)sender {
     
     [self.audioPlayer play:NO];
-
-    if (self.audioPlayer.current + self.currentWordItem.commitPlaytime/1000 >= self.audioPlayer.duration) {
+    
+    CGFloat nextTime = self.audioPlayer.current + self.currentWordItem.commitPlaytime/1000;
+    if (nextTime >= self.audioPlayer.duration) {
+        // 播放第一个
         [self.audioPlayer seekToTime:0];
     } else {
-        [self.audioPlayer seekToTime:self.audioPlayer.current + self.currentWordItem.commitPlaytime/1000];
+        [self.audioPlayer seekToTime:nextTime];
     }
 }
 
@@ -197,6 +210,7 @@ CAAnimationDelegate
  
             if (weakSelf.currentWordItem.commitPlaytime > 0) {
 
+                NSLog(@"tempTime2222  %f",time);
                 NSInteger currentIndex = time/(weakSelf.currentWordItem.commitPlaytime/1000);
                 [weakSelf.wordsView showWordsWithIndex:currentIndex];
             }

@@ -103,6 +103,9 @@
         [self play:YES];
     } else {
         
+        if (self.current >= self.duration) {
+            self.current = time;
+        }
         CMTime tempTime = CMTimeMake(time, 1);
         [self.playerItem seekToTime:tempTime];
         [self play:YES];
@@ -132,6 +135,10 @@
                 
                 CGFloat currentTime = weakSelf.playerItem.currentTime.value/weakSelf.playerItem.currentTime.timescale;// 计算当前在第几秒
                 CGFloat duration = CMTimeGetSeconds(weakSelf.playerItem.duration);
+                
+                if (currentTime > duration) {
+                    currentTime = duration;
+                }
                 weakSelf.progressBlock(currentTime, duration);
                 weakSelf.current = currentTime;
                 weakSelf.duration = duration;
@@ -148,7 +155,6 @@
 //    [self.audioPlayer seekToTime:kCMTimeZero];
     [self play:NO];
     self.current = self.duration;
-    NSLog(@"current %f",self.current);
     if (self.finishedBlock) {
         self.finishedBlock();
     }
