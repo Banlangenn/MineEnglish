@@ -33,7 +33,7 @@ UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UILabel *sendTimeLabel;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *teremarkBottomConstraint;
 
 @property (nonatomic, strong) HomeworkSession *homeworkSession;
 
@@ -192,19 +192,20 @@ UICollectionViewDelegateFlowLayout>
     
     self.dateLabel.text = [Utils formatedDateString:self.homeworkSession.sendTime];
     
-    
     if (![homeworkSession.homework.typeName isEqualToString: kHomeworkTaskFollowUpName]){
        
         if (homeworkSession.homework.items.count == 1) {
             self.collectionViewHeightConstraint.constant = 0.f;
-            self.collectionViewBottomConstraint.constant = 10.f;
         } else {
             self.collectionViewHeightConstraint.constant = 114.f;
-            self.collectionViewBottomConstraint.constant = 8.f;
         }
     } else {
         self.collectionViewHeightConstraint.constant = 114.f;
-        self.collectionViewBottomConstraint.constant = 8.f;
+    }
+    if (teremark.length) {
+        self.teremarkBottomConstraint.constant = 15.f;
+    } else {
+        self.teremarkBottomConstraint.constant = 5.f;
     }
     
     if (homeworkSession.homework.imageCount + homeworkSession.homework.videoCount > 0) {
@@ -222,7 +223,6 @@ UICollectionViewDelegateFlowLayout>
         return homeworkSession.homework.cellHeight;
     }
     
-    
     static SessionHomeworkTableViewCell *cell = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -232,7 +232,6 @@ UICollectionViewDelegateFlowLayout>
     [cell setupWithHomeworkSession:homeworkSession];
     
     cell.collectionViewHeightConstraint.constant = 114.f;
-    cell.collectionViewBottomConstraint.constant = 8.f;
     
     // 任务需提交
     if (homeworkSession.homework.imageCount + homeworkSession.homework.videoCount > 0) {
@@ -257,7 +256,6 @@ UICollectionViewDelegateFlowLayout>
         [mAttribute addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
         cell.homeworkTextLabel.attributedText = mAttribute;
     }
-    
     
     // 批改备注
     NSString *teremark = @"";
@@ -285,7 +283,6 @@ UICollectionViewDelegateFlowLayout>
         }
     }
     homeworkSession.homework.cellHeight = height;
-    NSLog(@"homeworkSession:%f  \n %@",height,homeworkSession.homework);
     return homeworkSession.homework.cellHeight;
 }
 
@@ -369,7 +366,6 @@ UICollectionViewDelegateFlowLayout>
             
             cell = audioCell;
         }
-        
     }
  
     return cell;
