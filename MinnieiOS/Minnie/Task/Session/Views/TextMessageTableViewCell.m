@@ -69,7 +69,8 @@ NSString * const RightTextMessageTableViewCellId = @"RightTextMessageTableViewCe
         attach.bounds = CGRectMake(0, -3, 18, 18);
         NSMutableAttributedString * attr = [[NSMutableAttributedString alloc] init];
         NSString *text = message.text;
-        if ([message.text isEqualToString:kHomeworkTaskFollowUpName]) {
+        if ([message.text isEqualToString:kHomeworkTaskFollowUpName] ||
+            [message.text isEqualToString:@"跟读任务"]) {
             text = @"跟读任务";
         }
         NSString *title = [NSString stringWithFormat:@"     %@     ",text];

@@ -216,7 +216,8 @@ MIActivityBannerViewDelegate
                     
                     NSString *typeName = ((AVIMTypedMessage *)message).attributes[@"typeName"];
                     if ([typeName isEqualToString:kHomeworkTaskFollowUpName] ||
-                        [typeName isEqualToString:kHomeworkTaskWordMemoryName]) {
+                        [typeName isEqualToString:kHomeworkTaskWordMemoryName] ||
+                        [typeName isEqualToString:@"跟读任务"]) {
                         
                         homeworkSession.lastSessionContent = @"[录制]";
                     } else {
@@ -769,7 +770,7 @@ MIActivityBannerViewDelegate
                                                                             finished:!self.isUnfinished];
         return height;
     }
-    return 143;
+    return 148;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

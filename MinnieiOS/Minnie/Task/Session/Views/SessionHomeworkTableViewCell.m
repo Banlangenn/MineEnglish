@@ -119,12 +119,12 @@ UICollectionViewDelegateFlowLayout>
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = NO;
             self.imageCountLabel.textColor = [UIColor greenBgColor];
-            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.imageCount,homeworkSession.homework.imageCount];
+            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu／%lu",homeworkSession.homework.imageCount,homeworkSession.homework.imageCount];
         } else if (homeworkSession.homework.currentImageCount < homeworkSession.homework.imageCount) {
             self.imageCountLabel.hidden = NO;
             self.imageSelectedImageV.hidden = YES;
             self.imageCountLabel.textColor = [UIColor redColor];
-            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu/%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
+            self.imageCountLabel.text = [NSString stringWithFormat:@"图片  %lu／%lu",homeworkSession.homework.currentImageCount,homeworkSession.homework.imageCount];
         }
         if (homeworkSession.homework.videoCount <= 0) {// 隐藏
             self.videoCountlabel.hidden = YES;
@@ -134,13 +134,13 @@ UICollectionViewDelegateFlowLayout>
             self.videoSelectedImagV.hidden = NO;
             self.videoCountlabel.textColor = [UIColor greenBgColor];
             
-            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu/%lu",homeworkSession.homework.videoCount,homeworkSession.homework.videoCount];
+            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu／%lu",homeworkSession.homework.videoCount,homeworkSession.homework.videoCount];
         } else if (homeworkSession.homework.currentVideoCount < homeworkSession.homework.videoCount) {
             self.videoCountlabel.hidden = NO;
             self.videoSelectedImagV.hidden = YES;
             self.videoCountlabel.textColor = [UIColor redColor];
             
-            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu/%lu",homeworkSession.homework.currentVideoCount,homeworkSession.homework.videoCount];
+            self.videoCountlabel.text = [NSString stringWithFormat:@"视频  %lu／%lu",homeworkSession.homework.currentVideoCount,homeworkSession.homework.videoCount];
         }
     } else {
         self.needCommitBgView.hidden = YES;
@@ -296,7 +296,7 @@ UICollectionViewDelegateFlowLayout>
     NSInteger number = 0;
     // 单词记忆，内容放在items最后一个
     // items 第一个放text 内容文本
-    // 跟读任务 内容放在 otheritem
+    // 跟读    内容放在 otheritem
     // 单词记忆、跟读，第一个放开始任务button
 
     for (HomeworkItem *item in self.homeworkSession.homework.items) {

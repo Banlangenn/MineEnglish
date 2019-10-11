@@ -44,7 +44,7 @@
 // 新增
 @property (nonatomic, strong) HomeworkFileDto *fileInfos; //文件位置信息
 
-@property (nonatomic, strong) NSString *typeName; //任务类型：通知、跟读任务、单词记忆、普通任务、考试统计
+@property (nonatomic, strong) NSString *typeName; //任务类型：通知、跟读、单词记忆、普通任务、考试统计
 
 @property (nonatomic, assign) NSInteger examType; // 任务类型为成绩统计：1:周测；2:正式考试
 

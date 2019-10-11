@@ -115,7 +115,13 @@
         };
         download.progressCallBack = ^(CGFloat progress) {
             
-            [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在保存视频%.f%%...", progress * 100]];
+            NSInteger current = progress * 100;
+            if (current % 5 == 0) {
+                [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在保存视频%.ld%%...",current]];
+            }
+            if (progress >= 1) {
+                [HUD hideAnimated:YES];
+            }
         };
         [download startDownloadVedioWithUrl:self.currentUrl];
     } else {

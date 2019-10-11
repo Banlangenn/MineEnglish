@@ -125,12 +125,12 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             progress.frame = CGRectMake(i * proWidth + 1, 0, proWidth - 2, progressHeight);
         }
         progress.backgroundColor = [UIColor detailColor];
-        progress.layer.cornerRadius = progressHeight/2.0;
+//        progress.layer.cornerRadius = progressHeight/2.0;
         [self.progressBgView addSubview:progress];
         
         [_progressViews addObject:progress];
     }
-    self.progressBgView.layer.cornerRadius = 2.0;
+//    self.progressBgView.layer.cornerRadius = 2.0;
     
     // 初始状态
     self.wordLabel.hidden = NO;

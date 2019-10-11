@@ -2006,7 +2006,9 @@ HomeworkAnswersPickerViewControllerDelegate>
         
         NSString *typeName = message.attributes[@"typeName"];
         if ([typeName isEqualToString:kHomeworkTaskWordMemoryName] ||
-            [typeName isEqualToString:kHomeworkTaskFollowUpName]) { // 跟读，单词任务消息
+            [typeName isEqualToString:kHomeworkTaskFollowUpName] ||
+            [typeName isEqualToString:@"跟读任务"]
+            ) { // 跟读，单词任务消息
             NSString *identifier = nil;
             if (isPeerMessage) {
                 identifier = LeftTextMessageTableViewCellId;
