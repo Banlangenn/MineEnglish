@@ -10,21 +10,22 @@
 #import "UIView+Layout.h"
 #import "AnswerPickerCell.h"
 #import "Masonry.h"
-#import "VIResourceLoaderManager.h"
-#import "VICacheManager.h"
+//#import "VIResourceLoaderManager.h"
+//#import "VICacheManager.h"
 #import <AVKit/AVKit.h>
 #import "NEPhotoBrowser.h"
 #import "AudioPlayer.h"
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
+#import "MIPlayerViewController.h"
 static CGFloat answerItemMargin = 5;
 
-@interface HomeworkAnswersPickerViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,VIResourceLoaderManagerDelegate, NEPhotoBrowserDataSource, NEPhotoBrowserDelegate>
+@interface HomeworkAnswersPickerViewController ()<UICollectionViewDelegate,UICollectionViewDataSource, NEPhotoBrowserDataSource, NEPhotoBrowserDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *mCollectionView;
 @property (weak, nonatomic) IBOutlet UIButton *preViewBtn;
 @property (strong, nonatomic) NSMutableArray * selectedAnswers;
-@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
+//@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
 @property (nonatomic, strong) NEPhotoBrowser *photoBrowser;
 @property (nonatomic, strong) UIImageView * currentSelectedImageView;
 @end
@@ -61,30 +62,35 @@ static CGFloat answerItemMargin = 5;
 
 - (void)playerVideoWithURL:(NSString *)url {
 
-    AVAudioSession *session =[AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    NSInteger playMode = [[Application sharedInstance] playMode];
-    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
-    AVPlayer *player;
-    if (playMode == 1)// 在线播放
-    {
-        [VICacheManager cleanCacheForURL:[NSURL URLWithString:url] error:nil];
-        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
-    }
-    else
-    {
-        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
-        resourceLoaderManager.delegate = self;
-        self.resourceLoaderManager = resourceLoaderManager;
-        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
-        player = [AVPlayer playerWithPlayerItem:playerItem];
-    }
+//    AVAudioSession *session =[AVAudioSession sharedInstance];
+//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    NSInteger playMode = [[Application sharedInstance] playMode];
+//    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
+//    AVPlayer *player;
+//    if (playMode == 1)// 在线播放
+//    {
+//        [VICacheManager cleanCacheForURL:[NSURL URLWithString:url] error:nil];
+//        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
+//    }
+//    else
+//    {
+//        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
+//        resourceLoaderManager.delegate = self;
+//        self.resourceLoaderManager = resourceLoaderManager;
+//        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
+//        player = [AVPlayer playerWithPlayerItem:playerItem];
+//    }
+//
+//    playerViewController.player = player;
+//    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:playerViewController animated:YES completion:nil];
+//    playerViewController.view.frame = self.view.frame;
+//    [playerViewController.player play];
     
-    playerViewController.player = player;
-    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
     [self presentViewController:playerViewController animated:YES completion:nil];
-    playerViewController.view.frame = self.view.frame;
-    [playerViewController.player play];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [playerViewController playVideoWithUrl:url];
     
 }
 
@@ -98,31 +104,31 @@ static CGFloat answerItemMargin = 5;
 
 - (void)showAudioWithURL:(NSString *)url withCoverURL:(NSString *)coverUrl
 {
-    AVAudioSession *session =[AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    AudioPlayerViewController *playerViewController = [[AudioPlayerViewController alloc]init];
-    NSInteger playMode = [[Application sharedInstance] playMode];
-    AVPlayer *player;
-    if (playMode == 1)// 在线播放
-    {
-        [VICacheManager cleanCacheForURL:[NSURL URLWithString:url] error:nil];
-        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
-    }
-    else
-    {
-        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
-        resourceLoaderManager.delegate = self;
-        self.resourceLoaderManager = resourceLoaderManager;
-        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
-        player = [AVPlayer playerWithPlayerItem:playerItem];
-    }
-    
-    
-    playerViewController.player = player;
-    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:playerViewController animated:YES completion:nil];
-    playerViewController.view.frame = self.view.frame;
-    [playerViewController.player play];
+//    AVAudioSession *session =[AVAudioSession sharedInstance];
+//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    AudioPlayerViewController *playerViewController = [[AudioPlayerViewController alloc]init];
+//    NSInteger playMode = [[Application sharedInstance] playMode];
+//    AVPlayer *player;
+//    if (playMode == 1)// 在线播放
+//    {
+//        [VICacheManager cleanCacheForURL:[NSURL URLWithString:url] error:nil];
+//        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
+//    }
+//    else
+//    {
+//        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
+//        resourceLoaderManager.delegate = self;
+//        self.resourceLoaderManager = resourceLoaderManager;
+//        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
+//        player = [AVPlayer playerWithPlayerItem:playerItem];
+//    }
+//
+//
+//    playerViewController.player = player;
+//    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:playerViewController animated:YES completion:nil];
+//    playerViewController.view.frame = self.view.frame;
+//    [playerViewController.player play];
     //    VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
     //    self.resourceLoaderManager = resourceLoaderManager;
     //    AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:url]];
@@ -131,6 +137,11 @@ static CGFloat answerItemMargin = 5;
     //    [self presentViewController:playerViewController animated:YES completion:nil];
     //    playerViewController.view.frame = self.view.frame;
     //    [playerViewController.player play];
+    
+    MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+    [self presentViewController:playerViewController animated:YES completion:nil];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [playerViewController playVideoWithUrl:url];
     [playerViewController setOverlyViewCoverUrl:coverUrl];
 }
 
@@ -176,34 +187,34 @@ static CGFloat answerItemMargin = 5;
 }
 
 #pragma mark - VIResourceLoaderManagerDelegate
-- (void)resourceLoaderManagerLoadURL:(NSURL *)url didFailWithError:(NSError *)error
-{
-    [VICacheManager cleanCacheForURL:url error:nil];
-    // 适配ipad版本
-    UIAlertControllerStyle alertStyle;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        alertStyle = UIAlertControllerStyleActionSheet;
-    } else {
-        alertStyle = UIAlertControllerStyleAlert;
-    }
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil
-                                                                     message:@"播放失败"
-                                                              preferredStyle:alertStyle];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self.tabBarController dismissViewControllerAnimated:YES completion:^{
-                                                                 
-                                                             }];
-                                                         }];
-    
-    [alertVC addAction:cancelAction];
-    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:alertVC
-                       animated:YES
-                     completion:nil];
-    
-}
+//- (void)resourceLoaderManagerLoadURL:(NSURL *)url didFailWithError:(NSError *)error
+//{
+//    [VICacheManager cleanCacheForURL:url error:nil];
+//    // 适配ipad版本
+//    UIAlertControllerStyle alertStyle;
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        alertStyle = UIAlertControllerStyleActionSheet;
+//    } else {
+//        alertStyle = UIAlertControllerStyleAlert;
+//    }
+//    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil
+//                                                                     message:@"播放失败"
+//                                                              preferredStyle:alertStyle];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定"
+//                                                           style:UIAlertActionStyleCancel
+//                                                         handler:^(UIAlertAction * _Nonnull action) {
+//                                                             [self.tabBarController dismissViewControllerAnimated:YES completion:^{
+//                                                                 
+//                                                             }];
+//                                                         }];
+//    
+//    [alertVC addAction:cancelAction];
+//    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:alertVC
+//                       animated:YES
+//                     completion:nil];
+//    
+//}
 
 
 #pragma mark - UICollectionViewDataSource && Delegate

@@ -12,7 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MIPlayerViewController : AVPlayerViewController
 
-- (void)showSaveVideo:(NSString *)url;
+@property (nonatomic,assign) BOOL showSaveBtn;
+
+
+- (void)playVideoWithUrl:(NSString *)videoUrl;
+
+- (void)setOverlyViewCoverUrl:(NSString *)cover;
 
 @end
 

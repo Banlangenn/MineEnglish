@@ -13,9 +13,7 @@
 #import "PushManager.h"
 #import "AudioPlayer.h"
 #import "FileUploader.h"
-#import "VICacheManager.h"
 #import "MIReadingWordsView.h"
-#import "VIResourceLoaderManager.h"
 #import <AVOSCloudIM/AVOSCloudIM.h>
 #import "MICheckWordsViewController.h"
 #import <AVFoundation/AVFoundation.h>

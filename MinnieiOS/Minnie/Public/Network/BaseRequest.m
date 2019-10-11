@@ -168,7 +168,7 @@ static NSString *accessToken = nil;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 NSString *errorText = [NSString stringWithFormat:@"认证错误，请重新登录, %@", self.requestUrl];
                 NSLog(@"%@", errorText);
-                [HUD showErrorWithMessage:@"该账号在其他设备登录"];
+//                [HUD showErrorWithMessage:@"请重新登录"];
             });
             
             if (APP.currentUser != nil) {

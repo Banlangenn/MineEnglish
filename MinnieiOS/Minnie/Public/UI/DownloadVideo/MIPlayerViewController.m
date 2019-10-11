@@ -6,15 +6,21 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import "AudioPlayer.h"
 #import "DownloadVideo.h"
 #import "UIView+ViewDesc.h"
 #import <Aspects/Aspects.h>
 #import "NSObject+BlockObserver.h"
 #import "MIPlayerViewController.h"
+#import "VICacheManager.h"
+#import "VIResourceLoaderManager.h"
 
-@interface MIPlayerViewController ()
-
-@property (nonatomic,copy) NSString * currentUrl;
+@interface MIPlayerViewController ()<
+VIResourceLoaderManagerDelegate
+>{
+    
+    BOOL _statusObserver;
+}
 
 //增加两个属性先
 //记录音量控制的父控件，控制它隐藏显示的 view
@@ -24,15 +30,45 @@
 //增加一个保存按钮
 @property (nonatomic, strong) UIButton *saveButton;
 
+// 当前播放URL
+@property (nonatomic,copy) NSString * currentUrl;
+
+// 缓存播放
+@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
+
+@property(nonatomic,strong)UIImageView * coverImageView;
+
 @end
 
 @implementation MIPlayerViewController
 
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    [self.hookAVPlaySingleTap remove];
+    [self.resourceLoaderManager cleanCache];
+    if (_statusObserver) {
+          [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+      }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    if (self.currentUrl.length > 0) {
+}
+
+#pragma mark - 保存视频
+- (void)setShowSaveBtn:(BOOL)showSaveBtn{
+   
+    _showSaveBtn = showSaveBtn;
+    if (!self.hookAVPlaySingleTap && _showSaveBtn) {
+        
+        [self addSaveVideoButton];
+    }
+}
+
+- (void)addSaveVideoButton {
         
         Class UIGestureRecognizerTarget = NSClassFromString(@"UIGestureRecognizerTarget");
 #pragma clang diagnostic push
@@ -83,9 +119,7 @@
                 [avTouchIgnoringView setNeedsLayout];
             }
         }];
-    }
 }
-
 
 - (UIButton *)saveButton{
     if (!_saveButton) {
@@ -117,7 +151,7 @@
             
             NSInteger current = progress * 100;
             if (current % 5 == 0) {
-                [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在保存视频%.ld%%...",current]];
+                [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在保存视频%ld%%...",(long)current]];
             }
             if (progress >= 1) {
                 [HUD hideAnimated:YES];
@@ -129,10 +163,120 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
+
+#pragma 播放状态
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     
-    [super viewWillDisappear:animated];
-    [self.hookAVPlaySingleTap remove];
+    if (object == self.player.currentItem && [keyPath isEqualToString:@"status"]) {
+        switch (self.player.currentItem.status) {
+            case AVPlayerItemStatusUnknown:     // 未知状态，此时不能播放
+                break;
+            case AVPlayerItemStatusReadyToPlay: // 准备完毕，可以播放
+                break;
+            case AVPlayerItemStatusFailed:      // 加载失败，网络或者服务器出现问题
+            {
+                if (_statusObserver) {
+                    [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+                }
+                [self.resourceLoaderManager cleanCache];
+                self.player = nil;
+                AVPlayerItem *playItem = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:self.currentUrl]];
+                AVPlayer *player = [AVPlayer playerWithPlayerItem:playItem];
+                [playItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+                
+                self.player = player;
+                [player play];
+            }
+                break;
+            default:
+                break;
+        }
+    }
 }
 
+#pragma mark - 封面
+
+- (void)setOverlyViewCoverUrl:(NSString *)cover
+{
+    if (!self.coverImageView) {
+        
+        self.coverImageView = [[UIImageView alloc] init];
+        self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.coverImageView.backgroundColor = [UIColor blackColor];
+        [self.contentOverlayView addSubview:self.coverImageView];
+        [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.contentOverlayView);
+        }];
+    }
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:cover]];
+}
+
+
+
+#pragma mark - 播放视频
+- (void)playVideoWithUrl:(NSString *)videoUrl {
+    
+    self.currentUrl = videoUrl;
+    [[AudioPlayer sharedPlayer] stop];
+    AVAudioSession *session =[AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    NSInteger playMode = [[Application sharedInstance] playMode];
+    
+    AVPlayer *player;
+    if (playMode == 1)// 在线播放
+    {
+        [VICacheManager cleanCacheForURL:[NSURL URLWithString:videoUrl] error:nil];
+        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:videoUrl]];
+    }
+    else
+    {
+        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
+        resourceLoaderManager.delegate = self;
+        self.resourceLoaderManager = resourceLoaderManager;
+        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:videoUrl]];
+        [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+        _statusObserver = YES;
+        player = [AVPlayer playerWithPlayerItem:playerItem];
+    }
+    
+    self.player = player;
+    self.view.frame = [UIScreen mainScreen].bounds;
+    [self.player play];
+}
+
+
+#pragma mark - VIResourceLoaderManagerDelegate
+- (void)resourceLoaderManagerLoadURL:(NSURL *)url didFailWithError:(NSError *)error
+{
+    [VICacheManager cleanCacheForURL:url error:nil];
+    // 适配ipad版本
+//    UIAlertControllerStyle alertStyle;
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        alertStyle = UIAlertControllerStyleActionSheet;
+//    } else {
+//        alertStyle = UIAlertControllerStyleAlert;
+//    }
+//    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil
+//                                                                     message:@"播放失败"
+//                                                              preferredStyle:alertStyle];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定"
+//                                                           style:UIAlertActionStyleCancel
+//                                                         handler:^(UIAlertAction * _Nonnull action) {
+//                                                             [self.tabBarController dismissViewControllerAnimated:YES completion:^{
+//
+//                                                             }];
+//                                                         }];
+//
+//    [alertVC addAction:cancelAction];
+//
+//    alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:alertVC
+//                       animated:YES
+//                     completion:nil];
+//
+}
+
+- (void)dealloc {
+    NSLog(@"dealloc");
+}
 @end

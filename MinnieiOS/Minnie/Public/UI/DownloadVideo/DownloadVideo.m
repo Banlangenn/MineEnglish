@@ -14,32 +14,18 @@
 
 @property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;
 
+@property (nonatomic,copy) NSString *vedioUrl;
 
 @end
 
 @implementation DownloadVideo
 
 - (void)startDownloadVedioWithUrl:(NSString *)vedioUrl{
-    
-    NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [cache stringByAppendingPathComponent:[vedioUrl stringByDeletingPathExtension]];
-    file = [NSString stringWithFormat:@"%@.mp4",file];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
-       
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(file)) {
-            UISaveVideoAtPathToSavedPhotosAlbum(file, self, nil, nil);
-            [HUD showWithMessage:@"保存成功"];
-        }
-        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
-    } else {
-       
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-        self.downloadTask = [session downloadTaskWithURL:[NSURL URLWithString:vedioUrl]];
-        [self.downloadTask resume];
-    }
-    
+    self.vedioUrl = vedioUrl;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    self.downloadTask = [session downloadTaskWithURL:[NSURL URLWithString:vedioUrl]];
+    [self.downloadTask resume];
 }
 
 #pragma mark - NSURLSessionDelegate
@@ -93,6 +79,13 @@ didFinishDownloadingToURL:(NSURL *)location{
         [HUD showWithMessage:@"视频保存成功"];
         if (self.successCallBack) {
             self.successCallBack(YES);
+        }
+        
+        NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *file = [cache stringByAppendingPathComponent:[self.vedioUrl stringByDeletingPathExtension]];
+        file = [NSString stringWithFormat:@"%@.mp4",file];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
+            [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
         }
     }
 }
