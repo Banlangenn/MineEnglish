@@ -19,6 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 // 缓存目录
 + (NSString *)cacheDirectory;
 
+// 清理缓存
++ (BOOL)clearTmpDirectory;
++ (BOOL)clearCachesDirectory;
+
+// 缓存大小
++ (NSNumber *)sizeOfTmpDirectory;
++ (NSNumber *)sizeCachesDirectory;
+
 @end
 
 NS_ASSUME_NONNULL_END

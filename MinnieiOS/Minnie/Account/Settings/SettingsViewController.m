@@ -137,7 +137,10 @@
         cell.itemLabel.text = @"清除缓存";
         cell.detailLabel.hidden = NO;
         
-        NSUInteger size = [[SDImageCache sharedImageCache] getSize];
+        NSUInteger imageSize = [[SDImageCache sharedImageCache] getSize];
+        NSUInteger cacheSize = [DownloadCacheVideo sizeCachesDirectory].integerValue;
+        cacheSize = 0;
+        NSUInteger size = imageSize + cacheSize;
         
         cell.detailLabel.text = [Utils formatedSizeString:(long long)(size)];
         cell.actionLabel.hidden = YES;
@@ -237,8 +240,8 @@
         [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
       
         // 清理视频文件
-        NSString *cacheDirectory = [DownloadCacheVideo cacheDirectory];
-        [[NSFileManager defaultManager] removeItemAtPath:cacheDirectory error:nil];
+        [DownloadCacheVideo clearTmpDirectory];
+        [DownloadCacheVideo clearCachesDirectory];
         
         // 清理缓存
         [self.settingsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
