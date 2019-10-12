@@ -482,6 +482,9 @@
 		12A1E95622A6995C001247D7 /* icon_Enclosure@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87FD07CE21BE443700664AF1 /* icon_Enclosure@3x.png */; };
 		12A1E95722A6997B001247D7 /* ic_remove_plat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97109653207A006D00568785 /* ic_remove_plat@3x.png */; };
 		12A1E95822A6997D001247D7 /* ic_remove_plat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9710961A207A006D00568785 /* ic_remove_plat@2x.png */; };
+		12A647752351A91E0094519F /* DownloadCacheVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A647742351A91E0094519F /* DownloadCacheVideo.m */; };
+		12A647762351A91E0094519F /* DownloadCacheVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A647742351A91E0094519F /* DownloadCacheVideo.m */; };
+		12A647772351A91F0094519F /* DownloadCacheVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A647742351A91E0094519F /* DownloadCacheVideo.m */; };
 		12AF64F5228E4A790031E1F6 /* EqualSpaceFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */; };
 		12AF64F6228E4A790031E1F6 /* EqualSpaceFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */; };
 		12B503CC2317C34E001880A9 /* MITeacherOnlineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12B503C52317C34D001880A9 /* MITeacherOnlineTableViewCell.xib */; };
@@ -2216,6 +2219,8 @@
 		128CF0C522C46645004FBC91 /* HomeworkConfirmView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeworkConfirmView.h; path = ../HomeworkConfirmView.h; sourceTree = "<group>"; };
 		128CF0C622C46645004FBC91 /* HomeworkConfirmView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeworkConfirmView.m; path = ../HomeworkConfirmView.m; sourceTree = "<group>"; };
 		128CF0CA22C4665C004FBC91 /* HomeworkConfirmView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeworkConfirmView.xib; path = ../HomeworkConfirmView.xib; sourceTree = "<group>"; };
+		12A647732351A91E0094519F /* DownloadCacheVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadCacheVideo.h; sourceTree = "<group>"; };
+		12A647742351A91E0094519F /* DownloadCacheVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCacheVideo.m; sourceTree = "<group>"; };
 		12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
 		12AF64F4228E4A790031E1F6 /* EqualSpaceFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualSpaceFlowLayout.h; sourceTree = "<group>"; };
 		12B503C42317C34D001880A9 /* MISecondTeachersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MISecondTeachersView.h; sourceTree = "<group>"; };
@@ -3755,6 +3760,8 @@
 			children = (
 				122F22DC2333856D00B3E4DA /* DownloadVideo.h */,
 				122F22DD2333856D00B3E4DA /* DownloadVideo.m */,
+				12A647732351A91E0094519F /* DownloadCacheVideo.h */,
+				12A647742351A91E0094519F /* DownloadCacheVideo.m */,
 				12C39B9D233606040005DFBC /* UIView+ViewDesc.h */,
 				12C39B9F233606050005DFBC /* UIView+ViewDesc.m */,
 				12786FB623346EF700FBD62F /* MIPlayerViewController.h */,
@@ -7598,6 +7605,7 @@
 				12ED3B12229C34B000255F8B /* SettingTableViewCell.m in Sources */,
 				1226F3362298334C00BAB1C9 /* FileUploader.m in Sources */,
 				12961CDD229FD72D0075B04A /* TagsRequest.m in Sources */,
+				12A647772351A91F0094519F /* DownloadCacheVideo.m in Sources */,
 				12CB73B222AB92180064FB21 /* HomeworkAddTableViewCell.m in Sources */,
 				128F137922D4695D00C9F5B7 /* HomeworkSessionsViewController.m in Sources */,
 				12B7082622A5207200117537 /* DatePickerView.m in Sources */,
@@ -8122,6 +8130,7 @@
 				97109C78207A2EC900568785 /* LoginViewController.m in Sources */,
 				879CE52F2191725800BBE4B7 /* AchieverService.m in Sources */,
 				971098F4207A0BF500568785 /* NEPhotoBrowser.m in Sources */,
+				12A647752351A91E0094519F /* DownloadCacheVideo.m in Sources */,
 				87C52FA92164AC3E004288F4 /* WBGDrawTool.m in Sources */,
 				97109D99207A2F0400568785 /* UpdateProfileRequest.m in Sources */,
 				871806DD21DF51540023511C /* MUPhotoPreviewController.m in Sources */,
@@ -8431,6 +8440,7 @@
 				12B504CA23191D6C001880A9 /* MIEidtFileView.m in Sources */,
 				1923CB1A2283C07D0056B2AD /* StudentLabelRequest.m in Sources */,
 				8770A2B2223CA9F8005733E4 /* PinyinHelper.m in Sources */,
+				12A647762351A91E0094519F /* DownloadCacheVideo.m in Sources */,
 				871806CD21DF438C0023511C /* MUVideoIndicatorView.m in Sources */,
 				8770A2B1223CA9F8005733E4 /* NSString+PinYin4Cocoa.m in Sources */,
 				973649C420AF2F8600511A95 /* HomeworkVideoTableViewCell.m in Sources */,

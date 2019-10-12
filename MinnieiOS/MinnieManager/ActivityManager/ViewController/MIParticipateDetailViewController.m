@@ -13,6 +13,7 @@
 //#import "VICacheManager.h"
 #import "UIScrollView+Refresh.h"
 //#import "VIResourceLoaderManager.h"
+#import "MIPlayerViewController.h"
 #import "MIParticipateDetailTableViewCell.h"
 #import "MIParticipateDetailViewController.h"
 
