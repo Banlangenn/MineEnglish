@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startDownloadVedioWithUrl:(NSString *)vedioUrl;
 
 + (NSString *)cachedFilePathForURL:(NSURL *)url;
+
+// 缓存目录
++ (NSString *)cacheDirectory;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -56,14 +56,19 @@ didFinishDownloadingToURL:(NSURL *)location{
 
 + (NSString *)cachedFilePathForURL:(NSURL *)url{
     
-    NSString *cacheDirectory = [NSTemporaryDirectory() stringByAppendingFormat:@"taskMedia"];
+    NSString *cacheDirectory = [DownloadCacheVideo cacheDirectory];
     NSString *pathComponent = [[url.absoluteString md5] md5];
     pathComponent = [pathComponent stringByAppendingPathExtension:@".mp4"];
-    
     NSString *filePath = [cacheDirectory stringByAppendingPathComponent:pathComponent];
-    [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
 
     return filePath;
+}
+
++ (NSString *)cacheDirectory{
+    
+    NSString *cacheDirectory = [NSTemporaryDirectory() stringByAppendingFormat:@"taskMedia"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:cacheDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    return cacheDirectory;
 }
 
 @end

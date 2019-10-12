@@ -245,6 +245,7 @@
 //        player = [AVPlayer playerWithPlayerItem:playerItem];
         
         NSString *videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:videoUrl]];
+//        NSLog(@"videoPath %@",videoPath);
         if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {// 判断是否有缓存文件
             
             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:videoPath]];

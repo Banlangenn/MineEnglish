@@ -10,6 +10,7 @@
 #import "Application.h"
 #import "IMManager.h"
 #import "AppDelegate.h"
+#import "DownloadCacheVideo.h"
 #import "LoginViewController.h"
 #import "SettingTableViewCell.h"
 #import "SettingsViewController.h"
@@ -234,11 +235,17 @@
     }
     else if (indexPath.row == 2) {
         [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+      
+        // 清理视频文件
+        NSString *cacheDirectory = [DownloadCacheVideo cacheDirectory];
+        [[NSFileManager defaultManager] removeItemAtPath:cacheDirectory error:nil];
+        
         // 清理缓存
         [self.settingsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         [TIP showText:@"缓存已清理" inView:self.view];
     }
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return SettingTableViewCellHeight;
