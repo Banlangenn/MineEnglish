@@ -1247,7 +1247,6 @@ ClassAndStudentSelectorControllerDelegate
                     }
                 }
                 rowHeight = height;
-//                rowHeight = self.items.count * 112 + MITitleTypeTableViewCellHeight;
             } else {
                 rowHeight = MITitleTypeTableViewCellHeight;
             }
@@ -1268,7 +1267,6 @@ ClassAndStudentSelectorControllerDelegate
                     }
                 }
                 rowHeight = height;
-//                rowHeight = self.answerItems.count * 112  + MITitleTypeTableViewCellHeight;
             } else {
                 rowHeight = MITitleTypeTableViewCellHeight;
             }

@@ -46,6 +46,14 @@ CGFloat const HomeworkImageTableViewCellHeight = 112.f;
     }
 }
 
+- (IBAction)imageButtonPressed:(id)sender {
+    
+    if (self.imageCalback) {
+        self.imageCalback(self.imageUrl);
+    }
+}
+
+
 @end
 
 

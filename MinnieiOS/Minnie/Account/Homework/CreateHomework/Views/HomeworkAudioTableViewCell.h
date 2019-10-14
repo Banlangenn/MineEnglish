@@ -18,12 +18,17 @@ extern CGFloat const HomeworkAudioWithMp3TableViewCellHeight;
 
 @interface HomeworkAudioTableViewCell : UITableViewCell
 
-@property (nonatomic, copy) HomeworkAudioTableViewCellPlayCallback playCallback;
+
+@property (nonatomic, copy) void (^imageCallback) (NSString *imageUrl);
+
+@property (nonatomic, copy) void (^playAudioCallback) (NSString *imageUrl, NSString *audioUrl);
+
+//@property (nonatomic, copy) HomeworkAudioTableViewCellPlayCallback playCallback;
 @property (nonatomic, copy) HomeworkAudioTableViewCellDeleteCallback deleteCallback;
 @property (nonatomic, copy) HomeworkAudioTableViewCellDeleteFileCallback deleteFileCallback;
 
 //设置音频
-- (void)setupWithAudioUrl:(NSString *)videoUrl
+- (void)setupWithAudioUrl:(NSString *)audioUrl
                  coverUrl:(NSString *)coverUrl;
 
 @end

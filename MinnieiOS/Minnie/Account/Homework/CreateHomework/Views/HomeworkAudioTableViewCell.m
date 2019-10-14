@@ -21,7 +21,8 @@ CGFloat const HomeworkAudioWithMp3TableViewCellHeight = 164.f;
 @property (weak, nonatomic) IBOutlet UIView * mp3FileView;
 @property (weak, nonatomic) IBOutlet UILabel *mp3TitleLabel;
 
-@property (nonatomic, copy) NSString *AudioUrl;
+@property (nonatomic, copy) NSString *audioUrl;
+@property (nonatomic, copy) NSString *audioCoverUrl;
 
 @end
 
@@ -41,7 +42,7 @@ CGFloat const HomeworkAudioWithMp3TableViewCellHeight = 164.f;
     [self.audioCoverImageView az_setGradientBackgroundWithColors:@[[UIColor colorWithHex:0xFF7C6B],[UIColor colorWithHex:0xFF395D]] locations:nil startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
 }
 
-- (void)setupWithAudioUrl:(NSString *)videoUrl
+- (void)setupWithAudioUrl:(NSString *)audioUrl
                  coverUrl:(NSString *)coverUrl {
     
     if (coverUrl.length == 0)
@@ -57,15 +58,31 @@ CGFloat const HomeworkAudioWithMp3TableViewCellHeight = 164.f;
         [self.audioCoverImageView sd_setImageWithURL:[coverUrl imageURLWithWidth:182.0]];
     }
     
-    self.AudioUrl = videoUrl;
+    self.audioUrl = audioUrl;
     
 }
 
-- (IBAction)playButtonPressed:(id)sender {
-//    if (self.playCallback != nil) {
-//        self.playCallback(self.AudioUrl);
-//    }
+- (IBAction)imageButtonPressed:(id)sender {
+    if (self.audioCoverUrl.length == 0) {
+        
+        if (self.playAudioCallback) {
+            self.playAudioCallback(self.audioCoverUrl,self.audioUrl);
+        }
+    } else {
+
+        if (self.imageCallback != nil) {
+            self.imageCallback(self.audioCoverUrl);
+        }
+    }
 }
+
+- (IBAction)audioButtonPressed:(id)sender {
+    
+    if (self.playAudioCallback) {
+        self.playAudioCallback(self.audioCoverUrl,self.audioUrl);
+    }
+}
+
 - (IBAction)deleteMp3FilePressed:(id)sender {
     if (self.deleteFileCallback != nil) {
         self.deleteFileCallback();

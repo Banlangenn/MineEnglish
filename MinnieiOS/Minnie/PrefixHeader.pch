@@ -65,33 +65,49 @@
 #define kColumnSecondWidth          184.f
 #define kColumnThreeWidth           (ScreenWidth - kRootModularWidth - kColumnSecondWidth)/2.0
 
-
+#define isDevelop (1)
 
 /*
  *  环境配置
- *  线上环境:     @"http://api.minniedu.com:8888"
  *  开发环境:     @"http://api.minniedu.com:9999"
+ *  线上环境:     @"http://api.minniedu.com:8888"
  */
+
+#if isDevelop
+
+#define kConfigBaseUrl         @"http://api.minniedu.com:9999"
+
+#else
+
 #define kConfigBaseUrl         @"http://api.minniedu.com:8888"
 
-//#define kConfigBaseUrl         @"http://api.minniedu.com:9999"
+#endif
+
 
 /*
  *  AVOSCloud配置
- *   正式版
- *   ApplicationId:     @"pe0Om2fpgh5oHCd0NfSUbwkT-gzGzoHsz"
- *   clientKey:         @"gfJuGSytpQalwcnAmNtunRoP"
  *   开发版
  *  ApplicationId:      @"JE1gHMgc1MJaTRCPFcz30F9E-gzGzoHsz"
  *  clientKey:          @"Axlm6WN8mJ7j1ivtGjgHxGqb"
+ *   正式版
+ *   ApplicationId:     @"pe0Om2fpgh5oHCd0NfSUbwkT-gzGzoHsz"
+ *   clientKey:         @"gfJuGSytpQalwcnAmNtunRoP"
  *
  */
+
+#if isDevelop
+
+#define kAVOSCloudApplicationId         @"JE1gHMgc1MJaTRCPFcz30F9E-gzGzoHsz"
+#define kAVOSCloudClientKey             @"Axlm6WN8mJ7j1ivtGjgHxGqb"
+
+#else
 
 #define kAVOSCloudApplicationId         @"pe0Om2fpgh5oHCd0NfSUbwkT-gzGzoHsz"
 #define kAVOSCloudClientKey             @"gfJuGSytpQalwcnAmNtunRoP"
 
-//#define kAVOSCloudApplicationId         @"JE1gHMgc1MJaTRCPFcz30F9E-gzGzoHsz"
-//#define kAVOSCloudClientKey             @"Axlm6WN8mJ7j1ivtGjgHxGqb"
+#endif
+
+
 
 typedef NS_ENUM(NSInteger, MIHomeworkCreateContentType) {
     

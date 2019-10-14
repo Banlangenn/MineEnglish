@@ -6,6 +6,9 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+
+#import "NEPhotoBrowser.h"
+#import "MIPlayerViewController.h"
 #import "MIAddTypeTableViewCell.h"
 #import "MITitleTypeTableViewCell.h"
 #import "HomeworkVideoTableViewCell.h"
@@ -32,7 +35,9 @@ UITableViewDelegate,
 UITableViewDataSource,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
-UIDocumentPickerDelegate
+UIDocumentPickerDelegate,
+NEPhotoBrowserDelegate,
+NEPhotoBrowserDataSource
 >
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -49,6 +54,10 @@ UIDocumentPickerDelegate
 @property (nonatomic, strong) MBProgressHUD * mHud;
 
 @property (nonatomic, assign) MIHomeworkCreateContentType contentType;
+
+@property (nonatomic, strong) NEPhotoBrowser *photoBrowser;
+@property (nonatomic, copy) NSString *currentSelectedImageUrl;
+@property (nonatomic, strong) UIImageView *currentSelectedImageView;
 
 @end
 
@@ -154,7 +163,8 @@ UIDocumentPickerDelegate
             MIAddTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MIAddTypeTableViewCellId forIndexPath:indexPath];
             WeakifySelf;
             contentCell.addCallback = ^(BOOL isAdd) {
-                [weakSelf handleAddAnswerItem];
+                
+                [weakSelf handleAddItem];
             };
             [contentCell setupWithCreateType:MIHomeworkCreateContentType_Add];
             cell = contentCell;
@@ -166,43 +176,21 @@ UIDocumentPickerDelegate
                 HomeworkImageTableViewCell *imageCell = [tableView dequeueReusableCellWithIdentifier:HomeworkImageTableViewCellId forIndexPath:indexPath];
                 
                 [imageCell setupWithImageUrl:item.imageUrl];
-                WeakifySelf;
-                [imageCell setDeleteCallback:^(BOOL bDel) {
-                    if (bDel)
-                    {
-                        [weakSelf deleteAnswerItem:item];
-                    }
-                    else
-                    {
-                        [weakSelf addFileAnswerItem:@[@"public.audio"] withHomeworkItem:item];
-                    }
-                }];
-                
+                [self setImageCellCallback:imageCell item:item];
                 cell = imageCell;
             } else if ([item.type isEqualToString:@"video"]) {
                 
                 HomeworkVideoTableViewCell *videoCell = [tableView dequeueReusableCellWithIdentifier:HomeworkVideoTableViewCellId forIndexPath:indexPath];
                 
                 [videoCell setupWithVideoUrl:item.videoUrl coverUrl:item.videoCoverUrl];
-                
-                WeakifySelf;
-                [videoCell setDeleteCallback:^{
-                    [weakSelf deleteAnswerItem:item];
-                }];
+                [self setVideoCellCallback:videoCell item:item];
                 cell = videoCell;
             } else if ([item.type isEqualToString:@"audio"]) {
                 
                 HomeworkAudioTableViewCell *audioCell = [tableView dequeueReusableCellWithIdentifier:HomeworkAudioTableViewCellId forIndexPath:indexPath];
                 [audioCell setupWithAudioUrl:item.audioUrl coverUrl:item.audioCoverUrl];
                 
-                WeakifySelf;
-                [audioCell setDeleteCallback:^{
-                    [weakSelf deleteAnswerItem:item];
-                }];
-                
-                [audioCell setDeleteFileCallback:^{
-                    [weakSelf deleteAnswerMp3ForItem:item];
-                }];
+                [self setAudioCellCallback:audioCell item:item];
                 cell = audioCell;
             }
         }
@@ -213,6 +201,7 @@ UIDocumentPickerDelegate
             MIAddTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MIAddTypeTableViewCellId forIndexPath:indexPath];
             WeakifySelf;
             contentCell.addCallback = ^(BOOL isAdd) {
+                
                 [weakSelf handleAddItem];
             };
             [contentCell setupWithCreateType:MIHomeworkCreateContentType_Add];
@@ -226,43 +215,20 @@ UIDocumentPickerDelegate
                 HomeworkImageTableViewCell *imageCell = [tableView dequeueReusableCellWithIdentifier:HomeworkImageTableViewCellId forIndexPath:indexPath];
                 
                 [imageCell setupWithImageUrl:item.imageUrl];
-                WeakifySelf;
-                [imageCell setDeleteCallback:^(BOOL bDel) {
-                    if (bDel)
-                    {
-                        [weakSelf deleteItem:item];
-                    }
-                    else
-                    {
-                        [weakSelf addFileItem:@[@"public.audio"] withHomeworkItem:item];
-                    }
-                }];
-                
+                [self setImageCellCallback:imageCell item:item];
                 cell = imageCell;
             } else if ([item.type isEqualToString:@"video"]) {
                 
                 HomeworkVideoTableViewCell *videoCell = [tableView dequeueReusableCellWithIdentifier:HomeworkVideoTableViewCellId forIndexPath:indexPath];
                 
                 [videoCell setupWithVideoUrl:item.videoUrl coverUrl:item.videoCoverUrl];
-                
-                WeakifySelf;
-                [videoCell setDeleteCallback:^{
-                    [weakSelf deleteItem:item];
-                }];
+                [self setVideoCellCallback:videoCell item:item];
                 cell = videoCell;
             } else if ([item.type isEqualToString:@"audio"]) {
                 
                 HomeworkAudioTableViewCell *audioCell = [tableView dequeueReusableCellWithIdentifier:HomeworkAudioTableViewCellId forIndexPath:indexPath];
                 [audioCell setupWithAudioUrl:item.audioUrl coverUrl:item.audioCoverUrl];
-                
-                WeakifySelf;
-                [audioCell setDeleteCallback:^{
-                    [weakSelf deleteItem:item];
-                }];
-                
-                [audioCell setDeleteFileCallback:^{
-                    [weakSelf deleteMp3ForItem:item];
-                }];
+                [self setAudioCellCallback:audioCell item:item];
                 cell = audioCell;
                 
             }
@@ -274,6 +240,79 @@ UIDocumentPickerDelegate
     return cell;
 }
 
+- (void)setAudioCellCallback:(HomeworkAudioTableViewCell *)cell item:(id)item{
+    WeakifySelf;
+   [cell setDeleteCallback:^{
+       [weakSelf deleteItem:item];
+   }];
+   [cell setImageCallback:^(NSString *imageUrl) {
+       
+       weakSelf.currentSelectedImageUrl = imageUrl;
+       
+       weakSelf.photoBrowser = [[NEPhotoBrowser alloc] init];
+       weakSelf.photoBrowser.delegate = weakSelf;
+       weakSelf.photoBrowser.dataSource = weakSelf;
+       weakSelf.photoBrowser.clickedImageView = weakSelf.currentSelectedImageView;
+       UIViewController *rootController = weakSelf.window.rootViewController;
+       [weakSelf.photoBrowser showInContext:rootController];
+   }];
+   
+   [cell setPlayAudioCallback:^(NSString *imageUrl, NSString *audioUrl) {
+      
+       MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+       playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+       [playerViewController playVideoWithUrl:audioUrl];
+       [playerViewController setOverlyViewCoverUrl:imageUrl];
+       [weakSelf presentVC:playerViewController];
+   }];
+   
+   [cell setDeleteFileCallback:^{
+       [weakSelf deleteMp3ForItem:item];
+   }];
+}
+- (void)setImageCellCallback:(HomeworkImageTableViewCell *)cell item:(id)item{
+   
+     WeakifySelf;
+     [cell setDeleteCallback:^(BOOL bDel) {
+         if (bDel)
+         {
+             [weakSelf deleteItem:item];
+         }
+         else
+         {
+             [weakSelf addFileItem:@[@"public.audio"] withHomeworkItem:item];
+         }
+     }];
+     
+     [cell setImageCalback:^(NSString *imageUrl) {
+
+         weakSelf.currentSelectedImageUrl = imageUrl;
+         
+         weakSelf.photoBrowser = [[NEPhotoBrowser alloc] init];
+         weakSelf.photoBrowser.delegate = weakSelf;
+         weakSelf.photoBrowser.dataSource = weakSelf;
+         weakSelf.photoBrowser.clickedImageView = weakSelf.currentSelectedImageView;
+         UIViewController *rootController = weakSelf.window.rootViewController;
+         [weakSelf.photoBrowser showInContext:rootController];
+    }];
+}
+
+- (void)setVideoCellCallback:(HomeworkVideoTableViewCell *)cell item:(id)item{
+
+    WeakifySelf;
+    [cell setDeleteCallback:^{
+        [weakSelf deleteItem:item];
+    }];
+    [cell setPlayCallback:^(NSString *url) {
+
+        MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+        playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        [playerViewController playVideoWithUrl:url];
+        [weakSelf presentVC:playerViewController];
+    }];
+}
+
+
 #pragma mark - 添加、删除音频、视频、图片、文件材料
 - (void)handleAddItem {
     // 适配ipad版本
@@ -283,14 +322,19 @@ UIDocumentPickerDelegate
     } else {
         alertStyle = UIAlertControllerStyleAlert;
     }
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择作业材料类型"
+    NSString *title= @"选择作业材料类型";
+    if (self.isAddingAnswerItem) {
+        title = @"选择作业答案类型";
+    }
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title
                                                                      message:nil
                                                               preferredStyle:alertStyle];
-    
+    WeakifySelf;
     UIAlertAction * fileAction = [UIAlertAction actionWithTitle:@"文件"
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                            [self addFileItem:@[@"public.image", @"public.movie",@"public.audio"] withHomeworkItem:nil];
+                                                          
+                                                            [weakSelf addFileItem:@[@"public.image", @"public.movie",@"public.audio"] withHomeworkItem:nil];
                                                         }];
     
     UIAlertAction * videoAction = [UIAlertAction actionWithTitle:@"视频"
@@ -310,7 +354,7 @@ UIDocumentPickerDelegate
                                                          handler:^(UIAlertAction * _Nonnull action) {
                                                          }];
     
-   
+
     if (self.contentType == MIHomeworkCreateContentType_AddCovers ||
         self.contentType == MIHomeworkCreateContentType_AddActPic) {
       
@@ -332,38 +376,10 @@ UIDocumentPickerDelegate
         [alertVC addAction:cancelAction];
     }
     [self presentVC:alertVC];
-
-}
-
-- (void)presentVC:(UIViewController *)VC{
-    
-#if MANAGERSIDE
-    
-    UIViewController *rootController = self.window.rootViewController;
-    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [rootController presentViewController:VC animated:YES completion:nil];
-#else
-    
-//    VC.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self.vc presentViewController:VC
-                          animated:YES
-                        completion:nil];
-#endif
-}
-
-- (void)addFileItem:(NSArray *)allowedUTIs withHomeworkItem:(HomeworkItem *)item
-{
-    self.isAddingAnswerItem = NO;
-    UIDocumentPickerViewController * picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:allowedUTIs inMode:UIDocumentPickerModeImport];
-    picker.delegate = self;
-    objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self presentVC:picker];
-    
 }
 
 - (void)addVideoItem {
     
-    self.isAddingAnswerItem = NO;
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -373,7 +389,6 @@ UIDocumentPickerDelegate
 
 - (void)addImageItem {
     
-    self.isAddingAnswerItem = NO;
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -381,186 +396,18 @@ UIDocumentPickerDelegate
     [self presentVC:picker];
 }
 
-- (void)deleteItem:(HomeworkItem *)item {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                         }];
-    WeakifySelf;
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              [weakSelf.items removeObject:item];
-                                                              [weakSelf.tableView reloadData];
-                                                              [weakSelf callBack];
-                                                          }];
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:confirmAction];
-    [self presentVC:alertController];
-}
-
-- (void)deleteMp3ForItem:(HomeworkItem *)item
+- (void)addFileItem:(NSArray *)allowedUTIs withHomeworkItem:(id)item
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                         }];
-    WeakifySelf;
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              item.audioUrl = @"";
-                                                              NSString * coverUrl = item.audioCoverUrl;
-                                                              item.imageUrl = coverUrl;
-                                                              item.audioCoverUrl = @"";
-                                                              item.type = HomeworkItemTypeImage;
-                                                              [weakSelf.tableView reloadData];
-                                                              [weakSelf callBack];
-                                                          }];
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:confirmAction];
-    [self presentVC:alertController];
-}
-- (void)deleteAnswerMp3ForItem:(HomeworkAnswerItem *)item
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                         }];
-    WeakifySelf;
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              item.audioUrl = @"";
-                                                              NSString * coverUrl = item.audioCoverUrl;
-                                                              item.imageUrl = coverUrl;
-                                                              item.audioCoverUrl = @"";
-                                                              item.type = HomeworkItemTypeImage;
-                                                              [weakSelf.tableView reloadData];
-                                                              [weakSelf callBack];
-                                                          }];
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:confirmAction];
-    [self presentVC:alertController];
-}
-- (void)deleteAnswerItem:(HomeworkAnswerItem *)item {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                         }];
-    WeakifySelf;
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              [weakSelf.answerItems removeObject:item];
-                                                              [weakSelf.tableView reloadData];
-                                                              [weakSelf callBack];
-                                                          }];
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:confirmAction];
-    
-    [self presentVC:alertController];
-}
-
-- (void)handleAddAnswerItem {
-    // 适配ipad版本
-    UIAlertControllerStyle alertStyle;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        alertStyle = UIAlertControllerStyleActionSheet;
-    } else {
-        alertStyle = UIAlertControllerStyleAlert;
-    }
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择作业答案类型"
-                                                                     message:nil
-                                                              preferredStyle:alertStyle];
-    
-    UIAlertAction * fileAction = [UIAlertAction actionWithTitle:@"文件"
-                                                          style:UIAlertActionStyleDefault
-                                                        handler:^(UIAlertAction * _Nonnull action) {
-                                                            [self addFileAnswerItem:@[@"public.image", @"public.movie",@"public.audio"] withHomeworkItem:nil];
-                                                        }];
-    
-    
-    UIAlertAction *videoAction = [UIAlertAction actionWithTitle:@"视频"
-                                                          style:UIAlertActionStyleDefault
-                                                        handler:^(UIAlertAction * _Nonnull action) {
-                                                            [self addVideoAnswerItem];
-                                                        }];
-    
-    UIAlertAction *imageAction = [UIAlertAction actionWithTitle:@"图片"
-                                                          style:UIAlertActionStyleDefault
-                                                        handler:^(UIAlertAction * _Nonnull action) {
-                                                            [self addImageAnswerItem];
-                                                        }];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                         }];
-    [alertVC addAction:fileAction];
-    [alertVC addAction:videoAction];
-    [alertVC addAction:imageAction];
-    [alertVC addAction:cancelAction];
-    
-    
-    [self presentVC:alertVC];
-}
-
-- (void)addFileAnswerItem:(NSArray *)allowedUTIs withHomeworkItem:(HomeworkAnswerItem *)item
-{
-    self.isAddingAnswerItem = YES;
-    
     UIDocumentPickerViewController * picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:allowedUTIs inMode:UIDocumentPickerModeImport];
     picker.delegate = self;
-    
     objc_setAssociatedObject(picker , &keyOfPickerDocument, item, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     [self presentVC:picker];
+    
 }
 
-- (void)addVideoAnswerItem {
-    self.isAddingAnswerItem = YES;
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.mediaTypes = @[(NSString *)kUTTypeMovie];
-    
-    [self presentVC:picker];
-}
 
-- (void)addImageAnswerItem {
-    self.isAddingAnswerItem = YES;
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.mediaTypes = @[(NSString *)kUTTypeImage];
-    
-    [self presentVC:picker];
-}
-
-- (void)deleteHomework {
+#pragma mark - 删除 item
+- (void)deleteItem:(id)item {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
@@ -569,16 +416,66 @@ UIDocumentPickerDelegate
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
                                                          }];
-    
+    WeakifySelf;
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                                if ([item isKindOfClass:[HomeworkAnswerItem class]]) {
+                                                                   
+                                                                    [weakSelf.answerItems removeObject:item];
+                                                                } else if ([item isKindOfClass:[HomeworkItem class]]){
+                                                                   
+                                                                    [weakSelf.items removeObject:item];
+                                                                }
+                                                                [weakSelf.tableView reloadData];
+                                                                [weakSelf callBack];
                                                           }];
     
     [alertController addAction:cancelAction];
     [alertController addAction:confirmAction];
     [self presentVC:alertController];
 }
+
+- (void)deleteMp3ForItem:(id)item
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除?"
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                         }];
+    WeakifySelf;
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"删除"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                                if ([item isKindOfClass:[HomeworkAnswerItem class]]) {
+                                                                  
+                                                                    HomeworkAnswerItem *tempItem = item;
+                                                                    tempItem.audioUrl = @"";
+                                                                    NSString * coverUrl = tempItem.audioCoverUrl;
+                                                                    tempItem.imageUrl = coverUrl;
+                                                                    tempItem.audioCoverUrl = @"";
+                                                                    tempItem.type = HomeworkItemTypeImage;
+                                                                } else if ([item isKindOfClass:[HomeworkItem class]]) {
+                                                                    
+                                                                    HomeworkItem *tempItem = item;
+                                                                    tempItem.audioUrl = @"";
+                                                                    NSString * coverUrl = tempItem.audioCoverUrl;
+                                                                    tempItem.imageUrl = coverUrl;
+                                                                    tempItem.audioCoverUrl = @"";
+                                                                    tempItem.type = HomeworkItemTypeImage;
+                                                                }
+                                                                [weakSelf.tableView reloadData];
+                                                                [weakSelf callBack];
+                                                          }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:confirmAction];
+    [self presentVC:alertController];
+}
+
 
 #pragma mark - 上传 音频、视频、图片、文件
 - (void)uploadVideoForPath:(NSURL *)videoUrl{
@@ -703,7 +600,6 @@ UIDocumentPickerDelegate
                 item.audioUrl = videoUrl;
                 NSString * cover = item.imageUrl;
                 item.audioCoverUrl = cover;
-                
             }
             else
             {
@@ -869,6 +765,30 @@ UIDocumentPickerDelegate
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - NEPhotoBrowserDataSource
+- (NSInteger)numberOfPhotosInPhotoBrowser:(NEPhotoBrowser *)browser {
+    return 1;
+}
+- (NSURL* __nonnull)photoBrowser:(NEPhotoBrowser * __nonnull)browser imageURLForIndex:(NSInteger)index {
+    return [NSURL URLWithString:self.currentSelectedImageUrl];
+}
+
+- (UIImage * __nullable)photoBrowser:(NEPhotoBrowser * __nonnull)browser placeholderImageForIndex:(NSInteger)index {
+    return self.currentSelectedImageView.image;
+}
+
+#pragma mark - NEPhotoBrowserDelegate
+- (void)photoBrowser:(NEPhotoBrowser * __nonnull)browser willSavePhotoWithView:(NEPhotoBrowserView *)view {
+    [HUD showProgressWithMessage:@"正在保存图片"];
+}
+
+- (void)photoBrowser:(NEPhotoBrowser * __nonnull)browser didSavePhotoSuccessWithImage:(UIImage *)image {
+    [HUD showWithMessage:@"保存图片成功"];
+}
+
+- (void)photoBrowser:(NEPhotoBrowser * __nonnull)browser savePhotoErrorWithError:(NSError *)error {
+    [HUD showErrorWithMessage:@"保存图片失败"];
+}
 
 - (void)callBack{
     
@@ -882,6 +802,22 @@ UIDocumentPickerDelegate
             self.addItemCallback(self.items);
         }
     }
+}
+
+- (void)presentVC:(UIViewController *)VC{
+    
+#if MANAGERSIDE
+    
+    UIViewController *rootController = self.window.rootViewController;
+    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [rootController presentViewController:VC animated:YES completion:nil];
+#else
+    
+    VC.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self.vc presentViewController:VC
+                          animated:YES
+                        completion:nil];
+#endif
 }
 
 @end

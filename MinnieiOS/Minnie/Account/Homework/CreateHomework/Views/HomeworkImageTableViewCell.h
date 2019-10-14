@@ -17,6 +17,8 @@ extern CGFloat const HomeworkImageTableViewCellHeight;
 
 @property (nonatomic, copy) HomeworkImageTableViewCellDeleteCallback deleteCallback;
 
+@property (nonatomic, copy) void (^imageCalback) (NSString *imageUrl);
+
 - (void)setupWithImageUrl:(NSString *)ImageUrl;
 
 @end

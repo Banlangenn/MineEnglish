@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="399" height="209"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wu-hI-xu7" id="UkD-m3-0mh">
-                <rect key="frame" x="0.0" y="0.0" width="399" height="208.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="399" height="209"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CyY-Hg-WK8">
@@ -38,7 +35,7 @@
                             <color key="titleColor" red="1" green="0.22352941176470587" blue="0.36470588235294116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="playButtonPressed:" destination="5wu-hI-xu7" eventType="touchUpInside" id="lUJ-gr-ssw"/>
+                            <action selector="imageButtonPressed:" destination="5wu-hI-xu7" eventType="touchUpInside" id="iIZ-Zg-mLd"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F7P-5W-neU">
@@ -53,7 +50,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4P-Ub-Iin">
-                        <rect key="frame" x="0.0" y="112" width="399" height="96.5"/>
+                        <rect key="frame" x="0.0" y="112" width="399" height="97"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RNk-x5-iN1">
                                 <rect key="frame" x="74" y="12" width="120" height="40"/>
@@ -64,11 +61,17 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MP3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fb-YH-TEM">
-                                <rect key="frame" x="118.5" y="23.5" width="31" height="17"/>
+                                <rect key="frame" x="118.5" y="12" width="31" height="40"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iO-uI-83a">
+                                <rect key="frame" x="74" y="12" width="120" height="40"/>
+                                <connections>
+                                    <action selector="audioButtonPressed:" destination="5wu-hI-xu7" eventType="touchUpInside" id="tcs-C7-Gdj"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDN-JS-jAS">
                                 <rect key="frame" x="351" y="8" width="48" height="48"/>
                                 <constraints>
@@ -90,13 +93,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0iO-uI-83a" firstAttribute="leading" secondItem="RNk-x5-iN1" secondAttribute="leading" id="13M-ue-mXl"/>
+                            <constraint firstItem="0iO-uI-83a" firstAttribute="bottom" secondItem="RNk-x5-iN1" secondAttribute="bottom" id="1Th-Lt-vIY"/>
                             <constraint firstItem="RNk-x5-iN1" firstAttribute="centerY" secondItem="siu-3z-9iT" secondAttribute="centerY" id="4Es-le-dMH"/>
+                            <constraint firstItem="0iO-uI-83a" firstAttribute="top" secondItem="4fb-YH-TEM" secondAttribute="top" id="4OM-lN-Fo4"/>
                             <constraint firstItem="4fb-YH-TEM" firstAttribute="centerX" secondItem="RNk-x5-iN1" secondAttribute="centerX" id="EzW-JE-vOI"/>
+                            <constraint firstItem="0iO-uI-83a" firstAttribute="trailing" secondItem="RNk-x5-iN1" secondAttribute="trailing" id="TGo-Qx-Sjw"/>
                             <constraint firstItem="RNk-x5-iN1" firstAttribute="top" secondItem="d4P-Ub-Iin" secondAttribute="top" constant="12" id="Y4O-7g-1G7"/>
                             <constraint firstAttribute="trailing" secondItem="uDN-JS-jAS" secondAttribute="trailing" id="eKM-C8-UTX"/>
                             <constraint firstItem="RNk-x5-iN1" firstAttribute="leading" secondItem="siu-3z-9iT" secondAttribute="trailing" constant="10" id="edw-eW-JNO"/>
                             <constraint firstItem="RNk-x5-iN1" firstAttribute="leading" secondItem="d4P-Ub-Iin" secondAttribute="leading" constant="74" id="q8L-ux-o1w"/>
                             <constraint firstItem="4fb-YH-TEM" firstAttribute="centerY" secondItem="RNk-x5-iN1" secondAttribute="centerY" id="rWL-zV-bd2"/>
+                            <constraint firstItem="0iO-uI-83a" firstAttribute="top" secondItem="RNk-x5-iN1" secondAttribute="top" id="rz1-Hj-XYM"/>
                             <constraint firstItem="uDN-JS-jAS" firstAttribute="centerY" secondItem="RNk-x5-iN1" secondAttribute="centerY" id="v76-VM-2Ah"/>
                         </constraints>
                     </view>
