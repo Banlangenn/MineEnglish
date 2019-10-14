@@ -1256,9 +1256,9 @@ ClassAndStudentSelectorControllerDelegate
             if (self.answerItems.count) {
               
                 CGFloat height = MITitleTypeTableViewCellHeight;
-                height = height + 112;
                 for (HomeworkAnswerItem *item in self.answerItems) {
-                   
+
+                   height = height + 112;
                     if ([item.type isEqualToString:@"audio"]) {
                         
                         if (item.audioCoverUrl.length > 0 && item.audioUrl.length > 0) {
