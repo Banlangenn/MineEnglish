@@ -334,7 +334,13 @@ NEPhotoBrowserDataSource
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction * _Nonnull action) {
                                                           
-                                                            [weakSelf addFileItem:@[@"public.image", @"public.movie",@"public.audio"] withHomeworkItem:nil];
+                                                            if (weakSelf.contentType == MIHomeworkCreateContentType_AddBgMusic) {
+                                                                
+                                                                [weakSelf addFileItem:@[@"public.audio"] withHomeworkItem:nil];
+                                                            } else {
+                                                                
+                                                                [weakSelf addFileItem:@[@"public.image", @"public.movie",@"public.audio"] withHomeworkItem:nil];
+                                                            }
                                                         }];
     
     UIAlertAction * videoAction = [UIAlertAction actionWithTitle:@"视频"
@@ -547,6 +553,11 @@ NEPhotoBrowserDataSource
                             item.type = HomeworkItemTypeVideo;
                             item.videoUrl = videoUrl;
                             item.videoCoverUrl = @"";
+                            if (self.contentType == MIHomeworkCreateContentType_AddBgMusic) {// 文件中选择mp4类型
+
+                                item.type = HomeworkItemTypeAudio;
+                                item.audioUrl = videoUrl;
+                            }
                             
                             [weakSelf.items addObject:item];
                         }
