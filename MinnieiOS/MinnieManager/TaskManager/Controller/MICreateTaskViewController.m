@@ -1228,12 +1228,12 @@ ClassAndStudentSelectorControllerDelegate
                 wordInfo.english = @"+";
                 wordInfo.chinese = @"添加单词";
                 [words addObject:wordInfo];
-                rowHeight = [MIAddWordTableViewCell heightWithTags:words collectionView:self.collectionWidth] + 50;
-                break;
+                rowHeight = [MIAddWordTableViewCell heightWithTags:words collectionView:self.collectionWidth] + 30;
             } else {
-                rowHeight = MITitleTypeTableViewCellHeight;
+                rowHeight = MITitleTypeTableViewCellHeight + 25;
             }
-        case MIHomeworkCreateContentType_Materials:
+            break;
+        case MIHomeworkCreateContentType_Materials:// 添加材料高度
             if (self.items.count) {
                
                 CGFloat height = MITitleTypeTableViewCellHeight;
