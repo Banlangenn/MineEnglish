@@ -324,18 +324,16 @@
         [request setValue:tokenStr forHTTPHeaderField:@"Authorization"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
-        NSLog(@"refreshOnlineState 0");
         NSURLSession *session = [NSURLSession sharedSession];
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             
             weakSelf.onlineStartTime = CFAbsoluteTimeGetCurrent();
-            NSLog(@"refreshOnlineState 2 %@ %f",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding],weakSelf.onlineStartTime);
+            
             dispatch_semaphore_signal(semaphore);
         }];
         [task resume];
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        NSLog(@"refreshOnlineState 1");
     } else {
        
         [ManagerServce requestUpdateOnlineState:online

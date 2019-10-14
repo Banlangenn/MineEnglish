@@ -510,9 +510,8 @@ UINavigationControllerDelegate
                     }];
                 });
             }else{
-                NSLog(@"当前压缩进度:%f",exportSession.progress);
+                
             }
-            NSLog(@"%@",exportSession.error);
             
         }];
     }

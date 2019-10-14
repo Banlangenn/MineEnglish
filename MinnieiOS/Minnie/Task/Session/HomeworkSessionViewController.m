@@ -305,7 +305,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 #else
     return ;
 #endif
-    NSLog(@"correct:%@",session.conversation.conversationId);
+
     if (session.conversation.conversationId != self.conversation.conversationId) {
         return;
     }
@@ -1324,10 +1324,8 @@ HomeworkAnswersPickerViewControllerDelegate>
                             }
                         }];
                     } else{
-                        NSLog(@"当前压缩进度:%f",exportSession.progress);
                     }
                     
-                    NSLog(@"%@",exportSession.error);
                 });
             }];
         }
@@ -1434,7 +1432,6 @@ HomeworkAnswersPickerViewControllerDelegate>
 #pragma mark - 加载历史消息
 - (void)loadMessagesHistory {
     
-    NSLog(@"loadMessagesHistory %@  %@",[IMManager sharedManager].client.clientId,self.conversation.description);
     WeakifySelf;
     [self.conversation queryMessagesWithLimit:1000 callback:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         StrongifySelf;
@@ -2418,7 +2415,6 @@ HomeworkAnswersPickerViewControllerDelegate>
     APP.currentIMHomeworkSessionId = 0;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
 }
 
 

@@ -254,7 +254,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
+    
     
     [self.request stop];
     [self.request clearCompletionBlock];

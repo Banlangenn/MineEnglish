@@ -105,7 +105,7 @@ NSString * const kIMManagerClientOnlineNotification = @"kIMManagerClientOnlineNo
 #pragma mark -
 
 - (void)imClientPaused:(AVIMClient *)imClient {
-    NSLog(@"%s", __func__);
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kIMManagerClientOfflineNotification object:nil];
 }
@@ -115,7 +115,7 @@ NSString * const kIMManagerClientOnlineNotification = @"kIMManagerClientOnlineNo
 }
 
 - (void)imClientResumed:(AVIMClient *)imClient {
-    NSLog(@"%s", __func__);
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kIMManagerClientOnlineNotification object:nil];
 }
@@ -167,7 +167,6 @@ didReceiveTypedMessage:(AVIMTypedMessage *)message {
 - (void)client:(AVIMClient *)client
 didOfflineWithError:(NSError *)error {
     if (error.code == 4111) { // 被人踢出来了，应用退出
-        NSLog(@"被人踢出来了，应用退出");
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [HUD showErrorWithMessage:@"你的帐号在别处登录"];

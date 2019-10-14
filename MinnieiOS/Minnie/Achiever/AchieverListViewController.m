@@ -27,7 +27,6 @@
     [self.achieverRequest stop];
     self.achieverRequest = nil;
     
-    NSLog(@"%s", __func__);
 }
 
 - (void)viewDidLoad {

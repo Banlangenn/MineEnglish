@@ -126,7 +126,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate,ChooseDatePicker
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
+    
 }
 
 #pragma mark - IBAction

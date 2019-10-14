@@ -86,7 +86,7 @@
                                 self.volumeSuperView = view;
                                 
                                 [view HF_addObserverForKeyPath:@"hidden" block:^(__weak id object, id oldValue, id newValue) {
-                                    NSLog(@"newValue ==%@",newValue);
+                                    
                                     BOOL isHidden = [(NSNumber *)newValue boolValue];
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         
@@ -189,7 +189,6 @@
                 
                 self.player = player;
                 [player play];
-                NSLog(@"AVPlayerItemStatusFailed");
             }
                 break;
             default:
@@ -245,7 +244,6 @@
 //        player = [AVPlayer playerWithPlayerItem:playerItem];
         
         NSString *videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:videoUrl]];
-//        NSLog(@"videoPath %@",videoPath);
         if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {// 判断是否有缓存文件
             
             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:videoPath]];
@@ -296,7 +294,5 @@
 ////
 //}
 
-- (void)dealloc {
-    NSLog(@"dealloc");
-}
+
 @end

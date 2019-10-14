@@ -56,7 +56,7 @@ EqualSpaceFlowLayoutDelegate
     [self.tagsRequest stop];
     self.tagsRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 #pragma mark - IBActions

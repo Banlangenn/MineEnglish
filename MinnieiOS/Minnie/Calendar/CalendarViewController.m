@@ -37,7 +37,6 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
 }
 
 #pragma mark - Private Methods
@@ -206,8 +205,6 @@
             }
         }
     }
-    
-    NSLog(@"%@", @"哈哈");
 }
 
 #pragma mark - UITableViewDataSource

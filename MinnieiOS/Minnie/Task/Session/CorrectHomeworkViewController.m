@@ -65,7 +65,6 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
 }
 
 
@@ -294,7 +293,6 @@
 
         [scoreCell setShareCallback:^(BOOL share, BOOL shareType) {
            
-            NSLog(@"setShareCallback  %d   %d",share,shareType);
             weakSelf.m_circle = share;
             weakSelf.m_scope = shareType;
         }];

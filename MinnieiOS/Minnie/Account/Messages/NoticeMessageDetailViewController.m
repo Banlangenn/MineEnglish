@@ -38,7 +38,7 @@
     [self.messageRequest stop];
     self.messageRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 - (IBAction)deleteMessageAction:(id)sender {
     

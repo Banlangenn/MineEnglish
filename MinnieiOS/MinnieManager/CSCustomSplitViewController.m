@@ -109,7 +109,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(customSplitViewController:willChangeToDisplayMode:)]) {
         [self.delegate customSplitViewController:self willChangeToDisplayMode:displayMode];
     }
-    NSLog(@"CSSplitDisplayMode  %lu %f %d",displayMode,self.primaryCloumnScale,animated);
     
     CGFloat viewWidth = self.view.frame.size.width;
     CGFloat primaryWidth = self.primaryCloumnScale;

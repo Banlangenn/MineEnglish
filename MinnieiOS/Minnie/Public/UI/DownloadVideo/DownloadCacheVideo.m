@@ -51,7 +51,6 @@ didFinishDownloadingToURL:(NSURL *)location{
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:self.videoPath error:nil];
     [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:self.videoPath] error:&error];
-//    NSLog(@"缓存成功 %d %@ %@",success,self.videoPath,error);
 }
 
 + (NSString *)cachedFilePathForURL:(NSURL *)url{

@@ -53,7 +53,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
+     
 }
 
 - (void)backButtonPressed:(id)sender {
@@ -333,7 +333,6 @@
         self.headerView.endDate = date;
         self.headerView.isWeekend = [self isAllWeekend];
         self.headerView.isWorkday = [self isAllWorkday];
-        NSLog(@"++++dates count: %@", @(self.dates.count));
         return;
     }
     
@@ -348,7 +347,6 @@
         self.headerView.startDate = date;
         self.headerView.isWeekend = [self isAllWeekend];
         self.headerView.isWorkday = [self isAllWorkday];
-        NSLog(@"++++dates count: %@", @(self.dates.count));
         return;
     }
     
@@ -357,7 +355,6 @@
         self.headerView.endDate = date;
         self.headerView.isWeekend = [self isAllWeekend];
         self.headerView.isWorkday = [self isAllWorkday];
-        NSLog(@"++++dates count: %@", @(self.dates.count));
         
         return;
     }
@@ -377,7 +374,6 @@
     self.headerView.isWeekend = [self isAllWeekend];
     self.headerView.isWorkday = [self isAllWorkday];
     
-    NSLog(@"++++dates count: %@", @(self.dates.count));
 }
 
 - (void)removeDate:(NSDate *)date {
@@ -405,7 +401,6 @@
     self.headerView.isWeekend = [self isAllWeekend];
     self.headerView.isWorkday = [self isAllWorkday];
     
-    NSLog(@"----dates count: %@", @(self.dates.count));
 }
 
 // 是不是都是周末

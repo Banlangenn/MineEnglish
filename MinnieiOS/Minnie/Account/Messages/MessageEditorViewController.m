@@ -1241,7 +1241,7 @@ ClassAndStudentSelectorControllerDelegate>
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
+    
 }
 
 @end

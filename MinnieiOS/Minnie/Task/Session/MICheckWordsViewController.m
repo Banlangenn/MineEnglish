@@ -200,7 +200,7 @@ CAAnimationDelegate
                 weakSelf.startRecordBtn.selected = NO;
                 weakSelf.startRecordLabel.text = @"点击查看录音";
             } else if (status == AVPlayerItemStatusReadyToPlay) {
-                NSLog(@"AVPlayerItemStatusReadyToPlay");
+                
                 weakSelf.startRecordBtn.selected = YES;
                 weakSelf.startRecordLabel.text = @"点击停止播放";
             }
@@ -210,7 +210,6 @@ CAAnimationDelegate
  
             if (weakSelf.currentWordItem.commitPlaytime > 0) {
 
-                NSLog(@"tempTime2222  %f",time);
                 NSInteger currentIndex = time/(weakSelf.currentWordItem.commitPlaytime/1000);
                 [weakSelf.wordsView showWordsWithIndex:currentIndex];
             }

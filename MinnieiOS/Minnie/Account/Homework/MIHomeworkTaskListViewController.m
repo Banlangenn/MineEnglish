@@ -538,7 +538,7 @@ NEPhotoBrowserDataSource
     [self.homeworksRequest stop];
     self.homeworksRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 @end

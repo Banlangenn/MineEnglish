@@ -36,7 +36,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
+    
 }
 
 #pragma mark - IBActions

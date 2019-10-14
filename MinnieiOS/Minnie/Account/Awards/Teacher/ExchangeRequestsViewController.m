@@ -98,7 +98,7 @@
     [self.listRequest stop];
     self.listRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (IBAction)manageButtonPressed:(id)sender {

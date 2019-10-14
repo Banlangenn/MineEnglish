@@ -86,7 +86,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
+    
 }
 
 #pragma mark - Private Methods

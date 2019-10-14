@@ -42,7 +42,7 @@
     [self.recordsRequest stop];
     self.recordsRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 #pragma mark - Private Method

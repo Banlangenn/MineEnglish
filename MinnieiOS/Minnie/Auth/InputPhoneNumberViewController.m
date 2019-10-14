@@ -58,9 +58,6 @@
     self.nextButton.enabled = NO;
 }
 
-- (void)dealloc {
-    NSLog(@"%s", __func__);
-}
 
 - (IBAction)backButtonPressed:(id)sender {
     [self.timer invalidate];

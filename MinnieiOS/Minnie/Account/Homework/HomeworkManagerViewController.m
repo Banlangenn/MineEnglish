@@ -117,7 +117,7 @@
     [self.homeworksRequest stop];
     self.homeworksRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (IBAction)createButtonPressed:(id)sender {

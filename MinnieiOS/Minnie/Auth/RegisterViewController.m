@@ -62,7 +62,6 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
 }
 
 - (IBAction)backButtonPressed:(id)sender {

@@ -760,9 +760,7 @@ ClassAndStudentSelectorControllerDelegate
                 
                     [weakSelf.followItems addObject:newItem];
                 }
-                NSLog(@"image:%@,cover:%@,audio:%@",newItem.imageUrl,newItem.audioCoverUrl,newItem.audioUrl);
-                
-                
+               
                 [weakContentCell setupWithItems:weakSelf.followItems vc:weakSelf contentType:createType];
                 [weakTableView beginUpdates];
                 [weakTableView endUpdates];

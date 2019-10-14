@@ -126,7 +126,7 @@ CGFloat const CorrectHomeworkScoreTableViewCellHeight = 39.0f;
         {
             self.fiveStarView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
             UIButton * fiveStarBtn = [self viewWithTag:100 + 5];
-            [fiveStarBtn setTitleColor:[UIColor colorWithHex:0xFFFFFF] forState:UIControlStateNormal]; NSLog(@" 111114");
+            [fiveStarBtn setTitleColor:[UIColor colorWithHex:0xFFFFFF] forState:UIControlStateNormal]; 
             break;
         }
         case 4:

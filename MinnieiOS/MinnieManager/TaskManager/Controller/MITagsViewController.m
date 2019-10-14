@@ -66,8 +66,6 @@ MIEqualSpaceFlowLayoutDelegate
     [self.tagsRequest clearCompletionBlock];
     [self.tagsRequest stop];
     self.tagsRequest = nil;
-    
-    NSLog(@"%s", __func__);
 }
 - (IBAction)backAction:(id)sender {
     

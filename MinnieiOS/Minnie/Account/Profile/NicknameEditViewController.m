@@ -58,7 +58,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -61,7 +61,7 @@
     [self.awardsRequest stop];
     self.awardsRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (IBAction)recordsButtonPressed:(id)sender {

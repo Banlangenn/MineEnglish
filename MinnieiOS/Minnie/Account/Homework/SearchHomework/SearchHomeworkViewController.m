@@ -126,7 +126,7 @@ EqualSpaceFlowLayoutDelegate
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

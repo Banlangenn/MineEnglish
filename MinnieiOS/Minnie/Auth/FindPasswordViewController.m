@@ -43,9 +43,6 @@
     [self.confirmButton setBackgroundImage:[Utils imageWithColor:[UIColor colorWithRed:0xDD/255.f green:0xDD/255.f blue:0xDD/255.f alpha:1.f]] forState:UIControlStateDisabled];
 }
 
-- (void)dealloc {
-    NSLog(@"%s", __func__);
-}
 
 - (IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

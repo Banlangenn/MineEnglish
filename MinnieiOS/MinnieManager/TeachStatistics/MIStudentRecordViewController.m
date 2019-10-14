@@ -95,6 +95,5 @@ UIScrollViewDelegate
 }
 
 - (void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
-    NSLog(@"selectIndex %d",pageController.selectIndex);
 }
 @end

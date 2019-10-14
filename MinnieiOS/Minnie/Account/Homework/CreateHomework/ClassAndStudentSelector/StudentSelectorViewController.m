@@ -40,7 +40,7 @@
     [self.studentsRequest stop];
     self.studentsRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (void)registerCellNibs {

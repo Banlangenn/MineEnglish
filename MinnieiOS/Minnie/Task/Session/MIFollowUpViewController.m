@@ -190,7 +190,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         [self.audioRecorder record];
         self.duration = 0;
         self.startTime = [NSDate date];
-        NSLog(@"starRecoreFound::%@",[NSDate date]);
     }
 }
 
@@ -204,7 +203,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         [weakSelf.audioRecorder stop];
         weakSelf.audioRecorder = nil;
         weakSelf.duration = [[NSDate date] timeIntervalSinceDate:self.startTime];
-        NSLog(@"stopRecordFound::%@",[NSDate date]);
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [[AVAudioSession sharedInstance] setActive:NO error:nil];
     });

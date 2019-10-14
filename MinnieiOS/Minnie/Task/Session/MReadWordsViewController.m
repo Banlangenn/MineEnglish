@@ -225,13 +225,12 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     
-    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
+//    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
 }
 
 #pragma mark - 定时播放任务
 - (void)countTimeMethod {
 
-    NSLog(@"计时器录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
     NSInteger index = 0;
 
     NSInteger playTime = (int)self.wordsItem.playtime/1000;
@@ -314,7 +313,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             NSInteger totalTime = self.wordsItem.randomWords.count * playTime;
             if (_currentWordIndex - 1 == totalTime) {
                     // 停止录音
-                    NSLog(@"停止录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
                     [self stopRecordFound];
                     [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.2];
             } else if ((_currentWordIndex - 1) > totalTime) {
@@ -345,7 +343,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                 view.backgroundColor = [UIColor mainColor];
                 // 开始录音
                 [self starRecoreFound];
-                NSLog(@"开始录音  %f",[[NSDate date] timeIntervalSinceDate:self.startTime]);
             }
         } else { // 播放单词
             
@@ -370,7 +367,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         
     }
     
-    NSLog(@"word  %@",self.wordLabel.text);
 }
 
 #pragma mark - 3.是否提交

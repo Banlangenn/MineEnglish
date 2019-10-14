@@ -117,7 +117,6 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s", __func__);
 }
 
 - (IBAction)exitButtonPressed:(id)sender {

@@ -11,7 +11,6 @@
 #import <AVKit/AVKit.h>
 #import "PushManager.h"
 #import "CircleHomework.h"
-#import "WebViewController.h"
 #import "UIScrollView+Refresh.h"
 #import "UITextView+Placeholder.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -148,7 +147,6 @@ UITableViewDelegate
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"%s", __func__);
 }
 
 #pragma mark - Private Methods

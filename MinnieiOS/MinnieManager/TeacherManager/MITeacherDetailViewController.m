@@ -343,7 +343,6 @@ UITableViewDataSource
     WeakifySelf;
     [TeacherService getTeacherDetailWithId:self.teacher.userId callback:^(Result *result, NSError *error) {
         
-        NSLog(@"%@",result);
         weakSelf.teacherDetail = (TeacherDetail *)result.userInfo;
         if (weakSelf.teacherDetail.isOnline) {
             weakSelf.onlineButton.backgroundColor = [UIColor greenBgColor];

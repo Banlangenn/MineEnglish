@@ -109,7 +109,6 @@
     [self.classesRequest stop];
     self.classesRequest = nil;
     
-    NSLog(@"%s", __func__);
 }
 
 #pragma mark - Private Methods

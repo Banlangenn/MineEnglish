@@ -92,7 +92,7 @@ UICollectionViewDelegateFlowLayout>
     [self.awardsRequest stop];
     self.awardsRequest = nil;
     
-    NSLog(@"%s", __func__);
+    
 }
 
 - (void)backButtonPressed:(id)sender{

@@ -194,7 +194,7 @@ MIActivityBannerViewDelegate
             
             [self mergeAndReloadWithQueriedConversations:conversations homeworkSessions:sessions];
         });
-        NSLog(@" ======= 会话数:%@ total:%lu 耗时%.fms", @(conversations.count),sessions.count, [[NSDate date] timeIntervalSinceDate:startTime]*1000);
+            NSLog(@" ======= 会话数:%@ total:%lu 耗时%.fms", @(conversations.count),sessions.count, [[NSDate date] timeIntervalSinceDate:startTime]*1000);
     }];
 }
 
@@ -981,8 +981,6 @@ MIActivityBannerViewDelegate
     [self.homeworkSessionsRequest clearCompletionBlock];
     [self.homeworkSessionsRequest stop];
     self.homeworkSessionsRequest = nil;
-    
-    NSLog(@"%s", __func__);
 }
 @end
 

@@ -376,7 +376,7 @@ NSString * const kColorPanRemoveNotificaiton = @"kColorPanRemoveNotificaiton";
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error == nil) {
-        NSLog(@"%@", @"保存成功啦");
+  
         [HUD showWithMessage:@"保存成功"];
     }
 }
