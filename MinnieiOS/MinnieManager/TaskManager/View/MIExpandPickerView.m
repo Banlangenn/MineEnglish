@@ -99,10 +99,10 @@ UIPickerViewDelegate>{
         [self.bgView addSubview:_secLabel];
         [self selectActionToPickerView:self.pickerView row:minIndex inComponent:0];
         [self selectActionToPickerView:self.pickerView row:secIndex inComponent:1];
-    } else if (createType == MIHomeworkCreateContentType_WordsTimeInterval) {// 0-9秒
+    } else if (createType == MIHomeworkCreateContentType_WordsTimeInterval) {// 1-9秒
         
         NSInteger secs = text.floatValue/1000;
-        NSInteger row = (int)secs/0.5 - 1;
+        NSInteger row = secs - 1;
         if (row <= 0 ||  row >= self.secArray.count) {
            row = 0;
         }
@@ -162,8 +162,8 @@ UIPickerViewDelegate>{
     } else if (self.createType == MIHomeworkCreateContentType_WordsTimeInterval) {
         if (_secArray == nil) {
             _secArray = [NSMutableArray array];
-            for (int sec = 1; sec < 19; sec++) {
-                NSString *str = [NSString stringWithFormat:@"%.1f", sec/2.0];
+            for (int sec = 1; sec < 10; sec++) {
+                NSString *str = [NSString stringWithFormat:@"%d", sec];
                 [_secArray addObject:str];
             }
         }
