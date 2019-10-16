@@ -71,7 +71,6 @@ UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 0) {
-    
         return 30;
     } else {
         
@@ -219,7 +218,7 @@ UITableViewDataSource
         if (weakSelf.troubleMessagesArray.count == 0) {
             
             [weakSelf.view showEmptyViewWithImage:nil
-                                            title:@"暂问题动态"
+                                            title:@"暂无问题任务"
                                     centerYOffset:0 linkTitle:nil
                                 linkClickCallback:nil
                                     retryCallback:^{
@@ -272,31 +271,30 @@ UITableViewDataSource
 }
 
 - (IBAction)zeroMsgAction:(id)sender {
-    if (self.zeroMsgBtn.selected) {
-        self.qestionHomeworkBtn.selected = NO;
-        return;
-    }
+
     self.qestionHomeworkBtn.selected = NO;
     self.zeroMsgBtn.selected = YES;
     self.messageType = HomeworkMessageType_ZeroMessages;
     if (self.zeroMessagesArray.count == 0) {
         [self requestStudentZeroTask];
+    } else {
+        self.tableView.hidden = NO;
+        [self.view hideAllStateView];
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
 }
 - (IBAction)questionHomeworkAction:(id)sender {
    
-    if (self.qestionHomeworkBtn.selected) {
-        self.zeroMsgBtn.selected = NO;
-        return;
-    }
     self.zeroMsgBtn.selected = NO;
     self.qestionHomeworkBtn.selected = YES;
     self.messageType = HomeworkMessageType_QuestionHomework;
     if (self.troubleMessagesArray.count == 0) {
         [self requestStudentTroubleTask];
+    } else {
+        self.tableView.hidden = NO;
+        [self.view hideAllStateView];
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
 }
 
 @end
