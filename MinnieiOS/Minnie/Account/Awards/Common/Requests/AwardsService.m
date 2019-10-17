@@ -106,8 +106,9 @@
 
 
 + (BaseRequest *)requestexchangeAwardByClassWithState:(NSInteger)state
+                                              nextUrl:(NSString *_Nullable)nextUrl
                                              callback:(RequestCallback)callback{
-    ExchangeAwardListRequest *request = [[ExchangeAwardListRequest alloc] initWithState:state];
+    ExchangeAwardListRequest *request = [[ExchangeAwardListRequest alloc] initWithState:state nextUrl:nextUrl];
     request.objectKey = @"list";
     request.objectClassName = @"ExchangeAwardListRecord";
     [request setCallback:callback];

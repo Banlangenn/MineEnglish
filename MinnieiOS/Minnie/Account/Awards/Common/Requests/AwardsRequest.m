@@ -193,18 +193,20 @@
 @interface ExchangeAwardListRequest()
 
 @property (nonatomic, assign) NSUInteger state;
+@property (nonatomic, copy) NSString * nextUrl;
 
 @end
 
 @implementation ExchangeAwardListRequest
 
-- (instancetype)initWithState:(NSUInteger)state{
+- (instancetype)initWithState:(NSUInteger)state nextUrl:(NSString *)nextUrl{
     
     self = [super init];
     if (self != nil) {
+        
         self.state = state;
+        self.nextUrl = nextUrl;
     }
-    
     return self;
     
 }
@@ -218,7 +220,14 @@
 }
 
 - (NSString *)requestUrl {
-    return [NSString stringWithFormat:@"%@/award/exchangeAwardList", ServerProjectName];
+  
+    if (self.nextUrl.length > 0) {
+
+        return [NSString stringWithFormat:@"%@%@", ServerProjectName,self.nextUrl];
+    } else {
+
+        return [NSString stringWithFormat:@"%@/award/exchangeAwardList", ServerProjectName];
+    }
 }
 
 @end

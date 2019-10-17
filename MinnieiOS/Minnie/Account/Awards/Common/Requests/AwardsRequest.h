@@ -65,14 +65,8 @@
 #pragma mark - 2.15.1    获取礼品兑换列表（ipad管理端）
 @interface ExchangeAwardListRequest : BaseRequest
 
-- (instancetype)initWithState:(NSUInteger)state;
+- (instancetype)initWithState:(NSUInteger)state nextUrl:(NSString *)nextUrl;
 
 @end
 
-
-#pragma mark -
-#pragma mark -
-#pragma mark -
-#pragma mark -
-#pragma mark -
 

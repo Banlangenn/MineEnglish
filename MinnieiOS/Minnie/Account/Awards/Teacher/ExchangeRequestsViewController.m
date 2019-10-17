@@ -113,7 +113,7 @@
                  forCellReuseIdentifier:ExchangeRequestTableViewCellId];
 }
 
-#pragma mark - 获取兑换列表
+#pragma mark - 获取兑换列表 (学生端、教师端)
 - (void)requestData {
     if (self.listRequest != nil) {
         return;
@@ -230,43 +230,97 @@
 - (void)requestAwardListByClass {
     
     WeakifySelf;
+    self.nextUrl = nil;
     [AwardsService requestexchangeAwardByClassWithState:0
-                                                     callback:^(Result *result, NSError *error) {
+                                                nextUrl:nil
+                                               callback:^(Result *result, NSError *error) {
                                                          
                                                          [weakSelf.requestsTableView headerEndRefreshing];
                                                          StrongifySelf;
                                                          [strongSelf handleRequestByClassResult:result error:error];
-                                                     }];
+    }];
+}
+- (void)loadMoreAwardListByClass {
+    
+    WeakifySelf;
+    [AwardsService requestexchangeAwardByClassWithState:0
+                                                nextUrl:self.nextUrl
+                                               callback:^(Result *result, NSError *error) {
+                                                         
+                                                         [weakSelf.requestsTableView headerEndRefreshing];
+                                                         StrongifySelf;
+                                                         [strongSelf handleRequestByClassResult:result error:error];
+    }];
 }
 
 - (void)handleRequestByClassResult:(Result *)result error:(NSError *)error {
     
     [self.containerView hideAllStateView];
     NSDictionary *dictionary = (NSDictionary *)(result.userInfo);
+    NSString *nextUrl = dictionary[@"next"];
     NSArray *records = dictionary[@"list"];
     
-    WeakifySelf;
-    if (error != nil) {
-        [self.containerView showFailureViewWithRetryCallback:^{
-            [weakSelf requestAwardListByClass];
-        }];
-        return;
-    }
-    
-    if (records.count > 0) {
+  
+    BOOL isLoadMore = self.nextUrl.length > 0;
+    if (isLoadMore) {
+        
+        [self.requestsTableView footerEndRefreshing];
         self.requestsTableView.hidden = NO;
-        [self.awardListByClass removeAllObjects];
-        [self.awardListByClass addObjectsFromArray:records];
-        [self sortAwardsByClass];
+
+        if (error != nil) {
+            return;
+        }
+        
+        if (records.count > 0) {
+            [self.awardListByClass addObjectsFromArray:records];
+            [self sortAwardsByClass];
+        }
+        
+        if (nextUrl.length == 0) {
+            [self.requestsTableView removeFooter];
+        }
+        
+        [self.requestsTableView reloadData];
     } else {
-        [self.containerView showEmptyViewWithImage:nil
-                                             title:@"暂无兑换信息"
-                                     centerYOffset:-20
-                                         linkTitle:nil
-                                 linkClickCallback:nil retryCallback:^{
-                                     [weakSelf requestAwardListByClass];
-        }];
+
+      [self.requestsTableView footerEndRefreshing];
+        WeakifySelf;
+         if (error != nil) {
+             [self.containerView showFailureViewWithRetryCallback:^{
+                 [weakSelf requestAwardListByClass];
+             }];
+             return;
+         }
+        if (records.count > 0) {
+            
+            self.requestsTableView.hidden = NO;
+            [self.awardListByClass removeAllObjects];
+            [self.awardListByClass addObjectsFromArray:records];
+            [self sortAwardsByClass];
+            
+            if (nextUrl.length > 0) {
+                WeakifySelf;
+                [self.requestsTableView addInfiniteScrollingWithRefreshingBlock:^{
+                    [weakSelf loadMoreAwardListByClass];
+                }];
+            } else {
+                [self.requestsTableView removeFooter];
+            }
+        } else {
+            if (self.awardListByClass.count == 0) {
+
+                [self.containerView showEmptyViewWithImage:nil
+                                                     title:@"暂无兑换信息"
+                                             centerYOffset:-20
+                                                 linkTitle:nil
+                                         linkClickCallback:nil retryCallback:^{
+                                             [weakSelf requestAwardListByClass];
+                }];
+            }
+        }
     }
+
+    self.nextUrl = nextUrl;
 }
 - (void)sortAwardsByClass {
     

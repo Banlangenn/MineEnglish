@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 2.15.1    获取礼品兑换列表（ipad管理端）
 // 获取礼品兑换列表(管理端)  state 0表示未兑换，1表示已兑换
 + (BaseRequest *)requestexchangeAwardByClassWithState:(NSInteger)state
+                                              nextUrl:(NSString *_Nullable)nextUrl
                                              callback:(RequestCallback)callback;
 
 
