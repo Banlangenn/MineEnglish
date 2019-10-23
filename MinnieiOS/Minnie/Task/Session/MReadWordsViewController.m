@@ -211,7 +211,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 }
 
 - (void)stopRecordFound{
-    
+
+    NSLog(@" stopRecordFound %.fs ", [[NSDate date] timeIntervalSinceDate:self.startTime]);
     WeakifySelf;
     // 停止录制
     [[AudioPlayer sharedPlayer] stop];
@@ -263,19 +264,21 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
             self.wordLabel.text = tempWord.english;
             UIView *view = self.progressViews.firstObject;
             view.backgroundColor = [UIColor mainColor];
-            // 开始录音
-            [self starRecoreFound];
+           
+            [self starRecoreFound];  // 开始录音
         } else {
             
-            if (index - 1 == self.wordsItem.randomWords.count) { // 停止录音
-               
-                [self stopRecordFound];
-                [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.2];
-            } else if (index - 1 > self.wordsItem.randomWords.count) {
+            if (index >= self.wordsItem.randomWords.count) { // 停止录音
+              
+                // 停止计时
+               [self invalidateTimer];
+               // 停止录音
+               [self stopRecordFound];
+               [self performSelector:@selector(showPlayGoodJob) withObject:nil afterDelay:1.0];
                 
-                _recordState = 2;
-                [self invalidateTimer];
-                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.2];
+               UIView *view = self.progressViews.lastObject;
+               view.backgroundColor = [UIColor mainColor];
+               return;
             } else { // 播放单词
                 
                 self.wordLabel.hidden = NO;
@@ -284,7 +287,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                 WordInfo *tempWord = self.wordsItem.randomWords[index - 1];
                 self.wordLabel.text = tempWord.english;
                 
-                if (index <= self.progressViews.count) {
+                if (index - 1 <= self.progressViews.count) {
                     WeakifySelf;
                     [UIView animateWithDuration:0.5 animations:^{
                         
@@ -311,18 +314,16 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         } else {
          
             NSInteger totalTime = self.wordsItem.randomWords.count * playTime;
-            if (_currentWordIndex - 1 == totalTime) {
-                    // 停止录音
-                    [self stopRecordFound];
-                    [self performSelector:@selector(playGoodJob) withObject:nil afterDelay:0.2];
-            } else if ((_currentWordIndex - 1) > totalTime) {
-                
-                _recordState = 2;
+            if (_currentWordIndex > totalTime) {
+               
+                // 停止计时
                 [self invalidateTimer];
-                [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.2];
+                // 停止录音
+                [self stopRecordFound];
+                [self performSelector:@selector(showPlayGoodJob) withObject:nil afterDelay:1.0];
                 return;
             }
-            
+
             if (_currentWordIndex%playTime == 1) {
                 index = _currentWordIndex/playTime;
                 _currentWordIndex ++;
@@ -364,9 +365,9 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
                 }
             }
         }
-        
     }
-    
+
+    NSLog(@" wordLabel %.fs  %@", [[NSDate date] timeIntervalSinceDate:self.startTime],self.wordLabel.text);
 }
 
 #pragma mark - 3.是否提交
@@ -398,7 +399,11 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
         [self finishedToast];
         return;
     }
-    
+    if (self.duration <= 2) {
+        [HUD showErrorWithMessage:@"录制语音时间过短"];
+        [self finishedToast];
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [HUD showProgressWithMessage:@"正在上传语音..."];
         WeakifySelf;
@@ -505,12 +510,15 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
     self.wordLabel.text = tempWord.english;
 }
 
-- (void)playGoodJob{
-    
-    self.wordLabel.text = @"Good job!";
-    // 播放完成提示音
+- (void)showPlayGoodJob{
+
+    _recordState = 2;
+   
+    self.wordLabel.text = @"Good job!"; // 播放完成提示音
     [[AudioPlayer sharedPlayer] playLocalURL:@"goodjob"];
+    [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.2];
 }
+
 
 #pragma mark setter && getter
 - (NSTimer *)wordsTimer{
