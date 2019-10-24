@@ -212,14 +212,14 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)stopRecordFound{
 
-    NSLog(@" stopRecordFound %.fs ", [[NSDate date] timeIntervalSinceDate:self.startTime]);
+//    NSLog(@" stopRecordFound %.fs ", [[NSDate date] timeIntervalSinceDate:self.startTime]);
     WeakifySelf;
     // 停止录制
     [[AudioPlayer sharedPlayer] stop];
     [weakSelf.audioRecorder stop];
     weakSelf.audioRecorder = nil;
-    self.duration = [[NSDate date] timeIntervalSinceDate:self.startTime];
-
+    self.duration = ceil([[NSDate date] timeIntervalSinceDate:self.startTime]);
+    
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
