@@ -8518,6 +8518,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieManager/MinnieManager.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ZHIGANG DONG (TVGPPVPKBF)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8531,7 +8532,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.manager;
@@ -8549,6 +8550,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieManager/MinnieManager.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHIGANG DONG (7ZN897DBZ8)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8562,7 +8564,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.manager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8773,6 +8775,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieStudent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ZHIGANG DONG (TVGPPVPKBF)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
@@ -8783,7 +8786,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.student;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8800,6 +8803,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieStudent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHIGANG DONG (7ZN897DBZ8)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -8809,7 +8813,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.student;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cce81f62-d635-44f9-93f8-910ba2ad5797";
@@ -8826,6 +8830,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieTeacher.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ZHIGANG DONG (TVGPPVPKBF)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
@@ -8840,7 +8845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.teacher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8857,6 +8862,7 @@
 				CODE_SIGN_ENTITLEMENTS = MinnieTeacher.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHIGANG DONG (7ZN897DBZ8)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
@@ -8871,7 +8877,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.teacher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "670ec308-d78e-4358-949d-efab26aa908a";

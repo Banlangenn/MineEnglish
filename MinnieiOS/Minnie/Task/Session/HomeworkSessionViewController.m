@@ -554,7 +554,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     self.isCommitingHomework = YES;
 #endif
     UIImagePickerController *videoPicker = [[UIImagePickerController alloc] init];
-    videoPicker.allowsEditing = YES;
+//    videoPicker.allowsEditing = YES;
     videoPicker.videoMaximumDuration = self.homeworkSession.homework.limitTimes;
     videoPicker.delegate = self;
     videoPicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
@@ -1267,9 +1267,16 @@ HomeworkAnswersPickerViewControllerDelegate>
         
 #if TEACHERSIDE || MANAGERSIDE
 #else
-        if (durationInSeconds > 5*60) {
+       
+        NSInteger limit = self.homeworkSession.homework.limitTimes; // 最大限制 5 分钟
+        if (limit == 0 || limit > 5 * 60) {
+            
+            limit = 5 * 60;
+        }
+        if (durationInSeconds > limit) {
          
-            [HUD showErrorWithMessage:@"视频时长不能超过5分钟"];
+            NSString *msg = [NSString stringWithFormat:@"本任务视频时长不能超过: %d分%d秒",(int)self.homeworkSession.homework.limitTimes/60,(int)self.homeworkSession.homework.limitTimes%60];
+            [HUD showErrorWithMessage:msg];
             return;
         }
 #endif

@@ -1108,7 +1108,7 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_HomeworkDifficulty),
                           @(MIHomeworkCreateContentType_AddWords),
                           @(MIHomeworkCreateContentType_WordsTimeInterval),
-                          @(MIHomeworkCreateContentType_AddBgMusic),
+//                          @(MIHomeworkCreateContentType_AddBgMusic),
                           @(MIHomeworkCreateContentType_Materials),
                           @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),
