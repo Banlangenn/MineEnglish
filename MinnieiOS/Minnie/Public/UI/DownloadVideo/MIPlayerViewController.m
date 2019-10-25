@@ -34,8 +34,9 @@
 
 // 缓存播放
 //@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
+@property(nonatomic,strong) DownloadCacheVideo * downloadTask;
 
-@property(nonatomic,strong)UIImageView * coverImageView;
+@property(nonatomic,strong) UIImageView * coverImageView;
 
 @end
 
@@ -46,10 +47,13 @@
     
     [super viewWillDisappear:animated];
     [self.hookAVPlaySingleTap remove];
-//    [self.resourceLoaderManager cleanCache];
+    [self.downloadTask cancelDownload];
+    
     if (_statusObserver) {
           _statusObserver = NO;
           [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+          [self.player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+          [self.player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
     }
     [self.player pause];
 }
@@ -176,25 +180,36 @@
                 [self.player play];
                 break;
             case AVPlayerItemStatusFailed:      // 加载失败，网络或者服务器出现问题
-            {
-                if (_statusObserver) {
-                    _statusObserver = NO;
-                    [self.player.currentItem removeObserver:self forKeyPath:@"status"];
-                }
-//                [self.resourceLoaderManager cleanCache];
-                self.player = nil;
-
-                AVPlayer *player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:self.currentUrl]];
-                [[DownloadCacheVideo new] startDownloadVedioWithUrl:self.currentUrl];
-                
-                self.player = player;
-                [player play];
-            }
+//            {
+//                if (_statusObserver) {
+//                    _statusObserver = NO;
+//                    [self.player.currentItem removeObserver:self forKeyPath:@"status"];
+//                }
+//                self.player = nil;
+//                NSLog(@"=====AVPlayerItemStatusFailed====");
+//                AVPlayer *player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:self.currentUrl]];
+//                [[DownloadCacheVideo new] startDownloadVedioWithUrl:self.currentUrl];
+//
+//                self.player = player;
+//                [player play];
+//            }
                 break;
             default:
                 break;
         }
+    } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
+
+       NSLog(@"playbackBufferEmpty");
+        if (!self.player.currentItem.isPlaybackBufferEmpty) {
+             [self.player play];
+         }
+    } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
+        NSLog(@"playbackLikelyToKeepUp");
+        if (!self.player.currentItem.isPlaybackLikelyToKeepUp) {
+             [self.player play];
+         }
     }
+    
 }
 
 #pragma mark - 封面
@@ -248,12 +263,21 @@
             
             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:videoPath]];
             [item addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+            [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+            [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
             _statusObserver = YES;
             
             player = [AVPlayer playerWithPlayerItem:item];
         } else {// 在线播放
-            player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:videoUrl]];
-            [[DownloadCacheVideo new] startDownloadVedioWithUrl:videoUrl];
+            
+            AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:videoUrl]];
+             [item addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+             [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+             [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+             _statusObserver = YES;
+            player = [AVPlayer playerWithPlayerItem:item];
+            
+            [self performSelector:@selector(startDownload) withObject:nil afterDelay:5.0];
         }
     }
     
@@ -262,6 +286,18 @@
     [self.player play];
 }
 
+- (void)startDownload{
+    
+    [self.downloadTask startDownloadVedioWithUrl:self.currentUrl];
+}
+
+- (DownloadCacheVideo *)downloadTask{
+  
+    if (!_downloadTask) {
+        _downloadTask = [[DownloadCacheVideo alloc] init];
+    }
+    return _downloadTask;
+}
 
 #pragma mark - VIResourceLoaderManagerDelegate
 //- (void)resourceLoaderManagerLoadURL:(NSURL *)url didFailWithError:(NSError *)error

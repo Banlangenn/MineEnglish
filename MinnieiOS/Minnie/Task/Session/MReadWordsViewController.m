@@ -212,7 +212,6 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)stopRecordFound{
 
-//    NSLog(@" stopRecordFound %.fs ", [[NSDate date] timeIntervalSinceDate:self.startTime]);
     WeakifySelf;
     // 停止录制
     [[AudioPlayer sharedPlayer] stop];
@@ -226,7 +225,7 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     
-//    NSLog(@" stopRecordFound耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
+//    NSLog(@" audioRecorderDidFinishRecording 耗时%.fms", [[NSDate date] timeIntervalSinceDate:self.startTime]*1000);
 }
 
 #pragma mark - 定时播放任务
