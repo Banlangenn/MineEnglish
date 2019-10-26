@@ -261,8 +261,7 @@ NEPhotoBrowserDataSource
       
        MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
        playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-       [playerViewController playVideoWithUrl:audioUrl];
-       [playerViewController setOverlyViewCoverUrl:imageUrl];
+       [playerViewController playAudioWithUrl:audioUrl coverUrl:imageUrl];
        [weakSelf presentVC:playerViewController];
    }];
    

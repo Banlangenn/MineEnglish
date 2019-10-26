@@ -34,6 +34,7 @@
 
 // 缓存播放
 //@property (nonatomic, strong) VIResourceLoaderManager *resourceLoaderManager;
+@property (nonatomic,copy) NSString * extensionName;    // 文件扩展名
 @property(nonatomic,strong) DownloadCacheVideo * downloadTask;
 
 @property(nonatomic,strong) UIImageView * coverImageView;
@@ -175,24 +176,14 @@
     if (object == self.player.currentItem && [keyPath isEqualToString:@"status"]) {
         switch (self.player.currentItem.status) {
             case AVPlayerItemStatusUnknown:     // 未知状态，此时不能播放
+            NSLog(@"AVPlayerItemStatusUnknown");
                 break;
             case AVPlayerItemStatusReadyToPlay: // 准备完毕，可以播放
                 [self.player play];
                 break;
             case AVPlayerItemStatusFailed:      // 加载失败，网络或者服务器出现问题
-//            {
-//                if (_statusObserver) {
-//                    _statusObserver = NO;
-//                    [self.player.currentItem removeObserver:self forKeyPath:@"status"];
-//                }
-//                self.player = nil;
-//                NSLog(@"=====AVPlayerItemStatusFailed====");
-//                AVPlayer *player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:self.currentUrl]];
-//                [[DownloadCacheVideo new] startDownloadVedioWithUrl:self.currentUrl];
-//
-//                self.player = player;
-//                [player play];
-//            }
+
+                NSLog(@"AVPlayerItemStatusFailed");
                 break;
             default:
                 break;
@@ -209,7 +200,6 @@
              [self.player play];
          }
     }
-    
 }
 
 #pragma mark - 封面
@@ -230,11 +220,28 @@
 }
 
 
+- (void)playVideoWithUrl:(NSString *)videoUrl {
+   
+    self.extensionName = @"mp4";
+    [self playWithUrl:videoUrl];
+}
+
+
+- (void)playAudioWithUrl:(NSString *)audioUrl coverUrl:(NSString *)cover{
+   
+    self.extensionName = @"mp3";
+    [self playWithUrl:audioUrl];
+    [self setOverlyViewCoverUrl:cover];
+}
+
+- (void)playAudioWithUrl:(NSString *)audioUrl {
+    
+}
 
 #pragma mark - 播放视频
-- (void)playVideoWithUrl:(NSString *)videoUrl {
+- (void)playWithUrl:(NSString *)url{
     
-    self.currentUrl = videoUrl;
+    self.currentUrl = url;
     [[AudioPlayer sharedPlayer] stop];
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -244,21 +251,15 @@
     AVPlayer *player;
     if (playMode == 1)// 在线播放
     {
-//        [VICacheManager cleanCacheForURL:[NSURL URLWithString:videoUrl] error:nil];
         // 在线播放
-        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:videoUrl]];
+        player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
     }
     else
     {// 缓存播放
-//        VIResourceLoaderManager *resourceLoaderManager = [VIResourceLoaderManager new];
-//        resourceLoaderManager.delegate = self;
-//        self.resourceLoaderManager = resourceLoaderManager;
-//        AVPlayerItem *playerItem = [resourceLoaderManager playerItemWithURL:[NSURL URLWithString:videoUrl]];
-//        [playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-//        _statusObserver = YES;
-//        player = [AVPlayer playerWithPlayerItem:playerItem];
+
         
-        NSString *videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:videoUrl]];
+        NSString *videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:url] extensionName:self.extensionName];
+        
         if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {// 判断是否有缓存文件
             
             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:videoPath]];
@@ -268,15 +269,17 @@
             _statusObserver = YES;
             
             player = [AVPlayer playerWithPlayerItem:item];
+            NSLog(@"缓存播放");
         } else {// 在线播放
             
-            AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:videoUrl]];
+             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:url]];
              [item addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
              [item addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
              [item addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
              _statusObserver = YES;
             player = [AVPlayer playerWithPlayerItem:item];
-            
+
+            NSLog(@"在线播放");
             [self performSelector:@selector(startDownload) withObject:nil afterDelay:5.0];
         }
     }
@@ -288,7 +291,7 @@
 
 - (void)startDownload{
     
-    [self.downloadTask startDownloadVedioWithUrl:self.currentUrl];
+    [self.downloadTask startDownloadWithUrl:self.currentUrl extensionName:self.extensionName];
 }
 
 - (DownloadCacheVideo *)downloadTask{

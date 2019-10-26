@@ -23,9 +23,11 @@ NSURLSessionDownloadDelegate
 @implementation DownloadCacheVideo
 
 
-- (void)startDownloadVedioWithUrl:(NSString *)vedioUrl{
+- (void)startDownloadWithUrl:(NSString *)vedioUrl
+               extensionName:(NSString *)extensionName{
    
-    self.videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:vedioUrl]];
+    self.videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:vedioUrl]
+                                                extensionName:extensionName];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
@@ -53,15 +55,16 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
 didFinishDownloadingToURL:(NSURL *)location{
 
     NSError *error = nil;
+
     [[NSFileManager defaultManager] removeItemAtPath:self.videoPath error:nil];
     [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:self.videoPath] error:&error];
 }
 
-+ (NSString *)cachedFilePathForURL:(NSURL *)url{
++ (NSString *)cachedFilePathForURL:(NSURL *)url extensionName:(NSString *)extensionName{
     
     NSString *cacheDirectory = [DownloadCacheVideo cacheDirectory];
     NSString *pathComponent = [[url.absoluteString md5] md5];
-    pathComponent = [pathComponent stringByAppendingPathExtension:@".mp4"];
+    pathComponent = [pathComponent stringByAppendingPathExtension:extensionName];
     NSString *filePath = [cacheDirectory stringByAppendingPathComponent:pathComponent];
 
     return filePath;

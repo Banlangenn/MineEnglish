@@ -197,8 +197,7 @@ UITableViewDataSource
     MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
     [self presentViewController:playerViewController animated:YES completion:nil];
     playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [playerViewController playVideoWithUrl:url];
-    [playerViewController setOverlyViewCoverUrl:coverUrl];
+    [playerViewController playAudioWithUrl:url coverUrl:coverUrl];
 }
 
 #pragma mark - VIResourceLoaderManagerDelegate

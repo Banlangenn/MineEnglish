@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)playVideoWithUrl:(NSString *)videoUrl;
 
-- (void)setOverlyViewCoverUrl:(NSString *)cover;
+// 音频播放
+- (void)playAudioWithUrl:(NSString *)audioUrl coverUrl:(NSString *)cover;
 
 @end
 

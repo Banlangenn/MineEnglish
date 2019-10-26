@@ -12,9 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DownloadCacheVideo : NSObject
 
-- (void)startDownloadVedioWithUrl:(NSString *)vedioUrl;
+- (void)startDownloadWithUrl:(NSString *)vedioUrl
+               extensionName:(NSString *)extensionName;
 
-+ (NSString *)cachedFilePathForURL:(NSURL *)url;
++ (NSString *)cachedFilePathForURL:(NSURL *)url
+                     extensionName:(NSString *)extensionName;
 - (void)cancelDownload;
 
 // 缓存目录
