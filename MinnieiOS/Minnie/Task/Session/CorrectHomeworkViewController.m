@@ -65,6 +65,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    NSLog(@"CorrectHomeworkViewController dealloc");
 }
 
 
@@ -324,11 +325,12 @@
         WeakifySelf;
         [addCommentCell setSelectCallback:^(NSString *tag) {
             
-            NSString *commentText = [NSString stringWithFormat:@"%@  %@",(weakSelf.commentText.length == 0 ? @"": weakSelf.commentText),tag];
-            weakSelf.commentText = commentText;
-            
-            CorrectHomeworkCommentTableViewCell * commentCell = (CorrectHomeworkCommentTableViewCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-            [commentCell setupCommentInfo:commentText];
+            [weakSelf updateSelectCellWithTag:tag];
+//            NSString *commentText = [NSString stringWithFormat:@"%@  %@",(weakSelf.commentText.length == 0 ? @"": weakSelf.commentText),tag];
+//            weakSelf.commentText = commentText;
+//
+//            CorrectHomeworkCommentTableViewCell * commentCell = (CorrectHomeworkCommentTableViewCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+//            [commentCell setupCommentInfo:commentText];
         }];
         
         [addCommentCell setManageCallback:^{
@@ -342,6 +344,16 @@
     }
     return cell;
 }
+
+- (void)updateSelectCellWithTag:(NSString *)tag{
+   
+    NSString *commentText = [NSString stringWithFormat:@"%@  %@",(self.commentText.length == 0 ? @"": self.commentText),tag];
+    self.commentText = commentText;
+    
+    CorrectHomeworkCommentTableViewCell * commentCell = (CorrectHomeworkCommentTableViewCell *)[self.mTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    [commentCell setupCommentInfo:commentText];
+}
+
 @end
 
 
