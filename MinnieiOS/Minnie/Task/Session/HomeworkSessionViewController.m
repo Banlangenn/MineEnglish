@@ -36,7 +36,6 @@
 #import "AudioPlayer.h"
 //#import "VIResourceLoaderManager.h"
 //#import "AudioPlayerViewController.h"
-#import "MIPlayerViewController.h"
 #import "CorrectHomeworkViewController.h"
 #import "TZImagePickerController.h"
 //#import "VICacheManager.h"
@@ -2420,7 +2419,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     APP.currentIMHomeworkSessionId = 0;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    NSLog(@"dealloc");
 }
 
 

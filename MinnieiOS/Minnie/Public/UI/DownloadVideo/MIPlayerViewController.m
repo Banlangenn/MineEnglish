@@ -48,16 +48,18 @@
     
     [super viewWillDisappear:animated];
     [self.hookAVPlaySingleTap remove];
+    [self.player HF_removeAllObserverBlocks];
     [self.downloadTask cancelDownload];
+    self.downloadTask = nil;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startDownload) object:nil];
     
+    [self.player pause];
     if (_statusObserver) {
           _statusObserver = NO;
           [self.player.currentItem removeObserver:self forKeyPath:@"status"];
           [self.player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
           [self.player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
     }
-    [self.player pause];
 }
 
 - (void)viewDidLoad {
@@ -80,23 +82,24 @@
         Class UIGestureRecognizerTarget = NSClassFromString(@"UIGestureRecognizerTarget");
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
+    WeakifySelf;
         _hookAVPlaySingleTap = [UIGestureRecognizerTarget aspect_hookSelector:@selector(_sendActionWithGestureRecognizer:) withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo>info,UIGestureRecognizer *gest){
             if (gest.numberOfTouches == 1) {
                 //AVVolumeButtonControl
-                if (!self.volumeSuperView) {
+                if (!weakSelf.volumeSuperView) {
                     UIView *view = [gest.view findViewByClassName:@"AVVolumeButtonControl"];
                     if (view) {
                         while (view.superview) {
                             view = view.superview;
                             if ([view isKindOfClass:[NSClassFromString(@"AVTouchIgnoringView") class]]) {
-                                self.volumeSuperView = view;
+                                weakSelf.volumeSuperView = view;
                                 
                                 [view HF_addObserverForKeyPath:@"hidden" block:^(__weak id object, id oldValue, id newValue) {
                                     
                                     BOOL isHidden = [(NSNumber *)newValue boolValue];
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         
-                                        [self.saveButton setHidden:isHidden];
+                                        [weakSelf.saveButton setHidden:isHidden];
                                     });
                                     
                                 }];
@@ -110,14 +113,15 @@
         } error:nil];
 #pragma clang diagnostic pop
         //这里必须监听到准备好开始播放了，才把按钮添加上去（系统控件的懒加载机制，我们才能获取到合适的 view 去添加），不然很突兀！
+    
         [self.player HF_addObserverForKeyPath:@"status" block:^(__weak id object, id oldValue, id newValue) {
             AVPlayerStatus status = [newValue integerValue];
             if (status == AVPlayerStatusReadyToPlay) {
-                UIView *avTouchIgnoringView = self.view;
-                [avTouchIgnoringView addSubview:self.saveButton];
+                UIView *avTouchIgnoringView = weakSelf.view;
+                [avTouchIgnoringView addSubview:weakSelf.saveButton];
                 
                 CGFloat margin = isIPhoneX ? 110 : 89;
-                [self.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                [weakSelf.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.right.mas_equalTo(avTouchIgnoringView).offset(-margin);
                     make.top.mas_equalTo(avTouchIgnoringView).offset(isIPhoneX ? 50 : 26);
                     make.width.mas_equalTo(44);
@@ -334,5 +338,8 @@
 ////
 //}
 
-
+- (void)dealloc
+{
+    NSLog(@"MIPlayerViewController dealloc");
+}
 @end
