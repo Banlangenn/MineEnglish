@@ -49,6 +49,7 @@
     [super viewWillDisappear:animated];
     [self.hookAVPlaySingleTap remove];
     [self.downloadTask cancelDownload];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startDownload) object:nil];
     
     if (_statusObserver) {
           _statusObserver = NO;
@@ -259,7 +260,7 @@
 
         
         NSString *videoPath = [DownloadCacheVideo cachedFilePathForURL:[NSURL URLWithString:url] extensionName:self.extensionName];
-        
+        NSLog(@":: %@",url);
         if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {// 判断是否有缓存文件
             
             AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL fileURLWithPath:videoPath]];

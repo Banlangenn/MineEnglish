@@ -36,8 +36,10 @@ NSURLSessionDownloadDelegate
 }
 
 - (void)cancelDownload{
-    
+   
+    [self.downloadTask suspend];
     [self.downloadTask cancel];
+    self.downloadTask = nil;
 }
 #pragma mark - NSURLSessionDelegate
 - (void)URLSession:(NSURLSession *)session
