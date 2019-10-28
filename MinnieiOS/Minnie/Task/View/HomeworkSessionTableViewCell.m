@@ -130,7 +130,7 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     {
         isOutTime = YES;
 //        self.unfinishTipLabel.text = @"距离过期";
-        if (hours <= 144)
+        if (hours < 144)
         {
             self.unfinishTipLabel.text = @"黄色还剩";
             self.unfinishTimeBgView.backgroundColor = [[UIColor colorWithHex:0XFFAD27] colorWithAlphaComponent:0.6];
