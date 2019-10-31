@@ -619,6 +619,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 }
 
 - (IBAction)retryButtonPressed:(id)sender {
+    WeakifySelf;
     [AlertView showInView:self.navigationController.view
                 withImage:[UIImage imageNamed:@"pop_img_return"]
                     title:@"重做这个作业？"
@@ -628,7 +629,8 @@ HomeworkAnswersPickerViewControllerDelegate>
           }
                   action2:@"确定"
           action2Callback:^{
-              [HomeworkSessionService redoHomeworkSessionWithId:self.homeworkSession.homeworkSessionId
+              StrongifySelf;
+              [HomeworkSessionService redoHomeworkSessionWithId:strongSelf.homeworkSession.homeworkSessionId
                                                        callback:^(Result *result, NSError *error) {
                                                            if (error != nil) {
                                                                [HUD showErrorWithMessage:@"请求失败"];
@@ -637,7 +639,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                                                            
 #if TEACHERSIDE || MANAGERSIDE
 #else
-                                                           NSInteger star = MIN(5, self.homeworkSession.score);
+                                                           NSInteger star = MIN(5, strongSelf.homeworkSession.score);
                                                            if (APP.currentUser.starCount > star) {
                                                                APP.currentUser.starCount -= star;
                                                            } else {
@@ -648,19 +650,17 @@ HomeworkAnswersPickerViewControllerDelegate>
                                                                          toUsers:@[@(self.homeworkSession.correctTeacher.userId)]];
 #endif
                                                            
-                                                           self.homeworkSession.score = 0;
-                                                           self.homeworkSession.reviewText = nil;
+                                                           weakSelf.homeworkSession.score = 0;
+                                                           weakSelf.homeworkSession.reviewText = nil;
                                                            
-                                                           self.resultView.hidden = YES;
-                                                           self.inputView.hidden = NO;
+                                                           weakSelf.resultView.hidden = YES;
+                                                           weakSelf.inputView.hidden = NO;
                                                            
-                                                           [self sendTextMessage:@"为了更多的星星而奋斗"];
+                                                           [weakSelf sendTextMessage:@"为了更多的星星而奋斗"];
                                                            
-                                                           [self.conversation setObject:@(NO) forKey:@"taskfinished"];
-                                                           WeakifySelf;
-                                                           [self.conversation updateWithCallback:^(BOOL succeeded, NSError * _Nullable error) {
+                                                           [weakSelf.conversation setObject:@(NO) forKey:@"taskfinished"];
+                                                           [strongSelf.conversation updateWithCallback:^(BOOL succeeded, NSError * _Nullable error) {
                                                                if (!succeeded) {
-                                                                   StrongifySelf;
                                                                    [strongSelf.conversation updateWithCallback:^(BOOL succeeded, NSError * _Nullable error) {
                                                                    }];
                                                                }
@@ -715,33 +715,33 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     NSString *name = [NSString stringWithFormat:@"%@", @(self.homeworkSession.homeworkSessionId)];
     if (self.conversation == nil) {
-       
+        WeakifySelf;
         AVIMConversationQuery *query = [self.client conversationQuery];
         [query whereKey:@"name" equalTo:name];
         [query findConversationsWithCallback:^(NSArray * _Nullable conversations, NSError * _Nullable error) {
-
+            StrongifySelf;
             if (error == nil)
             {
                 if (conversations.count > 0) {
                     
-                    self.homeworkSession.conversation = conversations[0];
-                    [self loadMessagesHistory];
+                    weakSelf.homeworkSession.conversation = conversations[0];
+                    [weakSelf loadMessagesHistory];
                 } else {
-                    
-                    [self.client createConversationWithName:name
+
+                    [strongSelf.client createConversationWithName:name
                                                   clientIds:@[teacherId, studentId]
                                                  attributes:nil
                                                     options:AVIMConversationOptionNone
                                                    callback:^(AVIMConversation * conversation, NSError * error) {
                                                        if (error == nil) {
-                                                           self.homeworkSession.conversation = conversation;
+                                                           weakSelf.homeworkSession.conversation = conversation;
                                                            
-                                                           [self loadMessagesHistory];
+                                                           [weakSelf loadMessagesHistory];
                                                        } else {
                                                            BLYLogError(@"会话页面加载失败(创建IM会话失败): %@", error);
                                                            
-                                                           [self.loadingContainerView showFailureViewWithRetryCallback:^{
-                                                               [self setupConversation];
+                                                           [strongSelf.loadingContainerView showFailureViewWithRetryCallback:^{
+                                                               [weakSelf setupConversation];
                                                            }];
                                                        }
                                                    }];
@@ -750,8 +750,8 @@ HomeworkAnswersPickerViewControllerDelegate>
             else
             {
                 BLYLogError(@"会话页面加载失败(创建IM会话失败): %@", error);
-                [self.loadingContainerView showFailureViewWithRetryCallback:^{
-                    [self setupConversation];
+                [strongSelf.loadingContainerView showFailureViewWithRetryCallback:^{
+                    [weakSelf setupConversation];
                 }];
             }
         }];
@@ -827,18 +827,18 @@ HomeworkAnswersPickerViewControllerDelegate>
     {
         return;
     }
+    WeakifySelf;
     NSInteger nextIndex = index+1;
     [HUD showProgressWithMessage:@"正在压缩图片..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImage *editedImage;
         if (index < images.count) {
-            editedImage = [self editedImageWithImage:[images objectAtIndex:index]];
+            editedImage = [weakSelf editedImageWithImage:[images objectAtIndex:index]];
         }
         NSData *data = UIImageJPEGRepresentation(editedImage, 0.4f);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [HUD showProgressWithMessage:@"正在上传图片..."];
-            WeakifySelf;
             
             QNUploadOption * option = [[QNUploadOption alloc] initWithProgressHandler:^(NSString *key, float percent) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -852,7 +852,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                 if (imageUrl.length > 0) {
                     [HUD hideAnimated:YES];
                     
-                    [self sendImageMessageWithURL:[NSURL URLWithString:imageUrl]];
+                    [strongSelf sendImageMessageWithURL:[NSURL URLWithString:imageUrl]];
                 } else {
                     [HUD showErrorWithMessage:@"图片上传失败"];
                 }
@@ -865,10 +865,11 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 
 - (void)sendImageMessageWithImage:(UIImage *)image {
-    
+    WeakifySelf;
     [HUD showProgressWithMessage:@"正在压缩图片..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *editedImage = [self editedImageWithImage:image];
+        StrongifySelf;
+        UIImage *editedImage = [strongSelf editedImageWithImage:image];
         NSData *data = UIImageJPEGRepresentation(editedImage, 0.7f);
 
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -884,7 +885,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                 if (imageUrl.length > 0) {
                     [HUD hideAnimated:YES];
                     
-                    [self sendImageMessageWithURL:[NSURL URLWithString:imageUrl]];
+                    [strongSelf sendImageMessageWithURL:[NSURL URLWithString:imageUrl]];
                 } else {
                     [HUD showErrorWithMessage:@"图片上传失败"];
                 }
@@ -908,7 +909,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     if (self.isCommitingHomework) {
         [HUD showProgressWithMessage:@"正在提交作业..."];
-        
+        WeakifySelf;
         [HomeworkSessionService commitHomeworkWithId:self.homeworkSession.homeworkSessionId
                                             imageUrl:imageURL.absoluteString
                                             videoUrl:nil
@@ -918,25 +919,25 @@ HomeworkAnswersPickerViewControllerDelegate>
                                                 if (error == nil) {
                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationKeyOfCommitHomework object:nil];
                                                     
-                                                    [self playSendAudio];
+                                                    [weakSelf playSendAudio];
                                                     
                                                     
                                                     [HUD showWithMessage:@"作业提交成功"];
                                                     
                                                     [PushManager pushText:@"[图片]"
-                                                                  toUsers:@[@(self.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
+                                                                  toUsers:@[@(weakSelf.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
                                                     
                                                     int64_t timestamp = (int64_t)([[NSDate date] timeIntervalSince1970] * 1000);
                                                     AVFile *file = [AVFile fileWithRemoteURL:imageURL];
                                                     AVIMImageMessage *message = [AVIMImageMessage messageWithText:@"image" file:file attributes:@{kKeyOfCreateTimestamp:@(timestamp)}];
                                                     
-                                                    [self sendMessage:message];
+                                                    [weakSelf sendMessage:message];
                                                     
                                                     
                                                 } else {
                                                     [HUD showErrorWithMessage:@"作业提交失败"];
                                                 }
-                                                self.isCommitingHomework = NO;
+                                                weakSelf.isCommitingHomework = NO;
                                             }];
     } else {
         int64_t timestamp = (int64_t)([[NSDate date] timeIntervalSince1970] * 1000);
@@ -993,6 +994,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                                                              file:file
                                                        attributes:@{kKeyOfCreateTimestamp:@(timestamp)}];
      BOOL isResend = message.status == AVIMMessageStatusFailed;
+    WeakifySelf;
     [self.conversation sendMessage:message progressBlock:^(NSInteger progress) {
         [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在上传视频%@%%...", @(progress)] cancelCallback:^{
             [file cancelUploading];
@@ -1010,43 +1012,43 @@ HomeworkAnswersPickerViewControllerDelegate>
             
 #if TEACHERSIDE || MANAGERSIDE
 #else
-            if (self.messages.count==0)
+            if (weakSelf.messages.count==0)
             {
-                [self updateHomeworkSessionModifiedTime];
+                [weakSelf updateHomeworkSessionModifiedTime];
             }
             
-            if (self.bFailReSendFlag)
+            if (weakSelf.bFailReSendFlag)
             {
-                [self updateHomeworkSessionModifiedTime];
+                [weakSelf updateHomeworkSessionModifiedTime];
             }
 #endif
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kIMManagerContentMessageDidSendNotification object:nil userInfo:@{@"message": message}];
             
             if (!isResend) {
-                [self.messages addObject:(AVIMTypedMessage *)message];
+                [weakSelf.messages addObject:(AVIMTypedMessage *)message];
             }
             
-            [self sortMessages];
-            [self reloadDataAndScrollToBottom];
+            [weakSelf sortMessages];
+            [weakSelf reloadDataAndScrollToBottom];
             
-            
-            if (self.isCommitingHomework)
+            StrongifySelf;
+            if (weakSelf.isCommitingHomework)
             {
                 [HUD showProgressWithMessage:@"正在提交作业..."];
                 
-                [HomeworkSessionService commitHomeworkWithId:self.homeworkSession.homeworkSessionId
+                [HomeworkSessionService commitHomeworkWithId:strongSelf.homeworkSession.homeworkSessionId
                                                     imageUrl:nil
                                                     videoUrl:file.url
                                                     callback:^(Result *result, NSError *error) {
-                                                        self.isCommitingHomework = NO;
+                                                        weakSelf.isCommitingHomework = NO;
                                                         
                                                         if (error == nil) {
                                                             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationKeyOfCommitHomework object:nil];
-                                                            [self playSendAudio];
+                                                            [weakSelf playSendAudio];
                                                             [HUD showWithMessage:@"作业提交成功"];
                                                             [PushManager pushText:@"[视频]"
-                                                                          toUsers:@[@(self.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
+                                                                          toUsers:@[@(weakSelf.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
                                                             
                                                     
                                                         } else {
@@ -1072,7 +1074,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     if (self.isCommitingHomework) {
         [HUD showProgressWithMessage:@"正在提交作业..."];
-        
+        WeakifySelf;
         [HomeworkSessionService commitHomeworkWithId:self.homeworkSession.homeworkSessionId
                                             imageUrl:nil
                                             videoUrl:videoURL.absoluteString
@@ -1082,10 +1084,10 @@ HomeworkAnswersPickerViewControllerDelegate>
                                                 if (error == nil) {
                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationKeyOfCommitHomework object:nil];
                                                     
-                                                    [self playSendAudio];
+                                                    [weakSelf playSendAudio];
                                                     [HUD showWithMessage:@"作业提交成功"];
                                                     [PushManager pushText:@"[视频]"
-                                                                  toUsers:@[@(self.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
+                                                                  toUsers:@[@(weakSelf.homeworkSession.correctTeacher.userId)] withPushType:PushManagerMessage];
                                                     
                                                     int64_t timestamp = (int64_t)([[NSDate date] timeIntervalSince1970] * 1000);
                                                     NSInteger d = (NSInteger)duration;
@@ -1169,33 +1171,33 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     AVIMMessageOption *option = [[AVIMMessageOption alloc] init];
     option.pushData = @{@"alert":@{@"body":text,@"action-loc-key":@"com.minine.push",@"loc-key":@(PushManagerMessage)}, @"badge":@"Increment",@"pushType" :@(PushManagerMessage),@"action":@"com.minine.push"};
-    
+    WeakifySelf;
     [self.conversation sendMessage:message
                             option:option
                           callback:^(BOOL succeeded, NSError * _Nullable error) {
 #if TEACHERSIDE || MANAGERSIDE
 #else
-                              if (succeeded && self.messages.count==0)
+                              if (succeeded && weakSelf.messages.count==0)
                               {
-                                  [self updateHomeworkSessionModifiedTime];
+                                  [weakSelf updateHomeworkSessionModifiedTime];
                               }
                               
-                              if (self.bFailReSendFlag)
+                              if (weakSelf.bFailReSendFlag)
                               {
-                                  [self updateHomeworkSessionModifiedTime];
+                                  [weakSelf updateHomeworkSessionModifiedTime];
                               }
 #endif
                               [[NSNotificationCenter defaultCenter] postNotificationName:kIMManagerContentMessageDidSendNotification object:nil userInfo:@{@"message": message}];
                               
                               if (!isResend) {
-                                  [self.messages addObject:(AVIMTypedMessage *)message];
+                                  [weakSelf.messages addObject:(AVIMTypedMessage *)message];
                               }
 
-                              [self sortMessages];
-                              [self reloadDataAndScrollToBottom];
+                              [weakSelf sortMessages];
+                              [weakSelf reloadDataAndScrollToBottom];
 #if TEACHERSIDE || MANAGERSIDE
 #else
-                              [self correctNotifyHomeworkSession];
+                              [weakSelf correctNotifyHomeworkSession];
 #endif
                           }];
 }
@@ -1233,7 +1235,9 @@ HomeworkAnswersPickerViewControllerDelegate>
 
 - (void)handlePhotoPickerResult:(UIImagePickerController *)picker
   didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    WeakifySelf;
     [picker dismissViewControllerAnimated:YES completion:^{
+        StrongifySelf;
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         if (image.size.width==0 || image.size.height==0) {
             [HUD showErrorWithMessage:@"图片选择失败"];
@@ -1244,10 +1248,10 @@ HomeworkAnswersPickerViewControllerDelegate>
         [editVC setOnlyForSend:YES];
         [editVC setThumbnailImages:@[image]];
         [editVC setSendCallback:^(UIImage *image) {
-            [self sendImageMessageWithImage:image];
+            [strongSelf sendImageMessageWithImage:image];
         }];
         editVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self.navigationController presentViewController:editVC animated:YES completion:nil];
+        [strongSelf.navigationController presentViewController:editVC animated:YES completion:nil];
 #endif
     }];
 }
@@ -1263,18 +1267,17 @@ HomeworkAnswersPickerViewControllerDelegate>
         if (asset != nil) {
             durationInSeconds = CMTimeGetSeconds(asset.duration);
         }
-        
 #if TEACHERSIDE || MANAGERSIDE
 #else
-       
-        NSInteger limit = self.homeworkSession.homework.limitTimes; // 最大限制 5 分钟
+        WeakifySelf;
+        NSInteger limit = weakSelf.homeworkSession.homework.limitTimes; // 最大限制 5 分钟
         if (limit == 0 || limit > 5 * 60) {
             
             limit = 5 * 60;
         }
         if (durationInSeconds > limit) {
          
-            NSString *msg = [NSString stringWithFormat:@"本任务视频时长不能超过: %d分%d秒",(int)self.homeworkSession.homework.limitTimes/60,(int)self.homeworkSession.homework.limitTimes%60];
+            NSString *msg = [NSString stringWithFormat:@"本任务视频时长不能超过: %d分%d秒",(int)weakSelf.homeworkSession.homework.limitTimes/60,(int)weakSelf.homeworkSession.homework.limitTimes%60];
             [HUD showErrorWithMessage:msg];
             return;
         }
@@ -1574,6 +1577,7 @@ HomeworkAnswersPickerViewControllerDelegate>
 }
 
 - (void)disableControlsForAWhile {
+
     self.view.userInteractionEnabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.view.userInteractionEnabled = YES;
@@ -1597,10 +1601,10 @@ HomeworkAnswersPickerViewControllerDelegate>
         //                                                            object:nil
         //                                                          userInfo:@{@"message":message}];
     }
-    
+    WeakifySelf;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.messagesTableView reloadData];
-        [self scrollMessagesTableViewToBottom:YES];
+        [weakSelf.messagesTableView reloadData];
+        [weakSelf scrollMessagesTableViewToBottom:YES];
     });
 }
 
@@ -1661,7 +1665,7 @@ HomeworkAnswersPickerViewControllerDelegate>
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [HUD showProgressWithMessage:@"正在上传语音..."];
-        
+        WeakifySelf;
         [[FileUploader shareInstance] uploadData:data
                             type:UploadFileTypeAudio
                    progressBlock:^(NSInteger number) {
@@ -1671,9 +1675,9 @@ HomeworkAnswersPickerViewControllerDelegate>
                      if (audioUrl.length > 0) {
                          [[NSFileManager defaultManager] removeItemAtPath:soundFilePath
                                                                     error:nil];
-                         
+                         StrongifySelf;
                          [HUD hideAnimated:YES];
-                         [self sendAudioMessage:[NSURL URLWithString:audioUrl] duration:duration];
+                         [strongSelf sendAudioMessage:[NSURL URLWithString:audioUrl] duration:duration];
                      } else {
                          [HUD showErrorWithMessage:@"音频上传失败"];
                      }
@@ -1772,7 +1776,7 @@ HomeworkAnswersPickerViewControllerDelegate>
         WeakifySelf;
         [cell setStartTaskCallback:^(void) { // 开始任务
             
-            NSString *typeName = self.homeworkSession.homework.typeName;
+            NSString *typeName = weakSelf.homeworkSession.homework.typeName;
             if ([typeName isEqualToString:kHomeworkTaskFollowUpName]) {
                 
                 if (weakSelf.homeworkSession.score != -1)  return;
@@ -2044,11 +2048,11 @@ HomeworkAnswersPickerViewControllerDelegate>
             }];
             [textCell setClickCallback:^{// 查看作业
 
-                NSString *typeName = self.homeworkSession.homework.typeName;
+                NSString *typeName = weakSelf.homeworkSession.homework.typeName;
                 if ([typeName isEqualToString:kHomeworkTaskFollowUpName]) {
                     
                     HomeworkItem *followItem = weakSelf.homeworkSession.homework.otherItem.firstObject;
-                    [self playAudioWithURL:message.file.url withCoverURL:followItem.audioCoverUrl];
+                    [weakSelf playAudioWithURL:message.file.url withCoverURL:followItem.audioCoverUrl];
                     
                 } else if ([typeName isEqualToString:kHomeworkTaskWordMemoryName]){
                    
@@ -2224,28 +2228,30 @@ HomeworkAnswersPickerViewControllerDelegate>
 - (void)requestHomeworkDetail{
 
     [self.loadingContainerView showLoadingView];
+    WeakifySelf;
     [HomeworkSessionService requestHomeworkSessionWithId:self.homeworkSession.homeworkSessionId callback:^(Result *result, NSError *error) {
         
-        [self.loadingContainerView hideAllStateView];
+        StrongifySelf;
+        [weakSelf.loadingContainerView hideAllStateView];
         if (error) {
-            [self.loadingContainerView showFailureViewWithRetryCallback:^{
-                [self requestHomeworkDetail];
+            [strongSelf.loadingContainerView showFailureViewWithRetryCallback:^{
+                [weakSelf requestHomeworkDetail];
             }];
             return ;
         } else {
             HomeworkSession *session = (HomeworkSession *)(result.userInfo);
             if (session) {
-                self.homeworkSession = session;
-                self.teacher = session.correctTeacher;
+                weakSelf.homeworkSession = session;
+                weakSelf.teacher = session.correctTeacher;
                 if ((session.correctTeacher.userId > 0) && (session.student.userId > 0)) {
-                    [self setupConversation];
+                    [weakSelf setupConversation];
                 } else {
-                    [self.loadingContainerView showFailureViewWithRetryCallback:^{
-                        [self requestHomeworkDetail];
+                    [strongSelf.loadingContainerView showFailureViewWithRetryCallback:^{
+                        [weakSelf requestHomeworkDetail];
                     }];
                 }
             }
-            [self updateData];
+            [weakSelf updateData];
         }
     }];
 }
