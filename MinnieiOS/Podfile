@@ -19,6 +19,7 @@ abstract_target 'Minnie' do
   pod 'YYText'
   pod 'StreamingKit'
   pod 'VIMediaCache'
+  pod 'MLeaksFinder'
   #pod 'Fabric'
   #pod 'Crashlytics'
   pod 'Bugly'

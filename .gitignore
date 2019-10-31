@@ -3,3 +3,6 @@ Podfile.lock
 xcuserdata
 xcshareddata
 contents.xcworkspacedata
+fastlane
+Gemfile
+Gemfile.lock

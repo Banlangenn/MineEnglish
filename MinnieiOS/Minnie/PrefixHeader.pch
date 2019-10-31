@@ -65,7 +65,7 @@
 #define kColumnSecondWidth          184.f
 #define kColumnThreeWidth           (ScreenWidth - kRootModularWidth - kColumnSecondWidth)/2.0
 
-#define isDevelop (1)
+#define isDevelop (0)
 
 /*
  *  环境配置
