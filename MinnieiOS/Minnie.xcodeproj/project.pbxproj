@@ -25,6 +25,7 @@
 		120426702300F30A008B90C9 /* goodjob.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1204266D2300F30A008B90C9 /* goodjob.mp3 */; };
 		12108A56231FC0730045206C /* count_5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A55231FC0720045206C /* count_5.mp3 */; };
 		12108A58231FC0840045206C /* count_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A57231FC0840045206C /* count_1.mp3 */; };
+		12179190236D29BD00824B0F /* ScoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B503E72317DC04001880A9 /* ScoreInfo.m */; };
 		1226E7D3229572C100BAB1C9 /* DrawImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226E7D2229572C100BAB1C9 /* DrawImageView.m */; };
 		1226E7D42295786100BAB1C9 /* DrawImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226E7D2229572C100BAB1C9 /* DrawImageView.m */; };
 		1226F2F12297F37A00BAB1C9 /* MinnieManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226F2F02297F37A00BAB1C9 /* MinnieManagerTests.m */; };
@@ -8255,6 +8256,7 @@
 				97109D4C207A2F0400568785 /* MessageEditorViewController.m in Sources */,
 				871806C321DF438C0023511C /* MUImagePickerManager.m in Sources */,
 				87707878219BB62500940A88 /* HomeWorkSendHistoryViewController.m in Sources */,
+				12179190236D29BD00824B0F /* ScoreInfo.m in Sources */,
 				1923CB1622812D330056B2AD /* EditStudentMarkView.m in Sources */,
 				12B504552318C445001880A9 /* MICreateTaskViewController.m in Sources */,
 				973649BD20AF2F8600511A95 /* CreateHomeworkViewController.m in Sources */,

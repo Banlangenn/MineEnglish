@@ -466,15 +466,15 @@ NEPhotoBrowserDataSource
     [cell setBlankCallback:^{
         
         MIScoreListViewController *scoreListVC = [[MIScoreListViewController alloc] initWithNibName:NSStringFromClass([MIScoreListViewController class]) bundle:nil];
-        WeakifySelf;
+        StrongifySelf;
         scoreListVC.editTaskCallBack = ^{
             
             [weakSelf requestHomeworks];
         };
         scoreListVC.homework = homework;
-        scoreListVC.currentFileInfo = self.currentFileInfo;
+        scoreListVC.currentFileInfo = strongSelf.currentFileInfo;
         scoreListVC.teacherSider = YES;
-        [self.navigationController pushViewController:scoreListVC animated:YES];
+        [weakSelf.navigationController pushViewController:scoreListVC animated:YES];
     }];
     [cell setSendCallback:^{
         
@@ -520,8 +520,8 @@ NEPhotoBrowserDataSource
     };
     scoreListVC.homework = homework;
     scoreListVC.teacherSider = YES;
-    scoreListVC.currentFileInfo = self.currentFileInfo;
-    [self.navigationController pushViewController:scoreListVC animated:YES];
+    scoreListVC.currentFileInfo = weakSelf.currentFileInfo;
+    [weakSelf.navigationController pushViewController:scoreListVC animated:YES];
 }
 
 
@@ -536,7 +536,6 @@ NEPhotoBrowserDataSource
     [self.homeworksRequest clearCompletionBlock];
     [self.homeworksRequest stop];
     self.homeworksRequest = nil;
-    
     
 }
 
