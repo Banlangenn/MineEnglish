@@ -31,6 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 退出登陆
 - (void)logout;
+
+
+- (void)setupIfly;
+- (void)destroyIfly;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

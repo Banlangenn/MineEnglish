@@ -15,13 +15,14 @@
 #import "MIRecordWaveView.h"
 #import <AFNetworking/AFNetworking.h>
 #import "AudioPlayerManager.h"
-
+#import "ISRDataHelper.h"
+#import <iflyMSC/iflyMSC.h>
 
 @interface MICheckWordsViewController ()<
-CAAnimationDelegate
->{
+NSURLSessionDownloadDelegate,
+IFlySpeechRecognizerDelegate
+>
 
-}
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *vedioBgView;
 
@@ -30,14 +31,22 @@ CAAnimationDelegate
 
 @property (strong,nonatomic) MIReadingWordsView *wordsView;
 
-@property (nonatomic, strong) MIRecordWaveView *recordWaveView;
+@property (strong,nonatomic) MIRecordWaveView *recordWaveView;
 
-@property (nonatomic, strong) AudioPlayerManager *audioPlayer;
+@property (strong,nonatomic, ) AudioPlayerManager *audioPlayer;
 @property (weak, nonatomic) IBOutlet UIView *recordAniBgView;
 
 
 @property (strong,nonatomic) HomeworkItem *currentWordItem;
 
+
+@property (strong,nonatomic) NSURLSessionDownloadTask *downloadTask;
+
+@property (strong,nonatomic) IFlySpeechRecognizer *iFlySpeechRecognizer;
+@property (strong, nonatomic) NSArray *resultArray; // 识别结果
+@property (assign, nonatomic,) NSInteger recognizerIndex;
+@property (strong, nonatomic) UILabel *recognizerLabel;
+@property (assign, nonatomic) NSInteger recognizerCount;
 
 @end
 
@@ -47,16 +56,26 @@ CAAnimationDelegate
     
     [super viewWillDisappear:animated];
     // 查看作业
-//    [self.wordsView invalidateTimer];
+    [self cancelDownload];
+    [self stopRecognizer];
     [self.audioPlayer resetCurrentPlayer];
+    // 移除音频文件
+    [[NSFileManager defaultManager] removeItemAtPath:[self filePath] error:nil];
     
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
- 
+    
+    [self configureData];
+    [self configureUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)configureData{
+   
     self.titleLabel.text = kHomeworkTaskWordMemoryName;
-  
     HomeworkItem *wordItem = self.homework.items.lastObject;
     
     // 处理要显示的随机数组
@@ -82,8 +101,20 @@ CAAnimationDelegate
     }
     self.currentWordItem = wordItem;
     
-    [self configureUI];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationWillEnterForegroundNotification object:nil];
+#if TEACHERSIDE || MANAGERSIDE
+    
+    // 单词识别结果(教师端显示)
+     NSDictionary *dict = [Utils getWordsText];
+     NSString *key = [self.audioUrl.lastPathComponent stringByDeletingPathExtension];
+     NSArray *textArray = [dict objectForKey:key];
+//     if (textArray.count == 0) {
+//         [self downloadWithUrl:self.audioUrl];
+//     } else {
+//         self.resultArray = textArray;
+//     }
+
+    [self downloadWithUrl:self.audioUrl];
+#endif
 }
 
 - (void) configureUI{
@@ -97,11 +128,54 @@ CAAnimationDelegate
     self.wordsView.wordsItem = self.currentWordItem;
     self.wordsView.hidden = NO;
     [self.vedioBgView addSubview:self.wordsView];
+    WeakifySelf;
     [self.wordsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.vedioBgView);
+        make.edges.equalTo(weakSelf.vedioBgView);
+    }];
+    
+    self.recognizerLabel = [[UILabel alloc] init];
+    self.recognizerLabel.font = [UIFont systemFontOfSize:14];
+    self.recognizerLabel.numberOfLines = 0;
+    self.recognizerLabel.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:self.recognizerLabel];
+    self.recognizerLabel.attributedText = [self dealwithTextArray:self.resultArray];
+    [self.recognizerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view.mas_left).offset(12);
+        make.right.equalTo(self.view.mas_right).offset(-12);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-40);
     }];
 }
 
+- (NSAttributedString *)dealwithTextArray:(NSArray *)textArray{
+    
+    NSArray *words = self.currentWordItem.words;
+    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] init];
+    for (NSInteger i = 0; i < textArray.count; i++) {
+        NSString *text = textArray[i];
+        WordInfo *wordInfo;
+        if (i < words.count) {
+            wordInfo = words[i];
+        }
+        NSDictionary *attri;
+        if ([text isEqualToString:wordInfo.chinese]) {
+           attri = @{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                     NSForegroundColorAttributeName:[UIColor blackColor]};
+        } else {
+            attri = @{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                      NSForegroundColorAttributeName:[UIColor redColor]};
+        }
+        NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:text attributes:attri];
+        [textAttr appendAttributedString:attStr];
+        
+        if (i > 0 && i < textArray.count - 1) {
+            if (text.length > 0) {
+                [textAttr appendAttributedString:[[NSAttributedString alloc] initWithString:@"、"]];
+            }
+        }
+    }
+    return textAttr;
+}
 #pragma mark  actions
 - (IBAction)backAction:(id)sender {
     
@@ -171,7 +245,7 @@ CAAnimationDelegate
                 [weakSelf.audioPlayer play:NO];
             } else {
                
-                if (value * weakSelf.audioPlayer.duration >= self.audioPlayer.duration) {
+                if (value * weakSelf.audioPlayer.duration >= weakSelf.audioPlayer.duration) {
                      
                      [weakSelf.audioPlayer seekToTime:weakSelf.audioPlayer.duration];
                  } else {
@@ -245,8 +319,184 @@ CAAnimationDelegate
 }
 
 
+#pragma mark - 下载音频
+- (void)downloadWithUrl:(NSString *)vedioUrl{
+
+    NSString *path = [self filePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        self.recognizerIndex = 0;
+        self.recognizerCount = [self componentsCount];
+        [self recognizerAudioStreamIndex:0 count:self.recognizerCount];
+        return;
+   }
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    self.downloadTask = [session downloadTaskWithURL:[NSURL URLWithString:vedioUrl]];
+    [self.downloadTask resume];
+}
+
+- (void)cancelDownload{
+   
+    [self.downloadTask suspend];
+    [self.downloadTask cancel];
+    self.downloadTask = nil;
+}
+
+#pragma mark - NSURLSessionDelegate
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location{
+
+    NSError *error = nil;
+    NSString *path = [self filePath];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:path] error:&error];
+    self.recognizerIndex = 0;
+    self.recognizerCount = [self componentsCount];
+    [self recognizerAudioStreamIndex:self.recognizerIndex count:self.recognizerCount];
+}
+
+- (NSString *)filePath{
+   
+    NSString *url = @"wordsAudio";
+    NSString *cacheDirectory = NSTemporaryDirectory();
+    NSString *pathComponent = [url stringByAppendingPathExtension:@"wav"];
+    NSString *filePath = [cacheDirectory stringByAppendingPathComponent:pathComponent];
+    NSLog(@"filePath %@",filePath);
+    return filePath;
+}
+
+- (NSUInteger)componentsCount{// 分段数量
+
+    NSData *data = [NSData dataWithContentsOfFile:[self filePath]];    //从文件中读取音频
+    return ceil((CGFloat)data.length/[self componentSize]);
+}
+
+
+- (NSUInteger)componentSize{// 分段字节大小
+    
+    //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
+    NSUInteger interval = 8 * 16 * 1 * (self.currentWordItem.commitPlaytime/1000) / 8 * 1000;
+    return interval;
+}
+
+#pragma mark - 音频识别
+- (void)recognizerAudioStreamIndex:(NSInteger)index count:(NSInteger)count{
+  
+    //设置音频源为音频流（-1）
+    [self.iFlySpeechRecognizer setParameter:@"-1" forKey:@"audio_source"];
+    //启动识别服务
+    [self.iFlySpeechRecognizer startListening];
+
+    //写入音频数据
+    NSString *pcmFilePath = [self filePath];
+    NSData *data = [NSData dataWithContentsOfFile:pcmFilePath];    //从文件中读取音频\
+
+    //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
+    NSUInteger interval = [self componentSize];
+    
+    NSInteger lastLength = 44 + interval * index;
+    
+    // 音频数据分段
+    if (index >= count - 1) {// 最后一段
+        interval = data.length - lastLength;
+    }
+    if (lastLength + interval < data.length) {
+
+        NSData *piceData = [data subdataWithRange:NSMakeRange(lastLength, interval)];
+      BOOL success = [self.iFlySpeechRecognizer writeAudio:piceData];//写入音频
+        NSLog(@"writeAudio %d",success);
+    }
+   
+//    整段识别
+//    for (int i = 0; i < count; i++) {
+//
+//        if (index == count - 1) {// 最后一段
+//            interval = data.length - lastLength;
+//        }
+//        if (lastLength + interval <= data.length) {
+//
+//            NSData *piceData = [data subdataWithRange:NSMakeRange(lastLength, interval)];
+//            [self.iFlySpeechRecognizer writeAudio:piceData];
+//        }
+//        lastLength += interval;
+//    }
+
+    //音频写入结束或出错时，必须调用结束识别接口
+    [self.iFlySpeechRecognizer stopListening];//音频数据写入完成，进入等待状态
+}
+
+- (void)stopRecognizer{
+    [self.iFlySpeechRecognizer cancel];
+    [self.iFlySpeechRecognizer stopListening];
+    [self.iFlySpeechRecognizer destroy];
+}
+
+- (IFlySpeechRecognizer *)iFlySpeechRecognizer{
+    
+    if (!_iFlySpeechRecognizer) {
+        
+        _iFlySpeechRecognizer = [IFlySpeechRecognizer sharedInstance];
+        [_iFlySpeechRecognizer setParameter:@"" forKey:[IFlySpeechConstant PARAMS]];
+//        [_iFlySpeechRecognizer setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN]];
+        _iFlySpeechRecognizer.delegate = self;
+        
+        //采样率
+//        [_iFlySpeechRecognizer setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+        [_iFlySpeechRecognizer setParameter:@"8000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+        //(EOS) 后端点
+        [_iFlySpeechRecognizer setParameter:@"10000" forKey:[IFlySpeechConstant VAD_EOS]];
+        //(BOS) 前端点
+        [_iFlySpeechRecognizer setParameter:@"10000" forKey:[IFlySpeechConstant VAD_BOS]];
+        //set language
+        [_iFlySpeechRecognizer setParameter:@"zh_cn" forKey:[IFlySpeechConstant LANGUAGE]];
+        //set accent
+        [_iFlySpeechRecognizer setParameter:@"mandarin" forKey:[IFlySpeechConstant ACCENT]];
+        // 是否有标点
+        [_iFlySpeechRecognizer setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT]];
+    }
+    return _iFlySpeechRecognizer;
+}
+
+#pragma mark - IFlySpeechRecognizerDelegate
+- (void) onCompleted:(IFlySpeechError *) error
+{
+    [self stopRecognizer];
+    self.iFlySpeechRecognizer = nil;
+    
+    self.recognizerIndex++;
+    if (self.recognizerIndex < self.recognizerCount) {
+
+        [self recognizerAudioStreamIndex:self.recognizerIndex count:self.recognizerCount];
+    } else {
+        self.recognizerLabel.attributedText = [self dealwithTextArray:self.resultArray];
+       [Utils saveWordsTextWithKey:[self.audioUrl.lastPathComponent stringByDeletingPathExtension] value:self.resultArray];
+    }
+}
+
+- (void)onResults:(NSArray *)results isLast:(BOOL)isLast {
+
+    NSMutableString *resultString = [[NSMutableString alloc] init];
+    NSDictionary *dic = results[0];
+    
+    for (NSString *key in dic) {
+        [resultString appendFormat:@"%@",key];
+    }
+    NSString * resultFromJson =  nil;
+    resultFromJson = [ISRDataHelper stringFromJson:resultString];
+    NSLog(@"resultFromJson=%@",resultFromJson);
+    if (resultFromJson.length > 0) {
+
+        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.resultArray];
+        [tempArray addObject:resultFromJson];
+        self.resultArray = tempArray;
+    }
+}
+
+
 - (void)dealloc{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 @end

@@ -305,6 +305,22 @@
     return bgView;
 }
 
++ (void)saveWordsTextWithKey:(NSString *)key value:(NSArray *)value{
+    
+    NSDictionary *tempDict = [[NSUserDefaults standardUserDefaults] valueForKey:kWordRecognizeText];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:tempDict];
+    [dict setValue:value forKey:key];
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:kWordRecognizeText];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSDictionary *)getWordsText{
+
+    NSDictionary *tempDict = [[NSUserDefaults standardUserDefaults] valueForKey:kWordRecognizeText];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return tempDict;
+}
+
 @end
 
 

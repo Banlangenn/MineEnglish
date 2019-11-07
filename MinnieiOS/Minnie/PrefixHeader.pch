@@ -162,4 +162,8 @@ typedef NS_ENUM(NSInteger, MIHomeworkTaskType) {
 #define kHomeworkTaskGeneralTaskName               @"普通任务"
 #define kHomeworkTaskNameExaminationStatistics     @"成绩统计"
 #define kHomeworkTaskActivityName                  @"活动"
+
+
+#define kWordRecognizeText                  @"WordRecognizeText"
+
 #endif /* PrefixHeader_pch */

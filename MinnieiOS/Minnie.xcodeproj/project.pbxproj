@@ -26,6 +26,48 @@
 		12108A56231FC0730045206C /* count_5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A55231FC0720045206C /* count_5.mp3 */; };
 		12108A58231FC0840045206C /* count_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12108A57231FC0840045206C /* count_1.mp3 */; };
 		12179190236D29BD00824B0F /* ScoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B503E72317DC04001880A9 /* ScoreInfo.m */; };
+		121791A7236F185600824B0F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791A6236F185600824B0F /* iflyMSC.framework */; };
+		121791A8236F185600824B0F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791A6236F185600824B0F /* iflyMSC.framework */; };
+		121791A9236F185600824B0F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791A6236F185600824B0F /* iflyMSC.framework */; };
+		121791AB236F187A00824B0F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AA236F187900824B0F /* libz.tbd */; };
+		121791AD236F188B00824B0F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AC236F188B00824B0F /* AVFoundation.framework */; };
+		121791AF236F189E00824B0F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AE236F189E00824B0F /* SystemConfiguration.framework */; };
+		121791B1236F18BE00824B0F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B0236F18BE00824B0F /* CoreTelephony.framework */; };
+		121791B3236F18DB00824B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B2236F18DB00824B0F /* Foundation.framework */; };
+		121791B5236F18E800824B0F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B4236F18E800824B0F /* AudioToolbox.framework */; };
+		121791B7236F18F300824B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B6236F18F300824B0F /* UIKit.framework */; };
+		121791B9236F190800824B0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B8236F190800824B0F /* CoreLocation.framework */; };
+		121791BB236F192300824B0F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BA236F192300824B0F /* libc++.tbd */; };
+		121791BD236F193400824B0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BC236F193400824B0F /* QuartzCore.framework */; };
+		121791BF236F193C00824B0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BE236F193C00824B0F /* CoreGraphics.framework */; };
+		121791C2236F21CE00824B0F /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 121791C0236F21CE00824B0F /* ISRDataHelper.m */; };
+		121791C3236F21CE00824B0F /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 121791C0236F21CE00824B0F /* ISRDataHelper.m */; };
+		121791C4236F21CE00824B0F /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 121791C0236F21CE00824B0F /* ISRDataHelper.m */; };
+		121791C8236F238C00824B0F /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791C6236F238B00824B0F /* libmp3lame.a */; };
+		121791C9236F238C00824B0F /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791C6236F238B00824B0F /* libmp3lame.a */; };
+		121791CA236F238C00824B0F /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791C6236F238B00824B0F /* libmp3lame.a */; };
+		121791CB236F23DD00824B0F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AA236F187900824B0F /* libz.tbd */; };
+		121791CC236F23F700824B0F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AC236F188B00824B0F /* AVFoundation.framework */; };
+		121791CD236F240D00824B0F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AE236F189E00824B0F /* SystemConfiguration.framework */; };
+		121791CE236F241700824B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B2236F18DB00824B0F /* Foundation.framework */; };
+		121791CF236F242400824B0F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B0236F18BE00824B0F /* CoreTelephony.framework */; };
+		121791D0236F243D00824B0F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B4236F18E800824B0F /* AudioToolbox.framework */; };
+		121791D1236F244400824B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B6236F18F300824B0F /* UIKit.framework */; };
+		121791D2236F245600824B0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B8236F190800824B0F /* CoreLocation.framework */; };
+		121791D3236F246400824B0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BC236F193400824B0F /* QuartzCore.framework */; };
+		121791D4236F247B00824B0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BE236F193C00824B0F /* CoreGraphics.framework */; };
+		121791D5236F249400824B0F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BA236F192300824B0F /* libc++.tbd */; };
+		121791D6236F25A800824B0F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AA236F187900824B0F /* libz.tbd */; };
+		121791D7236F25B000824B0F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AC236F188B00824B0F /* AVFoundation.framework */; };
+		121791D8236F25BF00824B0F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791AE236F189E00824B0F /* SystemConfiguration.framework */; };
+		121791D9236F25C700824B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B2236F18DB00824B0F /* Foundation.framework */; };
+		121791DA236F25D000824B0F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B0236F18BE00824B0F /* CoreTelephony.framework */; };
+		121791DB236F25D900824B0F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B4236F18E800824B0F /* AudioToolbox.framework */; };
+		121791DC236F25E100824B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B6236F18F300824B0F /* UIKit.framework */; };
+		121791DD236F25F000824B0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791B8236F190800824B0F /* CoreLocation.framework */; };
+		121791DE236F260C00824B0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BC236F193400824B0F /* QuartzCore.framework */; };
+		121791DF236F261800824B0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BE236F193C00824B0F /* CoreGraphics.framework */; };
+		121791E0236F262300824B0F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 121791BA236F192300824B0F /* libc++.tbd */; };
 		1226E7D3229572C100BAB1C9 /* DrawImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226E7D2229572C100BAB1C9 /* DrawImageView.m */; };
 		1226E7D42295786100BAB1C9 /* DrawImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226E7D2229572C100BAB1C9 /* DrawImageView.m */; };
 		1226F2F12297F37A00BAB1C9 /* MinnieManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1226F2F02297F37A00BAB1C9 /* MinnieManagerTests.m */; };
@@ -2163,6 +2205,22 @@
 		1204266D2300F30A008B90C9 /* goodjob.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = goodjob.mp3; sourceTree = "<group>"; };
 		12108A55231FC0720045206C /* count_5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = count_5.mp3; sourceTree = "<group>"; };
 		12108A57231FC0840045206C /* count_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = count_1.mp3; sourceTree = "<group>"; };
+		121791A6236F185600824B0F /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		121791AA236F187900824B0F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		121791AC236F188B00824B0F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		121791AE236F189E00824B0F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		121791B0236F18BE00824B0F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		121791B2236F18DB00824B0F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		121791B4236F18E800824B0F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		121791B6236F18F300824B0F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		121791B8236F190800824B0F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		121791BA236F192300824B0F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		121791BC236F193400824B0F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		121791BE236F193C00824B0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		121791C0236F21CE00824B0F /* ISRDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISRDataHelper.m; sourceTree = "<group>"; };
+		121791C1236F21CE00824B0F /* ISRDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISRDataHelper.h; sourceTree = "<group>"; };
+		121791C6236F238B00824B0F /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		121791C7236F238B00824B0F /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		1226E7D1229572C100BAB1C9 /* DrawImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawImageView.h; sourceTree = "<group>"; };
 		1226E7D2229572C100BAB1C9 /* DrawImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawImageView.m; sourceTree = "<group>"; };
 		1226F2D52297F37900BAB1C9 /* MinnieManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3452,6 +3510,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				121791CA236F238C00824B0F /* libmp3lame.a in Frameworks */,
+				121791BF236F193C00824B0F /* CoreGraphics.framework in Frameworks */,
+				121791BD236F193400824B0F /* QuartzCore.framework in Frameworks */,
+				121791BB236F192300824B0F /* libc++.tbd in Frameworks */,
+				121791B9236F190800824B0F /* CoreLocation.framework in Frameworks */,
+				121791B7236F18F300824B0F /* UIKit.framework in Frameworks */,
+				121791B5236F18E800824B0F /* AudioToolbox.framework in Frameworks */,
+				121791B3236F18DB00824B0F /* Foundation.framework in Frameworks */,
+				121791B1236F18BE00824B0F /* CoreTelephony.framework in Frameworks */,
+				121791AD236F188B00824B0F /* AVFoundation.framework in Frameworks */,
+				121791AF236F189E00824B0F /* SystemConfiguration.framework in Frameworks */,
+				121791AB236F187A00824B0F /* libz.tbd in Frameworks */,
+				121791A9236F185600824B0F /* iflyMSC.framework in Frameworks */,
 				12B7B94C22D863BE0057C798 /* WMPageController.framework in Frameworks */,
 				66A75D0AD9FF0A733A30104F /* Pods_Minnie_MinnieManager.framework in Frameworks */,
 			);
@@ -3475,6 +3546,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				121791E0236F262300824B0F /* libc++.tbd in Frameworks */,
+				121791DF236F261800824B0F /* CoreGraphics.framework in Frameworks */,
+				121791DE236F260C00824B0F /* QuartzCore.framework in Frameworks */,
+				121791DD236F25F000824B0F /* CoreLocation.framework in Frameworks */,
+				121791DC236F25E100824B0F /* UIKit.framework in Frameworks */,
+				121791DB236F25D900824B0F /* AudioToolbox.framework in Frameworks */,
+				121791DA236F25D000824B0F /* CoreTelephony.framework in Frameworks */,
+				121791D9236F25C700824B0F /* Foundation.framework in Frameworks */,
+				121791D8236F25BF00824B0F /* SystemConfiguration.framework in Frameworks */,
+				121791D7236F25B000824B0F /* AVFoundation.framework in Frameworks */,
+				121791D6236F25A800824B0F /* libz.tbd in Frameworks */,
+				121791C8236F238C00824B0F /* libmp3lame.a in Frameworks */,
+				121791A7236F185600824B0F /* iflyMSC.framework in Frameworks */,
 				3FC7D8DCCAE6B8F8BB292E34 /* Pods_Minnie_MinnieStudent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3483,6 +3567,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				121791D5236F249400824B0F /* libc++.tbd in Frameworks */,
+				121791D4236F247B00824B0F /* CoreGraphics.framework in Frameworks */,
+				121791D3236F246400824B0F /* QuartzCore.framework in Frameworks */,
+				121791D2236F245600824B0F /* CoreLocation.framework in Frameworks */,
+				121791D1236F244400824B0F /* UIKit.framework in Frameworks */,
+				121791D0236F243D00824B0F /* AudioToolbox.framework in Frameworks */,
+				121791CF236F242400824B0F /* CoreTelephony.framework in Frameworks */,
+				121791CE236F241700824B0F /* Foundation.framework in Frameworks */,
+				121791CD236F240D00824B0F /* SystemConfiguration.framework in Frameworks */,
+				121791CC236F23F700824B0F /* AVFoundation.framework in Frameworks */,
+				121791CB236F23DD00824B0F /* libz.tbd in Frameworks */,
+				121791C9236F238C00824B0F /* libmp3lame.a in Frameworks */,
+				121791A8236F185600824B0F /* iflyMSC.framework in Frameworks */,
 				A22B33AACE9433822A3A33FA /* Pods_Minnie_MinnieTeacher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3490,6 +3587,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		121791C5236F238B00824B0F /* Lame */ = {
+			isa = PBXGroup;
+			children = (
+				121791C6236F238B00824B0F /* libmp3lame.a */,
+				121791C7236F238B00824B0F /* lame.h */,
+			);
+			path = Lame;
+			sourceTree = "<group>";
+		};
 		1226F2D62297F37900BAB1C9 /* MinnieManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3857,6 +3963,18 @@
 		2E52121B5281DF467A4CFCDF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				121791BE236F193C00824B0F /* CoreGraphics.framework */,
+				121791BC236F193400824B0F /* QuartzCore.framework */,
+				121791BA236F192300824B0F /* libc++.tbd */,
+				121791B8236F190800824B0F /* CoreLocation.framework */,
+				121791B6236F18F300824B0F /* UIKit.framework */,
+				121791B4236F18E800824B0F /* AudioToolbox.framework */,
+				121791B2236F18DB00824B0F /* Foundation.framework */,
+				121791B0236F18BE00824B0F /* CoreTelephony.framework */,
+				121791AE236F189E00824B0F /* SystemConfiguration.framework */,
+				121791AC236F188B00824B0F /* AVFoundation.framework */,
+				121791AA236F187900824B0F /* libz.tbd */,
+				121791A6236F185600824B0F /* iflyMSC.framework */,
 				12B7B94B22D863BE0057C798 /* WMPageController.framework */,
 				879CE512218BF47E00BBE4B7 /* FileProviderUI.framework */,
 				879CE510218BF47600BBE4B7 /* FileProvider.framework */,
@@ -4138,8 +4256,11 @@
 				97109BBD207A1D5000568785 /* Calendar */,
 				97109837207A0BF500568785 /* Public */,
 				97109A74207A15CC00568785 /* PrefixHeader.pch */,
+				121791C1236F21CE00824B0F /* ISRDataHelper.h */,
+				121791C0236F21CE00824B0F /* ISRDataHelper.m */,
 				97108E002079F54900568785 /* AppDelegate.h */,
 				97108E012079F54900568785 /* AppDelegate.m */,
+				121791C5236F238B00824B0F /* Lame */,
 				12FEA39422E040C2008503B2 /* AppDelegate+ConfigureUI.h */,
 				12FEA39522E040C2008503B2 /* AppDelegate+ConfigureUI.m */,
 				97109DD6207A305900568785 /* LoadViewController.h */,
@@ -7525,6 +7646,7 @@
 				12747BF722A7CE01009C390E /* TextMessageTableViewCell.m in Sources */,
 				12961CCC229FD67F0075B04A /* DeleteFormTagsRequest.m in Sources */,
 				12786FBA23346EF700FBD62F /* MIPlayerViewController.m in Sources */,
+				121791C4236F21CE00824B0F /* ISRDataHelper.m in Sources */,
 				12B503EC2317DC05001880A9 /* ActivityInfo.m in Sources */,
 				12961CC9229FD64B0075B04A /* HomeworkSessionService.m in Sources */,
 				12747BF522A7CDDE009C390E /* AudioMessageTableViewCell.m in Sources */,
@@ -7869,6 +7991,7 @@
 				87AF73002193D164003E87F0 /* StudentDetailCell.m in Sources */,
 				97109D3B207A2F0400568785 /* NoticeMessagesViewController.m in Sources */,
 				97364A1A20B1704900511A95 /* MessageUpdateCountRequest.m in Sources */,
+				121791C2236F21CE00824B0F /* ISRDataHelper.m in Sources */,
 				87915A3621B933BC006C1BFD /* AudioPlayerViewController.m in Sources */,
 				87707876219ABAE900940A88 /* HomeworkSendLog.m in Sources */,
 				12B504E6231CB26F001880A9 /* MIToastView.m in Sources */,
@@ -8268,6 +8391,7 @@
 				876D982221D0DC2000A0E06E /* CorrectHomeworkHisCommentTableViewCell.m in Sources */,
 				12C39BB02338A54E0005DFBC /* MITaskSheetTableViewCell.m in Sources */,
 				97109C25207A2E3E00568785 /* CircleService.m in Sources */,
+				121791C3236F21CE00824B0F /* ISRDataHelper.m in Sources */,
 				97109929207A0BF600568785 /* SegmentControl.m in Sources */,
 				12CB739A22AB5BD50064FB21 /* MIHomeworkTaskListViewController.m in Sources */,
 				97109D32207A2F0400568785 /* SettingTableViewCell.m in Sources */,
@@ -8522,6 +8646,11 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8533,6 +8662,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -8554,6 +8687,11 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8565,6 +8703,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				MTL_FAST_MATH = YES;
@@ -8780,6 +8922,11 @@
 				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Minnie/Info_student.plist";
@@ -8787,6 +8934,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.student;
@@ -8807,6 +8958,11 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Minnie/Info_student.plist";
@@ -8814,6 +8970,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.student;
@@ -8834,6 +8994,11 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8846,6 +9011,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.teacher;
@@ -8867,6 +9036,11 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 7ZN897DBZ8;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Minnie/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8879,6 +9053,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Minnie/Lame",
 				);
 				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minnieedu.teacher;

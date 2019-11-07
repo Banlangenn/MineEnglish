@@ -32,6 +32,9 @@
     [Bugly startWithAppId:@"f82097cc09"];
     // 配置leancloud
     [self setupLeanCloudServer];
+    
+    [self setupIfly];
+    
     if (@available(iOS 11.0, *)) {
         UITableView.appearance.estimatedRowHeight = 0;
         UITableView.appearance.estimatedSectionFooterHeight = 0;

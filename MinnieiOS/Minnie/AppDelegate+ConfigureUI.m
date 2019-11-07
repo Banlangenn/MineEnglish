@@ -15,6 +15,7 @@
 #import "AppDelegate+ConfigureUI.h"
 #import "LoginViewController.h"
 #import "PortraitNavigationController.h"
+#import <iflyMSC/iflyMSC.h>
 
 #if TEACHERSIDE
 
@@ -214,6 +215,7 @@
 #else
     nibName = @"LoginViewController_Student";
 #endif
+    [[NSUserDefaults standardUserDefaults]  removeObjectForKey:kWordRecognizeText];
     LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:nibName bundle:nil];
     
     PortraitNavigationController *loginNC = [[PortraitNavigationController alloc] initWithRootViewController:loginVC];
@@ -357,10 +359,7 @@
     [ManagerServce requestUpdateOnlineState:NO
                                       times:times
                                    callback:^(Result *result, NSError *error) {
-//                                       if (error) {
-//                                           [HUD showErrorWithMessage:@"退出失败"];
-//                                           return ;
-//                                       }
+
                                        [AuthService logoutWithCallback:^(Result *result, NSError *error) {
                                            
                                            if (error) {
@@ -384,8 +383,31 @@
                                            
                                            PortraitNavigationController *loginNC = [[PortraitNavigationController alloc] initWithRootViewController:loginVC];
                                            weakSelf.window.rootViewController = loginNC;
+
+                                           [[NSUserDefaults standardUserDefaults]  removeObjectForKey:kWordRecognizeText];
                                        }];
 
                                    }];
+}
+
+#pragma mark - 讯飞
+- (void)setupIfly{
+    
+    [self destroyIfly];
+    
+    [IFlySetting setLogFile:LVL_ALL];
+    [IFlySetting showLogcat:YES];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [paths objectAtIndex:0];
+    [IFlySetting setLogFilePath:cachePath];
+    
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5da71f38"];
+    [IFlySpeechUtility createUtility:initString];
+}
+
+
+- (void)destroyIfly{
+    
+    [IFlySpeechUtility destroy];
 }
 @end

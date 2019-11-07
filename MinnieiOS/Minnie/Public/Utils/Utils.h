@@ -36,10 +36,13 @@
 + (NSString *)montAndDateTime:(long long)microSecond;
 
 #pragma mark - qiniu
-
 + (NSString *)qiniuHost;
 
 #pragma mark - ViewController的view以弹窗的形式添加到rootVC
 + (UIView *)viewOfVCAddToWindowWithVC:(UIViewController *)vc width:(CGFloat)width;
+
+// 保存音频识别文件
++ (void)saveWordsTextWithKey:(NSString *)key value:(NSArray *)value;
++ (NSDictionary *)getWordsText;
 
 @end
