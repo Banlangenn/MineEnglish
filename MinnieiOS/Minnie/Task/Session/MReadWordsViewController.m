@@ -416,7 +416,7 @@ IFlySpeechRecognizerDelegate>
         [HUD showProgressWithMessage:@"正在上传语音..."];
         WeakifySelf;
         [[FileUploader shareInstance] uploadData:data
-                                            type:UploadFileTypeAudio
+                                            type:UploadFileTypeWav
                                    progressBlock:^(NSInteger number) {
                                        [HUD showProgressWithMessage:[NSString stringWithFormat:@"正在上传语音%@%%...", @(number)]];
                                    }
@@ -589,16 +589,6 @@ IFlySpeechRecognizerDelegate>
 }
 
 - (NSDictionary *)audioRecordingSettings{
-    
-//    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
-//                              [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,// 录音格式
-//                              [NSNumber numberWithFloat:16000], AVSampleRateKey,//采样率
-//                              [NSNumber numberWithInt:2], AVNumberOfChannelsKey,//通道数
-//                              [NSNumber numberWithInt:AVAudioQualityMedium], AVSampleRateConverterAudioQualityKey,//音频质量
-//                              [NSNumber numberWithInt:64000], AVEncoderBitRateKey,// 编码比特率
-//                              [NSNumber numberWithInt:8], AVEncoderBitDepthHintKey,// 位深度
-//                              nil];
-    
     
     NSDictionary *settings = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                           [NSNumber numberWithFloat:8000], AVSampleRateKey,//采样率

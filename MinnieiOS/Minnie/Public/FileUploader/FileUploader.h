@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, UploadFileType) {
     UploadFileTypeImage,
     UploadFileTypeAudio,      //语音对话
+    UploadFileTypeWav,        //录制单词
     UploadFileTypeVideo,
     UploadFileTypeAudio_Mp3,   //MP3音频文件
 };

@@ -105,6 +105,8 @@
         extension = @"jpg";
     } else if (type == UploadFileTypeVideo) {
         extension = @"mp4";
+    } else if (type == UploadFileTypeWav) {
+           extension = @"wav";
     }
     else if (type == UploadFileTypeAudio_Mp3)
     {
