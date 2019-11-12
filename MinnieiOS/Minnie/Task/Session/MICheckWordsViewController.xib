@@ -78,7 +78,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oqB-rv-40c" userLabel="FooterView">
-                    <rect key="frame" x="0.0" y="612" width="414" height="220"/>
+                    <rect key="frame" x="0.0" y="602" width="414" height="220"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8v-AG-PfJ">
                             <rect key="frame" x="0.0" y="0.0" width="138" height="170"/>
@@ -203,7 +203,7 @@
                 <constraint firstItem="oqB-rv-40c" firstAttribute="trailing" secondItem="q2u-cl-GoB" secondAttribute="trailing" id="bvL-NO-MFS"/>
                 <constraint firstItem="q2u-cl-GoB" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="c4z-j6-s1m"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="q2u-cl-GoB" secondAttribute="trailing" id="ctm-3f-AjT"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="oqB-rv-40c" secondAttribute="bottom" constant="30" id="hlB-4W-u1d"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="oqB-rv-40c" secondAttribute="bottom" constant="40" id="hlB-4W-u1d"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="8Vz-gc-PVO" secondAttribute="trailing" id="pNx-0E-bvn"/>
                 <constraint firstItem="q2u-cl-GoB" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="ssR-SC-215"/>
                 <constraint firstItem="oqB-rv-40c" firstAttribute="leading" secondItem="q2u-cl-GoB" secondAttribute="leading" id="wI8-J8-562"/>

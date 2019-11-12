@@ -107,13 +107,12 @@ IFlySpeechRecognizerDelegate
      NSDictionary *dict = [Utils getWordsText];
      NSString *key = [self.audioUrl.lastPathComponent stringByDeletingPathExtension];
      NSArray *textArray = [dict objectForKey:key];
-//     if (textArray.count == 0) {
-//         [self downloadWithUrl:self.audioUrl];
-//     } else {
-//         self.resultArray = textArray;
-//     }
+     if (textArray.count == 0) {
+         [self downloadWithUrl:self.audioUrl];
+     } else {
+         self.resultArray = textArray;
+     }
 
-    [self downloadWithUrl:self.audioUrl];
 #endif
 }
 
@@ -168,7 +167,7 @@ IFlySpeechRecognizerDelegate
         NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:text attributes:attri];
         [textAttr appendAttributedString:attStr];
         
-        if (i > 0 && i < textArray.count - 1) {
+        if (i < textArray.count - 1) {
             if (text.length > 0) {
                 [textAttr appendAttributedString:[[NSAttributedString alloc] initWithString:@"、"]];
             }
@@ -368,6 +367,7 @@ didFinishDownloadingToURL:(NSURL *)location{
 
 - (NSUInteger)componentsCount{// 分段数量
 
+//    return 6;
     NSData *data = [NSData dataWithContentsOfFile:[self filePath]];    //从文件中读取音频
     return ceil((CGFloat)data.length/[self componentSize]);
 }
@@ -375,6 +375,8 @@ didFinishDownloadingToURL:(NSURL *)location{
 
 - (NSUInteger)componentSize{// 分段字节大小
     
+//    NSData *data = [NSData dataWithContentsOfFile:[self filePath]];    //从文件中读取音频
+//    return (data.length - 44)/[self componentsCount];
     //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
     NSUInteger interval = 8 * 16 * 1 * (self.currentWordItem.commitPlaytime/1000) / 8 * 1000;
     return interval;
@@ -382,7 +384,8 @@ didFinishDownloadingToURL:(NSURL *)location{
 
 #pragma mark - 音频识别
 - (void)recognizerAudioStreamIndex:(NSInteger)index count:(NSInteger)count{
-  
+
+    NSLog(@"recognizerIndex :%lu",index);
     //设置音频源为音频流（-1）
     [self.iFlySpeechRecognizer setParameter:@"-1" forKey:@"audio_source"];
     //启动识别服务
@@ -390,21 +393,20 @@ didFinishDownloadingToURL:(NSURL *)location{
 
     //写入音频数据
     NSString *pcmFilePath = [self filePath];
-    NSData *data = [NSData dataWithContentsOfFile:pcmFilePath];    //从文件中读取音频\
+    NSData *data = [NSData dataWithContentsOfFile:pcmFilePath];    //从文件中读取音频
 
     //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
     NSUInteger interval = [self componentSize];
     
     NSInteger lastLength = 44 + interval * index;
-    
     // 音频数据分段
     if (index >= count - 1) {// 最后一段
         interval = data.length - lastLength;
     }
-    if (lastLength + interval < data.length) {
+    if (lastLength + interval <= data.length) {
 
         NSData *piceData = [data subdataWithRange:NSMakeRange(lastLength, interval)];
-      BOOL success = [self.iFlySpeechRecognizer writeAudio:piceData];//写入音频
+        BOOL success = [self.iFlySpeechRecognizer writeAudio:piceData];//写入音频
         NSLog(@"writeAudio %d",success);
     }
    
@@ -463,7 +465,6 @@ didFinishDownloadingToURL:(NSURL *)location{
 {
     [self stopRecognizer];
     self.iFlySpeechRecognizer = nil;
-    
     self.recognizerIndex++;
     if (self.recognizerIndex < self.recognizerCount) {
 
@@ -484,7 +485,7 @@ didFinishDownloadingToURL:(NSURL *)location{
     }
     NSString * resultFromJson =  nil;
     resultFromJson = [ISRDataHelper stringFromJson:resultString];
-    NSLog(@"resultFromJson=%@",resultFromJson);
+    NSLog(@"resultFromJson=%@ %d",resultFromJson,isLast);
     if (resultFromJson.length > 0) {
 
         NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.resultArray];
