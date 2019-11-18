@@ -65,6 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.showsPlaybackControls = YES;
 }
 
 #pragma mark - 保存视频

@@ -487,12 +487,16 @@ UITableViewDataSource
     
     
     for (User *student in self.students) {
-        NSString *strFirstLetter = [student.pinyinName substringToIndex:1];
-        if (self.studentDict[strFirstLetter] != nil) {
-            [self.studentDict[strFirstLetter] addObject:student];
-        } else {
-            NSMutableArray *group = [NSMutableArray arrayWithObject:student];
-            [self.studentDict setObject:group forKey:strFirstLetter];
+       
+        if (student.pinyinName.length >= 1) {
+
+            NSString *strFirstLetter = [student.pinyinName substringToIndex:1];
+            if (self.studentDict[strFirstLetter] != nil) {
+                [self.studentDict[strFirstLetter] addObject:student];
+            } else {
+                NSMutableArray *group = [NSMutableArray arrayWithObject:student];
+                [self.studentDict setObject:group forKey:strFirstLetter];
+            }
         }
     }
     NSArray *keys = [self.studentDict.allKeys sortedArrayUsingSelector:@selector(compare:)];
