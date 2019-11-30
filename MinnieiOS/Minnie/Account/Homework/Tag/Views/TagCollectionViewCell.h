@@ -14,6 +14,8 @@ extern NSString * const TagCollectionViewCellId;
 
 @property (nonatomic, assign) BOOL choice;
 
+@property (nonatomic, strong) UIColor *selColor;
+
 - (void)setupWithTag:(NSString *)tag;
 
 + (CGSize)cellSizeWithTag:(NSString *)tag;

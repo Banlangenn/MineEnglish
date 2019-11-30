@@ -23,7 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) MITagsTableViewCellManageCallback manageCallback;
 
 @property (nonatomic, assign) HomeworkTagsTableViewCellSelectType type; //选择状态
+@property (weak, nonatomic) IBOutlet UIButton *managerBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *righLabel;
 
+@property (nonatomic, strong) UIColor *selColor;
 
 - (void)setupWithTags:(NSArray <NSString *> *)tags
          selectedTags:(NSArray <NSString *> *)selectedTags

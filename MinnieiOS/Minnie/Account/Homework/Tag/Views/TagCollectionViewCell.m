@@ -42,7 +42,8 @@ NSString * const TagCollectionViewCellId = @"TagCollectionViewCellId";
     self.bgImageView.layer.masksToBounds = YES;
     self.bgImageView.layer.borderWidth = 1.0;
     self.bgImageView.layer.borderColor = [UIColor colorWithHex:0xDDDDDD].CGColor;
-    
+
+    self.selColor = [UIColor colorWithHex:0x00ce00];
 }
 
 - (void)setupWithTag:(NSString *)tag {
@@ -54,7 +55,7 @@ NSString * const TagCollectionViewCellId = @"TagCollectionViewCellId";
     
     if (choice) {
         self.tagLabel.textColor = [UIColor whiteColor];
-        self.bgImageView.backgroundColor = [UIColor colorWithHex:0x00ce00];
+        self.bgImageView.backgroundColor = self.selColor;
     } else {
         self.tagLabel.textColor = [UIColor colorWithHex:0x666666];
         self.bgImageView.backgroundColor = [UIColor whiteColor];

@@ -24,7 +24,7 @@ MIEqualSpaceFlowLayoutDelegate>
 @property (nonatomic, strong) UICollectionView *tagsCollectionView;
 
 @property (nonatomic, assign) NSInteger collecttionViewWidth;
-@property (weak, nonatomic) IBOutlet UIButton *managerBtn;
+
 
 @end
 
@@ -62,7 +62,7 @@ MIEqualSpaceFlowLayoutDelegate>
         
         [self addContentView];
     }
-    self.tagsCollectionView.frame = CGRectMake(0, 40, _collecttionViewWidth, [MITagsTableViewCell heightWithTags:tags collectionWidth:collectionWidth]);
+    self.tagsCollectionView.frame = CGRectMake(0, 40, _collecttionViewWidth, [MITagsTableViewCell heightWithTags:tags collectionWidth:collectionWidth] + 10);
     
     [self.tagsCollectionView reloadData];
 }
@@ -86,10 +86,11 @@ MIEqualSpaceFlowLayoutDelegate>
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     TagCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:TagCollectionViewCellId
                                                                             forIndexPath:indexPath];
     NSString *tag = self.tags[indexPath.row];
-    
+    cell.selColor = self.selColor;
     [cell setupWithTag:tag];
     [cell setChoice:[self.selectedTags containsObject:tag]];
     
@@ -138,6 +139,9 @@ MIEqualSpaceFlowLayoutDelegate>
     if (itemSize.width > _collecttionViewWidth -30) {
         
         itemSize.width = _collecttionViewWidth - 30;
+    } else if (itemSize.width < 40) {
+        itemSize.width = 40;
+        itemSize.height = 30.5;
     }
     return itemSize;
 }

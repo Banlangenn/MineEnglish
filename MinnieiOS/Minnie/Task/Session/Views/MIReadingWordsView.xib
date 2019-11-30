@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,10 +23,26 @@
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kVz-Mm-QBV">
                             <rect key="frame" x="0.0" y="856" width="414" height="40"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNk-50-4hh">
+                                    <rect key="frame" x="10" y="6" width="28" height="28"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="PNk-50-4hh" secondAttribute="height" multiplier="1:1" id="Dq5-Ja-zYx"/>
+                                        <constraint firstAttribute="width" constant="28" id="llU-W4-eWq"/>
+                                    </constraints>
+                                    <state key="normal" image="play_words"/>
+                                    <state key="selected" image="stop_words"/>
+                                    <connections>
+                                        <action selector="playBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="zbT-TR-pgb"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="PNk-50-4hh" firstAttribute="leading" secondItem="kVz-Mm-QBV" secondAttribute="leading" constant="10" id="E5U-vG-BwK"/>
                                 <constraint firstAttribute="height" constant="40" id="Mla-t3-kO9"/>
+                                <constraint firstItem="PNk-50-4hh" firstAttribute="centerY" secondItem="kVz-Mm-QBV" secondAttribute="centerY" id="em4-ja-gfx"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -53,9 +69,14 @@
             <connections>
                 <outlet property="bgProgressView" destination="kVz-Mm-QBV" id="tfs-7n-NSN"/>
                 <outlet property="englishLabel" destination="v5x-Pw-TqT" id="e3m-ej-qat"/>
+                <outlet property="playBtn" destination="PNk-50-4hh" id="hnR-F3-UDF"/>
                 <outlet property="wordsView" destination="IW1-fJ-bvT" id="WTL-jH-Yhj"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="89.732142857142847"/>
         </view>
     </objects>
+    <resources>
+        <image name="play_words" width="28" height="28"/>
+        <image name="stop_words" width="28" height="28"/>
+    </resources>
 </document>

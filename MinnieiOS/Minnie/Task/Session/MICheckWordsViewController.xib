@@ -9,9 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MICheckWordsViewController">
             <connections>
-                <outlet property="recordAniBgView" destination="8Vz-gc-PVO" id="31v-jq-d78"/>
                 <outlet property="startRecordBtn" destination="2Vy-Ij-6GQ" id="lZm-pG-W2C"/>
                 <outlet property="startRecordLabel" destination="kGm-Nv-4oN" id="3ua-a2-V2x"/>
+                <outlet property="tableView" destination="Y1p-Q8-WTW" id="seO-rx-xLR"/>
                 <outlet property="titleLabel" destination="sNA-gt-mqL" id="Wxz-v0-dlw"/>
                 <outlet property="vedioBgView" destination="Y6T-sm-2PX" id="xxO-OC-q7c"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -70,14 +70,7 @@
                         <constraint firstAttribute="height" constant="320" id="q7W-Kx-epn"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Vz-gc-PVO" userLabel="recordBgView">
-                    <rect key="frame" x="0.0" y="468" width="414" height="150"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="150" id="0rG-nJ-7hm"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oqB-rv-40c" userLabel="FooterView">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oqB-rv-40c" userLabel="FooterView">
                     <rect key="frame" x="0.0" y="602" width="414" height="220"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8v-AG-PfJ">
@@ -192,19 +185,28 @@
                         <constraint firstAttribute="trailing" secondItem="zu7-vm-Grg" secondAttribute="trailing" id="xqs-Sl-Ozy"/>
                     </constraints>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y1p-Q8-WTW">
+                    <rect key="frame" x="0.0" y="408" width="414" height="454"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="JU5-ch-8oe"/>
+                        <outlet property="delegate" destination="-1" id="jJT-vx-UNv"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Y6T-sm-2PX" firstAttribute="top" secondItem="q2u-cl-GoB" secondAttribute="bottom" id="1WY-8p-KXm"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="Y1p-Q8-WTW" secondAttribute="bottom" id="612-k6-O4O"/>
                 <constraint firstItem="Y6T-sm-2PX" firstAttribute="leading" secondItem="q2u-cl-GoB" secondAttribute="leading" id="8lq-zj-AfL"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Y1p-Q8-WTW" secondAttribute="trailing" id="G4H-yg-9TS"/>
+                <constraint firstItem="Y1p-Q8-WTW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="P8d-1d-3Ve"/>
                 <constraint firstItem="Y6T-sm-2PX" firstAttribute="trailing" secondItem="q2u-cl-GoB" secondAttribute="trailing" id="TN0-n5-8yH"/>
-                <constraint firstItem="8Vz-gc-PVO" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="Tbl-XR-4Ia"/>
-                <constraint firstItem="8Vz-gc-PVO" firstAttribute="top" secondItem="Y6T-sm-2PX" secondAttribute="bottom" constant="60" id="at3-lr-Xkl"/>
                 <constraint firstItem="oqB-rv-40c" firstAttribute="trailing" secondItem="q2u-cl-GoB" secondAttribute="trailing" id="bvL-NO-MFS"/>
                 <constraint firstItem="q2u-cl-GoB" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="c4z-j6-s1m"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="q2u-cl-GoB" secondAttribute="trailing" id="ctm-3f-AjT"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="oqB-rv-40c" secondAttribute="bottom" constant="40" id="hlB-4W-u1d"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="8Vz-gc-PVO" secondAttribute="trailing" id="pNx-0E-bvn"/>
+                <constraint firstItem="Y1p-Q8-WTW" firstAttribute="top" secondItem="Y6T-sm-2PX" secondAttribute="bottom" id="kwa-El-oM2"/>
                 <constraint firstItem="q2u-cl-GoB" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="ssR-SC-215"/>
                 <constraint firstItem="oqB-rv-40c" firstAttribute="leading" secondItem="q2u-cl-GoB" secondAttribute="leading" id="wI8-J8-562"/>
             </constraints>

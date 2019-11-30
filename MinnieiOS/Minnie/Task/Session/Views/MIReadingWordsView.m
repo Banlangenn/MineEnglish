@@ -17,7 +17,7 @@
     
     CGRect newBounds = bounds;
     newBounds.origin.y = 0;
-    newBounds.size.height = 40;
+    newBounds.size.height = 10;
     return newBounds;
 }
 
@@ -29,6 +29,7 @@
     
     BOOL _isSliding;
 }
+@property (weak, nonatomic) IBOutlet UIButton *playBtn;
 
 @property (weak, nonatomic) IBOutlet UIView *wordsView;
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
@@ -59,7 +60,10 @@
     [self.bgProgressView addSubview:self.sliderView];
     [self.sliderView mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.edges.equalTo(self.bgProgressView);
+        make.height.equalTo(@10);
+        make.right.equalTo(self.bgProgressView.mas_right).offset(-10);
+        make.left.equalTo(self.bgProgressView).offset(52);
+        make.centerY.equalTo(self.bgProgressView.mas_centerY);
     }];
     
     [self.sliderView setMinimumTrackTintColor:[UIColor mainColor]];
@@ -70,10 +74,9 @@
     [self.sliderView setThumbImage:[UIImage imageNamed:@"thum"] forState:UIControlStateNormal];
     [self.sliderView setThumbImage:[UIImage imageNamed:@"thum"] forState:UIControlStateHighlighted];
     
-    [self.sliderView setMinimumTrackImage:[UIImage imageNamed:@"thum"] forState:UIControlStateNormal];
-    [self.sliderView setMaximumTrackImage:[UIImage imageNamed:@"thum_trace"] forState:UIControlStateNormal];
-    
-    
+    [self.sliderView setMinimumTrackTintColor:[UIColor whiteColor]];
+    [self.sliderView setMaximumTrackTintColor:[UIColor whiteColor]];
+
     WordInfo *tempWord = _wordsItem.randomWords.firstObject;
     self.englishLabel.text = tempWord.english;
 }
@@ -119,6 +122,13 @@
     self.isSlider = NO;
     if (self.sliderValueChangedCallback) {
         self.sliderValueChangedCallback(NO,self.sliderView.value);
+    }
+}
+- (IBAction)playBtnAction:(id)sender {
+    
+    self.playBtn.selected = !self.playBtn.selected;
+    if (self.playBtnChangedCallback) {
+        self.playBtnChangedCallback(self.playBtn.selected);
     }
 }
 

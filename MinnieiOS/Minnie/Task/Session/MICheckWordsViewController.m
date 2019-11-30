@@ -17,8 +17,11 @@
 #import "AudioPlayerManager.h"
 #import "ISRDataHelper.h"
 #import <iflyMSC/iflyMSC.h>
+#import "MITagsTableViewCell.h"
 
 @interface MICheckWordsViewController ()<
+UITableViewDelegate,
+UITableViewDataSource,
 NSURLSessionDownloadDelegate,
 IFlySpeechRecognizerDelegate
 >
@@ -28,13 +31,13 @@ IFlySpeechRecognizerDelegate
 
 @property (weak, nonatomic) IBOutlet UIButton *startRecordBtn;
 @property (weak, nonatomic) IBOutlet UILabel *startRecordLabel;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong,nonatomic) MIReadingWordsView *wordsView;
 
 @property (strong,nonatomic) MIRecordWaveView *recordWaveView;
 
 @property (strong,nonatomic, ) AudioPlayerManager *audioPlayer;
-@property (weak, nonatomic) IBOutlet UIView *recordAniBgView;
 
 
 @property (strong,nonatomic) HomeworkItem *currentWordItem;
@@ -43,10 +46,13 @@ IFlySpeechRecognizerDelegate
 @property (strong,nonatomic) NSURLSessionDownloadTask *downloadTask;
 
 @property (strong,nonatomic) IFlySpeechRecognizer *iFlySpeechRecognizer;
+
+@property (strong, nonatomic) NSMutableArray *wrongArray; // 识别结果
 @property (strong, nonatomic) NSArray *resultArray; // 识别结果
 @property (assign, nonatomic,) NSInteger recognizerIndex;
 @property (strong, nonatomic) UILabel *recognizerLabel;
 @property (assign, nonatomic) NSInteger recognizerCount;
+@property (strong, nonatomic) NSMutableString *answer;
 
 @end
 
@@ -112,12 +118,34 @@ IFlySpeechRecognizerDelegate
      } else {
          self.resultArray = textArray;
      }
+    self.wrongArray = [NSMutableArray array];
+    _answer = [NSMutableString string];
+    for (NSInteger i = 0; i < self.resultArray.count; i++) {
+        
+          NSString *text = self.resultArray[i];
+          WordInfo *wordInfo;
+          if (i < self.currentWordItem.words.count) {
+              wordInfo = self.currentWordItem.words[i];
+              [_answer appendString:wordInfo.chinese];
+          }
+        if (i < self.resultArray.count - 1) {
+            [_answer appendString:@"，"];
+        }
+          if (![text isEqualToString:wordInfo.chinese]) {
+              
+              [self.wrongArray addObject:text];
+          }
+    }
 
 #endif
 }
 
 - (void) configureUI{
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"MITagsTableViewCell" bundle:nil] forCellReuseIdentifier:MITagsTableViewCellId];
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.startRecordBtn setBackgroundImage:[UIImage imageNamed:@"btn_play_green"] forState:UIControlStateNormal];
@@ -136,14 +164,6 @@ IFlySpeechRecognizerDelegate
     self.recognizerLabel.font = [UIFont systemFontOfSize:14];
     self.recognizerLabel.numberOfLines = 0;
     self.recognizerLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:self.recognizerLabel];
-    self.recognizerLabel.attributedText = [self dealwithTextArray:self.resultArray];
-    [self.recognizerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-       
-        make.left.equalTo(self.view.mas_left).offset(12);
-        make.right.equalTo(self.view.mas_right).offset(-12);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-40);
-    }];
 }
 
 - (NSAttributedString *)dealwithTextArray:(NSArray *)textArray{
@@ -158,6 +178,7 @@ IFlySpeechRecognizerDelegate
         }
         NSDictionary *attri;
         if ([text isEqualToString:wordInfo.chinese]) {
+            
            attri = @{NSFontAttributeName:[UIFont systemFontOfSize:14],
                      NSForegroundColorAttributeName:[UIColor blackColor]};
         } else {
@@ -168,9 +189,7 @@ IFlySpeechRecognizerDelegate
         [textAttr appendAttributedString:attStr];
         
         if (i < textArray.count - 1) {
-            if (text.length > 0) {
-                [textAttr appendAttributedString:[[NSAttributedString alloc] initWithString:@"、"]];
-            }
+            [textAttr appendAttributedString:[[NSAttributedString alloc] initWithString:@"、"]];
         }
     }
     return textAttr;
@@ -230,6 +249,87 @@ IFlySpeechRecognizerDelegate
     }
 }
 
+#pragma mark - tableview
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    if (indexPath.row == 0) {
+
+        MITagsTableViewCell *tagsCell = [tableView dequeueReusableCellWithIdentifier:MITagsTableViewCellId forIndexPath:indexPath];
+        tagsCell.type = HomeworkTagsTableViewCellSelectNoneType;
+        tagsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+        tagsCell.selColor = [UIColor redColor];
+        tagsCell.righLabel.hidden = YES;
+        tagsCell.managerBtn.hidden = YES;
+        [tagsCell setupWithTags:self.resultArray selectedTags:self.wrongArray typeTitle:@"学生:" collectionWidth:ScreenWidth - 20];
+        WeakifySelf;
+        [tagsCell setSelectCallback:^(NSString *tag) {
+            
+            NSInteger index = [self.resultArray indexOfObject:tag];
+            CGFloat time = index * weakSelf.currentWordItem.commitPlaytime/1000;
+            [weakSelf.audioPlayer seekToTime:time];
+        }];
+        
+        return tagsCell;
+    } else {
+        
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recognizerCellId"];
+        if (!cell) {
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"recognizerCellId"];
+            [cell addSubview:self.recognizerLabel];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            CALayer *layer = [CALayer layer];
+            layer.frame = CGRectMake(0, 0, ScreenWidth, 0.5);
+            layer.backgroundColor = [UIColor lightGrayColor].CGColor;
+            [cell.layer addSublayer:layer];
+           
+
+            UILabel *titleLabel = [[UILabel alloc] init];
+            titleLabel.font = [UIFont boldSystemFontOfSize:16];
+            titleLabel.text = @"答案:";
+            titleLabel.textAlignment = NSTextAlignmentLeft;
+            [cell addSubview:titleLabel];
+            
+            [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                
+                make.height.equalTo(@18);
+                make.top.equalTo(cell.contentView.mas_top).offset(20);
+                make.left.equalTo(cell.contentView.mas_left).offset(15);
+                make.right.equalTo(cell.contentView.mas_right).offset(-15);
+            }];
+            
+            [self.recognizerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+               
+                make.top.equalTo(titleLabel.mas_bottom).offset(25);
+                make.left.equalTo(cell.contentView.mas_left).offset(15);
+                make.right.equalTo(cell.contentView.mas_right).offset(-15);
+                make.bottom.equalTo(cell.contentView.mas_bottom).offset(-40);
+            }];
+        }
+        
+        self.recognizerLabel.text = self.answer;
+
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == 0) {
+        
+        return [MITagsTableViewCell heightWithTags:self.resultArray collectionWidth:ScreenWidth - 20] + 75;
+    } else {
+        return 200;
+    }
+}
+
 #pragma mark setter && getter
 
 - (MIReadingWordsView *)wordsView{
@@ -254,6 +354,16 @@ IFlySpeechRecognizerDelegate
                  weakSelf.startRecordLabel.text = @"点击停止播放";
             }
                      
+        };
+        _wordsView.playBtnChangedCallback = ^(BOOL isPlay) {
+          
+            if (isPlay) {
+                // 播放单词录音
+                [weakSelf.audioPlayer play:YES];
+            } else {
+
+                [weakSelf.audioPlayer play:NO];
+            }
         };
     }
     return _wordsView;
@@ -304,7 +414,7 @@ IFlySpeechRecognizerDelegate
         _recordWaveView = [[MIRecordWaveView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 150)];
     }
     
-    [self.recordAniBgView addSubview:_recordWaveView];
+//    [self.recordAniBgView addSubview:_recordWaveView];
     return _recordWaveView;
 }
 
@@ -367,16 +477,13 @@ didFinishDownloadingToURL:(NSURL *)location{
 
 - (NSUInteger)componentsCount{// 分段数量
 
-//    return 6;
     NSData *data = [NSData dataWithContentsOfFile:[self filePath]];    //从文件中读取音频
-    return ceil((CGFloat)data.length/[self componentSize]);
+    return floor((CGFloat)data.length/[self componentSize]);
 }
 
 
 - (NSUInteger)componentSize{// 分段字节大小
     
-//    NSData *data = [NSData dataWithContentsOfFile:[self filePath]];    //从文件中读取音频
-//    return (data.length - 44)/[self componentsCount];
     //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
     NSUInteger interval = 8 * 16 * 1 * (self.currentWordItem.commitPlaytime/1000) / 8 * 1000;
     return interval;
@@ -470,7 +577,7 @@ didFinishDownloadingToURL:(NSURL *)location{
 
         [self recognizerAudioStreamIndex:self.recognizerIndex count:self.recognizerCount];
     } else {
-        self.recognizerLabel.attributedText = [self dealwithTextArray:self.resultArray];
+        
        [Utils saveWordsTextWithKey:[self.audioUrl.lastPathComponent stringByDeletingPathExtension] value:self.resultArray];
     }
 }
@@ -486,12 +593,14 @@ didFinishDownloadingToURL:(NSURL *)location{
     NSString * resultFromJson =  nil;
     resultFromJson = [ISRDataHelper stringFromJson:resultString];
     NSLog(@"resultFromJson=%@ %d",resultFromJson,isLast);
-    if (resultFromJson.length > 0) {
-
-        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.resultArray];
-        [tempArray addObject:resultFromJson];
-        self.resultArray = tempArray;
+    
+    if (resultFromJson.length == 0) {
+        // 无识别结果
+        resultFromJson = @"     ";
     }
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.resultArray];
+    [tempArray addObject:resultFromJson];
+    self.resultArray = tempArray;
 }
 
 
