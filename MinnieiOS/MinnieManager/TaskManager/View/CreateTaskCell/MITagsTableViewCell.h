@@ -26,7 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *managerBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *righLabel;
 
-@property (nonatomic, strong) UIColor *selColor;
+@property (nonatomic, strong) UIColor *selBgColor;
+@property (nonatomic, strong) UIColor *normalBgColor;
+@property (nonatomic, strong) UIColor *normalTextColor;
+@property (nonatomic, assign) CGFloat cornerRadius;
+
 
 - (void)setupWithTags:(NSArray <NSString *> *)tags
          selectedTags:(NSArray <NSString *> *)selectedTags

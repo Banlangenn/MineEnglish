@@ -90,7 +90,10 @@ MIEqualSpaceFlowLayoutDelegate>
     TagCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:TagCollectionViewCellId
                                                                             forIndexPath:indexPath];
     NSString *tag = self.tags[indexPath.row];
-    cell.selColor = self.selColor;
+    cell.selBgColor = self.selBgColor;
+    cell.normalBgColor = self.normalBgColor;
+    cell.normalTextColor = self.normalTextColor;
+    cell.cornerRadius = self.cornerRadius;
     [cell setupWithTag:tag];
     [cell setChoice:[self.selectedTags containsObject:tag]];
     
@@ -182,6 +185,12 @@ MIEqualSpaceFlowLayoutDelegate>
         
         NSString *tag = tags[indexPath.row];
         CGSize itemSize = [TagCollectionViewCell cellSizeWithTag:tag];
+       
+        if (itemSize.width < 40) {// 最小间距
+           itemSize.width = 40;
+           itemSize.height = 30.5;
+        }
+
         
         xNextOffset+=(minimumInteritemSpacing + itemSize.width);
         if (xNextOffset >= collecttionViewWidth - rightSpace) {

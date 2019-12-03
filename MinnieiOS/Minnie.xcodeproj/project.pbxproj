@@ -153,6 +153,9 @@
 		122C16A922AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
 		122C16AA22AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
 		122C16AB22AA2DD900084AC7 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 122C16A822AA2DD900084AC7 /* NSDate+Extension.m */; };
+		122CCD3B2392A22B001747BB /* MITagsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B5047D23191B1D001880A9 /* MITagsTableViewCell.m */; };
+		122CCD3C2392A22E001747BB /* MITagsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12B5048E23191B1D001880A9 /* MITagsTableViewCell.xib */; };
+		122CCD3D2392A239001747BB /* MIEqualSpaceFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B5046423191B1D001880A9 /* MIEqualSpaceFlowLayout.m */; };
 		122F22DE2333856D00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
 		122F22DF2333856D00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
 		122F22E02333856E00B3E4DA /* DownloadVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 122F22DD2333856D00B3E4DA /* DownloadVideo.m */; };
@@ -6721,6 +6724,7 @@
 				12B9B63A2289491300D8F277 /* btn_mission_preview@2x.png in Resources */,
 				8702868B2184113F00559195 /* navbar_screen@2x.png in Resources */,
 				971096A3207A006D00568785 /* btn_send_photo@2x.png in Resources */,
+				122CCD3C2392A22E001747BB /* MITagsTableViewCell.xib in Resources */,
 				971096C3207A006D00568785 /* icon_warning@2x.png in Resources */,
 				97108E0D2079F54B00568785 /* LaunchScreen.storyboard in Resources */,
 				97109C36207A2E3E00568785 /* CircleMoreCommentsTableViewCell.xib in Resources */,
@@ -8105,6 +8109,7 @@
 				8707EFCD21D61E8E0060B5A6 /* TagsRequest.m in Sources */,
 				97109DF9207A655000568785 /* CircleAndStarTableViewCell.m in Sources */,
 				871806CC21DF438C0023511C /* MUVideoIndicatorView.m in Sources */,
+				122CCD3B2392A22B001747BB /* MITagsTableViewCell.m in Sources */,
 				97109D3D207A2F0400568785 /* MessagesViewController.m in Sources */,
 				8770A27922310224005733E4 /* ModifyStarCountViewController.m in Sources */,
 				871806E721DF51540023511C /* MUTapDetectingImageView.m in Sources */,
@@ -8162,6 +8167,7 @@
 				1229815122C5B57300C09750 /* HomeworksRequest.m in Sources */,
 				871806C621DF438C0023511C /* MUAssetsFooterView.m in Sources */,
 				97109C20207A2E3E00568785 /* CircleHomework.m in Sources */,
+				122CCD3D2392A239001747BB /* MIEqualSpaceFlowLayout.m in Sources */,
 				97109A20207A158C00568785 /* HomeworkSessionsContainerViewController.m in Sources */,
 				872558A421D4CB6E0028BC2A /* CorrectHomeworkScoreTableViewCell.m in Sources */,
 				879CE52721913DD000BBE4B7 /* AchieverListHeaderView.m in Sources */,

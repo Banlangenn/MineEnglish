@@ -41,25 +41,59 @@ NSString * const TagCollectionViewCellId = @"TagCollectionViewCellId";
     self.bgImageView.layer.cornerRadius = 14.f;
     self.bgImageView.layer.masksToBounds = YES;
     self.bgImageView.layer.borderWidth = 1.0;
-    self.bgImageView.layer.borderColor = [UIColor colorWithHex:0xDDDDDD].CGColor;
-
-    self.selColor = [UIColor colorWithHex:0x00ce00];
+    self.bgImageView.layer.borderColor = [UIColor colorWithHex:0xebebeb].CGColor;
 }
 
 - (void)setupWithTag:(NSString *)tag {
     self.tagLabel.text = tag;
 }
 
+#pragma mark - setter && getter
 - (void)setChoice:(BOOL)choice {
     _choice = choice;
     
     if (choice) {
+        
         self.tagLabel.textColor = [UIColor whiteColor];
-        self.bgImageView.backgroundColor = self.selColor;
+        self.bgImageView.backgroundColor = self.selBgColor;
+        self.bgImageView.layer.borderColor = [UIColor clearColor].CGColor;
     } else {
-        self.tagLabel.textColor = [UIColor colorWithHex:0x666666];
-        self.bgImageView.backgroundColor = [UIColor whiteColor];
+        self.tagLabel.textColor = self.normalTextColor;
+        self.bgImageView.backgroundColor = self.normalBgColor;
+        self.bgImageView.layer.borderColor = [UIColor colorWithHex:0xebebeb].CGColor;
     }
+}
+
+- (void)setSelBgColor:(UIColor *)selBgColor{
+
+    _selBgColor = selBgColor;
+    if (!selBgColor) {
+        _selBgColor = [UIColor colorWithHex:0x00ce00];
+    }
+}
+
+- (void)setNormalBgColor:(UIColor *)normalBgColor{
+
+    _normalBgColor = normalBgColor;
+    if (!normalBgColor) {
+        _normalBgColor = [UIColor whiteColor];
+    }
+}
+
+- (void)setNormalTextColor:(UIColor *)normalTextColor{
+
+    _normalTextColor = normalTextColor;
+    if (!normalTextColor) {
+        _normalTextColor = [UIColor colorWithHex:0x666666];
+    }
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius{
+    _cornerRadius = cornerRadius;
+    if (_cornerRadius == 0) {
+        _cornerRadius = 14.f;
+    }
+    self.bgImageView.layer.cornerRadius = _cornerRadius;
 }
 
 + (CGSize)cellSizeWithTag:(NSString *)tag {

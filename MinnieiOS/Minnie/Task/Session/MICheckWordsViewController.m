@@ -48,7 +48,6 @@ IFlySpeechRecognizerDelegate
 @property (strong,nonatomic) IFlySpeechRecognizer *iFlySpeechRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *wrongArray; // 识别结果
-@property (strong, nonatomic) NSArray *resultArray; // 识别结果
 @property (assign, nonatomic,) NSInteger recognizerIndex;
 @property (strong, nonatomic) UILabel *recognizerLabel;
 @property (assign, nonatomic) NSInteger recognizerCount;
@@ -84,8 +83,9 @@ IFlySpeechRecognizerDelegate
     self.titleLabel.text = kHomeworkTaskWordMemoryName;
     HomeworkItem *wordItem = self.homework.items.lastObject;
     
-    // 处理要显示的随机数组
-    if (wordItem.playMode) {
+    // 处理要显示的单词数组
+    if (self.randomDictWords.count > 0) {
+     
         NSMutableArray *array = [NSMutableArray array];
         for (NSDictionary *wordDict in self.randomDictWords) {
             WordInfo *wordInfo = [[WordInfo alloc] init];
@@ -97,6 +97,7 @@ IFlySpeechRecognizerDelegate
     } else {
         wordItem.randomWords = wordItem.words;
     }
+    
     if (self.commitPlayTime.integerValue > 0) {
         wordItem.commitPlaytime = self.commitPlayTime.integerValue;
     } else {
@@ -110,38 +111,44 @@ IFlySpeechRecognizerDelegate
 #if TEACHERSIDE || MANAGERSIDE
     
     // 单词识别结果(教师端显示)
-     NSDictionary *dict = [Utils getWordsText];
-     NSString *key = [self.audioUrl.lastPathComponent stringByDeletingPathExtension];
-     NSArray *textArray = [dict objectForKey:key];
-     if (textArray.count == 0) {
-         [self downloadWithUrl:self.audioUrl];
-     } else {
-         self.resultArray = textArray;
-     }
+//     NSDictionary *dict = [Utils getWordsText];
+//     NSString *key = [self.audioUrl.lastPathComponent stringByDeletingPathExtension];
+//     NSArray *textArray = [dict objectForKey:key];
+//     if (textArray.count == 0) {
+//         [self downloadWithUrl:self.audioUrl];
+//     } else {
+//         self.resultArray = textArray;
+//     }
     self.wrongArray = [NSMutableArray array];
     _answer = [NSMutableString string];
-    for (NSInteger i = 0; i < self.resultArray.count; i++) {
+    for (NSInteger i = 0; i < self.currentWordItem.randomWords.count; i++) {
         
-          NSString *text = self.resultArray[i];
-          WordInfo *wordInfo;
-          if (i < self.currentWordItem.words.count) {
-              wordInfo = self.currentWordItem.words[i];
-              [_answer appendString:wordInfo.chinese];
-          }
+        // 答案
+        WordInfo *wordInfo = self.currentWordItem.randomWords[i];
+        [_answer appendString:wordInfo.chinese];
         if (i < self.resultArray.count - 1) {
             [_answer appendString:@"，"];
         }
-          if (![text isEqualToString:wordInfo.chinese]) {
-              
-              [self.wrongArray addObject:text];
-          }
+        // 识别结果
+        NSString *text;
+        if (i < self.resultArray.count) {
+           
+            text = self.resultArray[i];
+            if (![text isEqualToString:wordInfo.chinese]) {
+                  
+                [self.wrongArray addObject:text];
+            }
+        }
     }
+    self.tableView.hidden = NO;
+#else
+    self.tableView.hidden = YES;
 
 #endif
 }
 
 - (void) configureUI{
-    
+
     [self.tableView registerNib:[UINib nibWithNibName:@"MITagsTableViewCell" bundle:nil] forCellReuseIdentifier:MITagsTableViewCellId];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -168,7 +175,7 @@ IFlySpeechRecognizerDelegate
 
 - (NSAttributedString *)dealwithTextArray:(NSArray *)textArray{
     
-    NSArray *words = self.currentWordItem.words;
+    NSArray *words = self.currentWordItem.randomWords;
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] init];
     for (NSInteger i = 0; i < textArray.count; i++) {
         NSString *text = textArray[i];
@@ -223,7 +230,7 @@ IFlySpeechRecognizerDelegate
     [self.audioPlayer play:NO];
     if (self.audioPlayer.current >= self.audioPlayer.duration) {
         // 播放倒数第二个
-        CGFloat tempTime = (self.currentWordItem.words.count - 2) * self.currentWordItem.commitPlaytime/1000;
+        CGFloat tempTime = (self.currentWordItem.randomWords.count - 2) * self.currentWordItem.commitPlaytime/1000;
         [self.audioPlayer seekToTime:tempTime];
         return;
     }
@@ -262,7 +269,10 @@ IFlySpeechRecognizerDelegate
         tagsCell.type = HomeworkTagsTableViewCellSelectNoneType;
         tagsCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        tagsCell.selColor = [UIColor redColor];
+        tagsCell.selBgColor = [UIColor redColor];
+        tagsCell.normalBgColor = [UIColor colorWithHex:0xebebeb];
+        tagsCell.normalTextColor = [UIColor blackColor];
+        tagsCell.cornerRadius = 8;
         tagsCell.righLabel.hidden = YES;
         tagsCell.managerBtn.hidden = YES;
         [tagsCell setupWithTags:self.resultArray selectedTags:self.wrongArray typeTitle:@"学生:" collectionWidth:ScreenWidth - 20];
@@ -293,24 +303,23 @@ IFlySpeechRecognizerDelegate
 
             UILabel *titleLabel = [[UILabel alloc] init];
             titleLabel.font = [UIFont boldSystemFontOfSize:16];
-            titleLabel.text = @"答案:";
+            titleLabel.text = @"教师:";
             titleLabel.textAlignment = NSTextAlignmentLeft;
             [cell addSubview:titleLabel];
             
             [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 
                 make.height.equalTo(@18);
-                make.top.equalTo(cell.contentView.mas_top).offset(20);
-                make.left.equalTo(cell.contentView.mas_left).offset(15);
-                make.right.equalTo(cell.contentView.mas_right).offset(-15);
+                make.top.equalTo(cell.mas_top).offset(20);
+                make.left.equalTo(cell.mas_left).offset(15);
+                make.right.equalTo(cell.mas_right).offset(-15);
             }];
             
             [self.recognizerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                
                 make.top.equalTo(titleLabel.mas_bottom).offset(25);
-                make.left.equalTo(cell.contentView.mas_left).offset(15);
-                make.right.equalTo(cell.contentView.mas_right).offset(-15);
-                make.bottom.equalTo(cell.contentView.mas_bottom).offset(-40);
+                make.left.equalTo(cell.mas_left).offset(15);
+                make.right.equalTo(cell.mas_right).offset(-15);
             }];
         }
         
@@ -324,7 +333,7 @@ IFlySpeechRecognizerDelegate
     
     if (indexPath.row == 0) {
         
-        return [MITagsTableViewCell heightWithTags:self.resultArray collectionWidth:ScreenWidth - 20] + 75;
+        return [MITagsTableViewCell heightWithTags:self.resultArray collectionWidth:ScreenWidth - 20] + 50;
     } else {
         return 200;
     }

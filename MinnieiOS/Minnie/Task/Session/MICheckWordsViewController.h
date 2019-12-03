@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSArray *randomDictWords;
 
 @property (nonatomic,strong) NSNumber *commitPlayTime;
+
+@property (strong, nonatomic) NSArray *resultArray; // 识别结果
 @end
 
 NS_ASSUME_NONNULL_END

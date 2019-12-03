@@ -30,7 +30,8 @@ static NSString * const kKeyOfVideoDuration = @"videoDuration";
 
 @interface MReadWordsViewController ()<
 AVAudioRecorderDelegate,
-IFlySpeechRecognizerDelegate>
+IFlySpeechRecognizerDelegate
+>
 
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -57,8 +58,11 @@ IFlySpeechRecognizerDelegate>
 
 // 语音识别
 @property (nonatomic, strong) IFlySpeechRecognizer *iFlySpeechRecognizer;
-@property (nonatomic, copy) NSString *resultStr; // 识别结果
-@property (nonatomic, copy) NSString *result; // 识别结果
+@property (strong, nonatomic) NSArray *resultArray; // 识别结果
+@property (assign, nonatomic,) NSInteger recognizerIndex;
+@property (assign, nonatomic) NSInteger recognizerCount;
+
+@property (assign,nonatomic) BOOL recognizing;
 
 
 @end
@@ -229,6 +233,13 @@ IFlySpeechRecognizerDelegate>
     [weakSelf.audioRecorder stop];
     weakSelf.audioRecorder = nil;
     self.duration = ceil([[NSDate date] timeIntervalSinceDate:self.startTime]);
+
+    // 开始识别
+    self.recognizing = YES;
+    self.recognizerIndex = 0;
+    self.resultArray = nil;
+    self.recognizerCount = [self componentsCount];
+    [self recognizerAudioStreamIndex:self.recognizerIndex count:self.recognizerCount];
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
@@ -383,6 +394,12 @@ IFlySpeechRecognizerDelegate>
 #pragma mark - 3.是否提交
 - (void)finishedToast{
 
+    if (self.recognizing == YES) {
+        [HUD showProgressWithMessage:@"正在处理中，请稍后"];
+        return;
+    } else {
+        [HUD hideAnimated:YES];
+    }
     WeakifySelf;
     [MIToastView setTitle:@"是否提交作业？"
                   confirm:@"重新来过"
@@ -455,6 +472,7 @@ IFlySpeechRecognizerDelegate>
                                                                     kKeyOfAudioDuration:@(d),
                                                                     @"typeName":typeName,
                                                                     @"randomWords":wordsArray,
+                                                                    @"recognitionWords":self.resultArray,
                                                                     @"playtime":@(self.wordsItem.playtime)
                                                        }];
     [self sendMessage:message];
@@ -527,6 +545,135 @@ IFlySpeechRecognizerDelegate>
     [self performSelector:@selector(finishedToast) withObject:nil afterDelay:0.2];
 }
 
+#pragma mark - 音频识别
+- (void)recognizerAudioStreamIndex:(NSInteger)index count:(NSInteger)count{
+
+    NSLog(@"recognizerIndex :%lu",index);
+    //设置音频源为音频流（-1）
+    [self.iFlySpeechRecognizer setParameter:@"-1" forKey:@"audio_source"];
+    //启动识别服务
+    [self.iFlySpeechRecognizer startListening];
+
+    //写入音频数据
+    NSString *pcmFilePath = [self getRecordSoundPath];
+    NSData *data = [NSData dataWithContentsOfFile:pcmFilePath];    //从文件中读取音频
+
+    //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
+    NSUInteger interval = [self componentSize];
+    
+    NSInteger lastLength = 44 + interval * index;
+    // 音频数据分段
+    if (index >= count - 1) {// 最后一段
+        interval = data.length - lastLength;
+    }
+    if (lastLength + interval <= data.length) {
+
+        NSData *piceData = [data subdataWithRange:NSMakeRange(lastLength, interval)];
+        BOOL success = [self.iFlySpeechRecognizer writeAudio:piceData];//写入音频
+        NSLog(@"writeAudio %d",success);
+    }
+   
+//    整段识别
+//    for (int i = 0; i < count; i++) {
+//
+//        if (index == count - 1) {// 最后一段
+//            interval = data.length - lastLength;
+//        }
+//        if (lastLength + interval <= data.length) {
+//
+//            NSData *piceData = [data subdataWithRange:NSMakeRange(lastLength, interval)];
+//            [self.iFlySpeechRecognizer writeAudio:piceData];
+//        }
+//        lastLength += interval;
+//    }
+
+    //音频写入结束或出错时，必须调用结束识别接口
+    [self.iFlySpeechRecognizer stopListening];//音频数据写入完成，进入等待状态
+}
+
+- (void)stopRecognizer{
+    [self.iFlySpeechRecognizer cancel];
+    [self.iFlySpeechRecognizer stopListening];
+    [self.iFlySpeechRecognizer destroy];
+}
+
+- (IFlySpeechRecognizer *)iFlySpeechRecognizer{
+    
+    if (!_iFlySpeechRecognizer) {
+        
+        _iFlySpeechRecognizer = [IFlySpeechRecognizer sharedInstance];
+        [_iFlySpeechRecognizer setParameter:@"" forKey:[IFlySpeechConstant PARAMS]];
+//        [_iFlySpeechRecognizer setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN]];
+        _iFlySpeechRecognizer.delegate = self;
+        
+        //采样率
+//        [_iFlySpeechRecognizer setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+        [_iFlySpeechRecognizer setParameter:@"8000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+        //(EOS) 后端点
+        [_iFlySpeechRecognizer setParameter:@"10000" forKey:[IFlySpeechConstant VAD_EOS]];
+        //(BOS) 前端点
+        [_iFlySpeechRecognizer setParameter:@"10000" forKey:[IFlySpeechConstant VAD_BOS]];
+        //set language
+        [_iFlySpeechRecognizer setParameter:@"zh_cn" forKey:[IFlySpeechConstant LANGUAGE]];
+        //set accent
+        [_iFlySpeechRecognizer setParameter:@"mandarin" forKey:[IFlySpeechConstant ACCENT]];
+        // 是否有标点
+        [_iFlySpeechRecognizer setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT]];
+    }
+    return _iFlySpeechRecognizer;
+}
+
+#pragma mark - IFlySpeechRecognizerDelegate
+- (void) onCompleted:(IFlySpeechError *) error
+{
+    [self stopRecognizer];
+    self.iFlySpeechRecognizer = nil;
+    self.recognizerIndex++;
+    if (self.recognizerIndex < self.recognizerCount) {
+
+        [self recognizerAudioStreamIndex:self.recognizerIndex count:self.recognizerCount];
+        NSLog(@"xxxxxxxxxxxxxxxxxxxxxxx");
+    } else {
+        self.recognizing = NO;
+        [self finishedToast];
+        NSLog(@"xxxxxxxxxxxxxxxxxxxxxxx finish");
+    }
+}
+
+- (void)onResults:(NSArray *)results isLast:(BOOL)isLast {
+
+    NSMutableString *resultString = [[NSMutableString alloc] init];
+    NSDictionary *dic = results[0];
+    
+    for (NSString *key in dic) {
+        [resultString appendFormat:@"%@",key];
+    }
+    NSString * resultFromJson =  nil;
+    resultFromJson = [ISRDataHelper stringFromJson:resultString];
+    NSLog(@"resultFromJson=%@ %d",resultFromJson,isLast);
+    
+    if (resultFromJson.length == 0) {
+        // 无识别结果
+        resultFromJson = @"";
+    }
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.resultArray];
+    [tempArray addObject:resultFromJson];
+    self.resultArray = tempArray;
+}
+
+- (NSUInteger)componentsCount{// 分段数量
+
+    NSData *data = [NSData dataWithContentsOfFile:[self getRecordSoundPath]];    //从文件中读取音频
+    return floor((CGFloat)data.length/[self componentSize]);
+}
+
+
+- (NSUInteger)componentSize{// 分段字节大小
+
+    //采样频率(kHz) x 采样位数 x 声道数 x 时间(秒) / 8 = 文件大小(kb)
+    NSUInteger interval = 8 * 16 * 1 * (self.wordsItem.playtime/1000) / 8 * 1000;
+    return interval;
+}
 
 #pragma mark setter && getter
 - (NSTimer *)wordsTimer{
@@ -606,165 +753,6 @@ IFlySpeechRecognizerDelegate>
 - (void)dealloc {
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-#pragma mark - 语音识别
-- (IFlySpeechRecognizer *)iFlySpeechRecognizer{
-    
-    if (!_iFlySpeechRecognizer) {
-        
-        _iFlySpeechRecognizer = [IFlySpeechRecognizer sharedInstance];
-        [_iFlySpeechRecognizer setParameter:@"" forKey:[IFlySpeechConstant PARAMS]];
-        //set recognition domain
-        [_iFlySpeechRecognizer setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN]];
-        _iFlySpeechRecognizer.delegate = self;
-        
-        //set sample rate, 16K as a recommended option 采样率
-        [_iFlySpeechRecognizer setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
-        //set language
-        [_iFlySpeechRecognizer setParameter:@"zh_cn" forKey:[IFlySpeechConstant LANGUAGE]];
-        //set accent
-        [_iFlySpeechRecognizer setParameter:@"mandarin" forKey:[IFlySpeechConstant ACCENT]];
-        
-        //set whether or not to show punctuation in recognition results
-        [_iFlySpeechRecognizer setParameter:@"1" forKey:[IFlySpeechConstant ASR_PTT]];
-    }
-    return _iFlySpeechRecognizer;
-}
-
-- (void)startIflyRecord{
-  
-    [self.iFlySpeechRecognizer cancel];
-    [self.iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
-    [self.iFlySpeechRecognizer setParameter:@"json" forKey:[IFlySpeechConstant RESULT_TYPE]];
-    [self.iFlySpeechRecognizer setParameter:@"asr.pcm" forKey:[IFlySpeechConstant ASR_AUDIO_PATH]];
-    [self.iFlySpeechRecognizer setDelegate:self];
-    BOOL ret = [_iFlySpeechRecognizer startListening];
-    if (ret) {
-        NSLog(@"startIflyRecord");
-    } else {
-        NSLog(@"startIflyRecord fail");
-    }
-}
-
-- (void)stopIflyRecord{
-    [self.iFlySpeechRecognizer stopListening];
-}
-
-#pragma mark - IFlySpeechRecognizerDelegate
-- (void)onResults:(NSArray *)results isLast:(BOOL)isLast {
-
-    NSMutableString *resultString = [[NSMutableString alloc] init];
-    NSDictionary *dic = results[0];
-    
-    for (NSString *key in dic) {
-        [resultString appendFormat:@"%@",key];
-    }
-    
-    _result =[NSString stringWithFormat:@"%@%@", self.resultStr,resultString];
-    
-    NSString * resultFromJson =  nil;
-
-    resultFromJson = [ISRDataHelper stringFromJson:resultString];
-
-    if (isLast){
-        NSLog(@"ISR Results(json)：%@",self.result);
-    }
-}
-
-#pragma mark - pcm 转 mp3
-- (void)convertToMp3{
-
-    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *path = [NSString stringWithFormat:@"%@/%@",cachePath,@"asr.pcm"];
-    NSLog(@"convert begin!!");
-   
-    NSString *cafFilePath = path;
-    
-    
-    NSString *fileName = [NSString stringWithFormat:@"/%@.mp3", @"convertAudio"];
-     NSString *mp3FilePath = [[NSHomeDirectory() stringByAppendingFormat:@"/Documents/"] stringByAppendingPathComponent:fileName];
-
-    @try {
-        
-        int read, write;
-        
-        FILE *pcm = fopen([cafFilePath cStringUsingEncoding:NSUTF8StringEncoding], "rb");
-        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:NSUTF8StringEncoding], "wb");
-        
-        const int PCM_SIZE = 8192;
-        const int MP3_SIZE = 8192;
-        short int pcm_buffer[PCM_SIZE * 2];
-        unsigned char mp3_buffer[MP3_SIZE];
-        
-        
-        lame_t lame = lame_init();
-        lame_set_in_samplerate(lame, 16000);//采样率
-        lame_set_num_channels(lame, 1);
-        lame_set_brate(lame,16);// 比特率
-        lame_set_mode(lame,2);
-        lame_set_VBR(lame, vbr_default);
-        lame_init_params(lame);
-        
-        long curpos;
-        BOOL isSkipPCMHeader = NO;
-        
-        do {
-            
-            curpos = ftell(pcm);
-            
-            long startPos = ftell(pcm);//文件当前读到的位置
-            
-            fseek(pcm, 0, SEEK_END);
-            long endPos = ftell(pcm);//文件末尾位置
-            
-            long length = endPos - startPos;//剩下未读入文件长度
-            
-            fseek(pcm, curpos, SEEK_SET);//把文件指针重新置回
-            
-            
-            if (length > PCM_SIZE * 2 * sizeof(short int)) {
-               
-                if (!isSkipPCMHeader) {
-                    //Uump audio file header, If you do not skip file header
-                    //you will heard some noise at the beginning!!!
-                    fseek(pcm, 4 * 1024, SEEK_SET);
-                    isSkipPCMHeader = YES;
-                    NSLog(@"skip pcm file header !!!!!!!!!!");
-                }
-               
-                read = (int)fread(pcm_buffer, 2 * sizeof(short int), PCM_SIZE, pcm);
-                // 单声道 16位
-                write = lame_encode_buffer(lame, pcm_buffer, pcm_buffer, read, mp3_buffer, MP3_SIZE);
-                fwrite(mp3_buffer, write, 1, mp3);
-                NSLog(@"read %d bytes", write);
-            } else {
-               
-                [NSThread sleepForTimeInterval:0.05];
-                NSLog(@"sleep");
-                break;
-            }
-//        } while (self.startRecord);
-        } while (read != 0);
-
-        
-        
-        read = (int)fread(pcm_buffer, 2 * sizeof(short int), PCM_SIZE, pcm);
-        write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
-        NSLog(@"read %d bytes and flush to mp3 file", write);
-        
-        lame_close(lame);
-        fclose(mp3);
-        fclose(pcm);
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", [exception description]);
-    }
-    @finally {
-        NSLog(@"convert mp3 finish!!!");
-        NSLog(@"mp3FilePath:%@",mp3FilePath);
-    }
 }
 
 @end

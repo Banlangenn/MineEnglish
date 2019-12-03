@@ -14,7 +14,14 @@ extern NSString * const TagCollectionViewCellId;
 
 @property (nonatomic, assign) BOOL choice;
 
-@property (nonatomic, strong) UIColor *selColor;
+// 选中背景颜色
+@property (nonatomic, strong) UIColor *selBgColor;
+// 正常背景颜色
+@property (nonatomic, strong) UIColor *normalBgColor;
+// 正常文本颜色
+@property (nonatomic, strong) UIColor *normalTextColor;
+// 圆角
+@property (nonatomic, assign) CGFloat cornerRadius;
 
 - (void)setupWithTag:(NSString *)tag;
 

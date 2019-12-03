@@ -2062,6 +2062,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                     taskVC.homework = weakSelf.homeworkSession.homework;
                     taskVC.randomDictWords = message.attributes[@"randomWords"];
                     taskVC.commitPlayTime = message.attributes[@"playtime"];
+                    taskVC.resultArray = message.attributes[@"recognitionWords"];
                     [weakSelf.navigationController pushViewController:taskVC animated:YES];
                 }
             }];
