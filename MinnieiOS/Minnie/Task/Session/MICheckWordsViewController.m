@@ -302,7 +302,7 @@ IFlySpeechRecognizerDelegate
            
 
             UILabel *titleLabel = [[UILabel alloc] init];
-            titleLabel.font = [UIFont boldSystemFontOfSize:16];
+            titleLabel.font = [UIFont boldSystemFontOfSize:14];
             titleLabel.text = @"教师:";
             titleLabel.textAlignment = NSTextAlignmentLeft;
             [cell addSubview:titleLabel];
