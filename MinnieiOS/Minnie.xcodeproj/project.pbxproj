@@ -394,6 +394,7 @@
 		128F13A622D73D3000C9F5B7 /* 缺省插画_无作业@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9710960D207A006C00568785 /* 缺省插画_无作业@2x.png */; };
 		12961452239E335100F6B734 /* MIStudentInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */; };
 		12961453239E335100F6B734 /* MIStudentInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */; };
+		12961456239E3E7B00F6B734 /* MIStudentTaskRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */; };
 		12961C49229E5B130075B04A /* HomeworkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 973649A320AF2F8500511A95 /* HomeworkTableViewCell.m */; };
 		12961C4A229E5B260075B04A /* HomeworkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9736499C20AF2F8500511A95 /* HomeworkTableViewCell.xib */; };
 		12961C4B229E5B590075B04A /* icon_mission_choice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 971095F2207A006C00568785 /* icon_mission_choice@2x.png */; };
@@ -2272,6 +2273,8 @@
 		1296144F239E335100F6B734 /* MIStudentInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIStudentInfoTableViewCell.h; sourceTree = "<group>"; };
 		12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIStudentInfoTableViewCell.m; sourceTree = "<group>"; };
 		12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIStudentInfoTableViewCell.xib; sourceTree = "<group>"; };
+		12961454239E3E7A00F6B734 /* MIStudentTaskRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIStudentTaskRecordViewController.h; sourceTree = "<group>"; };
+		12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIStudentTaskRecordViewController.m; sourceTree = "<group>"; };
 		12A647732351A91E0094519F /* DownloadCacheVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadCacheVideo.h; sourceTree = "<group>"; };
 		12A647742351A91E0094519F /* DownloadCacheVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCacheVideo.m; sourceTree = "<group>"; };
 		12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
@@ -3711,6 +3714,8 @@
 				12B504282317DDC3001880A9 /* MIStudentRecordViewController.h */,
 				12B5042D2317DDC3001880A9 /* MIStudentRecordViewController.m */,
 				12B5042A2317DDC3001880A9 /* MIStudentRecordViewController.xib */,
+				12961454239E3E7A00F6B734 /* MIStudentTaskRecordViewController.h */,
+				12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -7669,6 +7674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12961456239E3E7B00F6B734 /* MIStudentTaskRecordViewController.m in Sources */,
 				12961C66229E66780075B04A /* PinyinHelper.m in Sources */,
 				12961C76229E674B0075B04A /* TeacherService.m in Sources */,
 				12747C0822A7CF42009C390E /* AnswerPickerCell.m in Sources */,

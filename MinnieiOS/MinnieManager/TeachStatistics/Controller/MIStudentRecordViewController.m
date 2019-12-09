@@ -7,6 +7,7 @@
 //
 #import "WMPageController.h"
 #import "MIStudentRecordViewController.h"
+#import "MIStudentTaskRecordViewController.h"
 #import "StudentStarRecordViewController.h"
 
 @interface MIStudentRecordViewController ()<
@@ -38,12 +39,18 @@ UIScrollViewDelegate
     self.subPageVCArray = [NSMutableArray array];
     for (int i = 0; i < 4; i++) {
       
-        StudentStarRecordViewController * statRecordVC = [[StudentStarRecordViewController alloc] initWithNibName:NSStringFromClass([StudentStarRecordViewController class]) bundle:nil];
-        statRecordVC.recordType = i;
+        if (i == 2) {
+            MIStudentTaskRecordViewController * statRecordVC = [[MIStudentTaskRecordViewController alloc] init];
+            [self.subPageVCArray addObject:statRecordVC];
+        } else {
+
+            StudentStarRecordViewController * statRecordVC = [[StudentStarRecordViewController alloc] initWithNibName:NSStringFromClass([StudentStarRecordViewController class]) bundle:nil];
+            statRecordVC.recordType = i;
+            [self.subPageVCArray addObject:statRecordVC];
+        }
         
-        [self.subPageVCArray addObject:statRecordVC];
     }
-    self.subPageTitleArray = @[@"星星获取", @"礼物兑换",@"任务得分",@"考试统计"];
+    self.subPageTitleArray = @[@"星星获取", @"礼物兑换",@"任务记录",@"考试统计"];
     self.pageController = [[WMPageController alloc] initWithViewControllerClasses:self.subPageVCArray andTheirTitles:self.subPageTitleArray];
     self.pageController.delegate = self;
     self.pageController.dataSource = self;
@@ -70,9 +77,24 @@ UIScrollViewDelegate
 
 -(void)updateStudentRecordWithStudentId:(NSInteger)studentId{
     
-    [(StudentStarRecordViewController *)self.pageController.currentViewController updateStarRecordWithSutdentId:studentId];
-    for (StudentStarRecordViewController *vc in self.pageController.viewControllerClasses) {
-        vc.studentId = studentId;
+    UIViewController *vc = self.pageController.currentViewController;
+    if ([vc isKindOfClass:[StudentStarRecordViewController class]]) {
+
+        [(StudentStarRecordViewController *)self.pageController.currentViewController updateStarRecordWithSutdentId:studentId];
+    } else if ([vc isKindOfClass:[MIStudentTaskRecordViewController class]]){
+        
+        [(MIStudentTaskRecordViewController *)self.pageController.currentViewController updateStarRecordWithSutdentId:studentId];
+    }
+    
+    for (UIViewController *vc in self.pageController.viewControllerClasses) {
+       
+        if ([vc isKindOfClass:[StudentStarRecordViewController class]]) {
+
+            ((StudentStarRecordViewController *)vc).studentId = studentId;
+        } else if ([vc isKindOfClass:[MIStudentTaskRecordViewController class]]){
+                       
+            ((MIStudentTaskRecordViewController *)vc).studentId = studentId;
+        }
     }
 }
 
