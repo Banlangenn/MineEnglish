@@ -392,6 +392,8 @@
 		128F138522D5C19C00C9F5B7 /* DeleteTeacherAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97109CED207A2F0400568785 /* DeleteTeacherAlertView.xib */; };
 		128F13A522D73D2C00C9F5B7 /* 缺省插画_无作业@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 971095EC207A006C00568785 /* 缺省插画_无作业@3x.png */; };
 		128F13A622D73D3000C9F5B7 /* 缺省插画_无作业@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9710960D207A006C00568785 /* 缺省插画_无作业@2x.png */; };
+		12961452239E335100F6B734 /* MIStudentInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */; };
+		12961453239E335100F6B734 /* MIStudentInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */; };
 		12961C49229E5B130075B04A /* HomeworkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 973649A320AF2F8500511A95 /* HomeworkTableViewCell.m */; };
 		12961C4A229E5B260075B04A /* HomeworkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9736499C20AF2F8500511A95 /* HomeworkTableViewCell.xib */; };
 		12961C4B229E5B590075B04A /* icon_mission_choice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 971095F2207A006C00568785 /* icon_mission_choice@2x.png */; };
@@ -2267,6 +2269,9 @@
 		128CF0C522C46645004FBC91 /* HomeworkConfirmView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeworkConfirmView.h; path = ../HomeworkConfirmView.h; sourceTree = "<group>"; };
 		128CF0C622C46645004FBC91 /* HomeworkConfirmView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeworkConfirmView.m; path = ../HomeworkConfirmView.m; sourceTree = "<group>"; };
 		128CF0CA22C4665C004FBC91 /* HomeworkConfirmView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeworkConfirmView.xib; path = ../HomeworkConfirmView.xib; sourceTree = "<group>"; };
+		1296144F239E335100F6B734 /* MIStudentInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIStudentInfoTableViewCell.h; sourceTree = "<group>"; };
+		12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIStudentInfoTableViewCell.m; sourceTree = "<group>"; };
+		12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIStudentInfoTableViewCell.xib; sourceTree = "<group>"; };
 		12A647732351A91E0094519F /* DownloadCacheVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadCacheVideo.h; sourceTree = "<group>"; };
 		12A647742351A91E0094519F /* DownloadCacheVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCacheVideo.m; sourceTree = "<group>"; };
 		12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
@@ -3692,6 +3697,37 @@
 			path = TeacherManager;
 			sourceTree = "<group>";
 		};
+		1296144D239E329C00F6B734 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				12B5042B2317DDC3001880A9 /* MISecondTeachStatisticsView.h */,
+				12B504232317DDC3001880A9 /* MISecondTeachStatisticsView.m */,
+				12B5042E2317DDC3001880A9 /* MIZeroMessagesViewController.h */,
+				12B504272317DDC3001880A9 /* MIZeroMessagesViewController.m */,
+				12B504262317DDC3001880A9 /* MIZeroMessagesViewController.xib */,
+				12B504292317DDC3001880A9 /* MIStudentDetailViewController.h */,
+				12B5042F2317DDC3001880A9 /* MIStudentDetailViewController.m */,
+				12B504222317DDC3001880A9 /* MIStudentDetailViewController.xib */,
+				12B504282317DDC3001880A9 /* MIStudentRecordViewController.h */,
+				12B5042D2317DDC3001880A9 /* MIStudentRecordViewController.m */,
+				12B5042A2317DDC3001880A9 /* MIStudentRecordViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1296144E239E331700F6B734 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				12B5042C2317DDC3001880A9 /* MIZeroMessagesTableViewCell.h */,
+				12B504252317DDC3001880A9 /* MIZeroMessagesTableViewCell.m */,
+				12B504242317DDC3001880A9 /* MIZeroMessagesTableViewCell.xib */,
+				1296144F239E335100F6B734 /* MIStudentInfoTableViewCell.h */,
+				12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */,
+				12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		12B504032317DD89001880A9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3726,20 +3762,8 @@
 		12B504212317DDC3001880A9 /* TeachStatistics */ = {
 			isa = PBXGroup;
 			children = (
-				12B504222317DDC3001880A9 /* MIStudentDetailViewController.xib */,
-				12B504232317DDC3001880A9 /* MISecondTeachStatisticsView.m */,
-				12B504242317DDC3001880A9 /* MIZeroMessagesTableViewCell.xib */,
-				12B504252317DDC3001880A9 /* MIZeroMessagesTableViewCell.m */,
-				12B5042E2317DDC3001880A9 /* MIZeroMessagesViewController.h */,
-				12B504272317DDC3001880A9 /* MIZeroMessagesViewController.m */,
-				12B504262317DDC3001880A9 /* MIZeroMessagesViewController.xib */,
-				12B504282317DDC3001880A9 /* MIStudentRecordViewController.h */,
-				12B504292317DDC3001880A9 /* MIStudentDetailViewController.h */,
-				12B5042A2317DDC3001880A9 /* MIStudentRecordViewController.xib */,
-				12B5042B2317DDC3001880A9 /* MISecondTeachStatisticsView.h */,
-				12B5042C2317DDC3001880A9 /* MIZeroMessagesTableViewCell.h */,
-				12B5042D2317DDC3001880A9 /* MIStudentRecordViewController.m */,
-				12B5042F2317DDC3001880A9 /* MIStudentDetailViewController.m */,
+				1296144E239E331700F6B734 /* View */,
+				1296144D239E329C00F6B734 /* Controller */,
 			);
 			name = TeachStatistics;
 			path = MinnieManager/TeachStatistics;
@@ -6554,6 +6578,7 @@
 				12ED3B6B229D9A4D00255F8B /* label_ic_into@3x.png in Resources */,
 				12961C8D229E722B0075B04A /* HomeworkPreviewViewController.xib in Resources */,
 				12747C8322A7D29B009C390E /* btn_add@2x.png in Resources */,
+				12961453239E335100F6B734 /* MIStudentInfoTableViewCell.xib in Resources */,
 				12B503CC2317C34E001880A9 /* MITeacherOnlineTableViewCell.xib in Resources */,
 				12747C1322A7D047009C390E /* CorrectHomeworkScoreTableViewCell.xib in Resources */,
 				12B5044B2317DE35001880A9 /* MISelectImageViewController.xib in Resources */,
@@ -7794,6 +7819,7 @@
 				12747BDC22A7CCD5009C390E /* DrawImageView.m in Sources */,
 				12747C0D22A7CFB2009C390E /* StarLogs.m in Sources */,
 				12B503EA2317DC05001880A9 /* ParentFileInfo.m in Sources */,
+				12961452239E335100F6B734 /* MIStudentInfoTableViewCell.m in Sources */,
 				1226F33D2298336C00BAB1C9 /* AppVersion.m in Sources */,
 				12B504A323191B1D001880A9 /* MIExpandSelectTypeTableViewCell.m in Sources */,
 				12961C49229E5B130075B04A /* HomeworkTableViewCell.m in Sources */,

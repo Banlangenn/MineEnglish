@@ -6,7 +6,9 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import "PublicService.h"
 #import "StudentService.h"
+#import "MIStudentInfoTableViewCell.h"
 #import "MIStudentDetailViewController.h"
 
 @interface MIStudentDetailViewController ()
@@ -18,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *onlineButton;
 
-@property (strong, nonatomic) User *student;
+@property (strong, nonatomic) Student *student;
 @property (strong, nonatomic) StudentDetail *studentDetail;
 
 @end
@@ -26,7 +28,9 @@
 @implementation MIStudentDetailViewController
 
 - (void)viewDidLoad {
+   
     [super viewDidLoad];
+   
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor emptyBgColor];
     
@@ -41,7 +45,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)updateStudent:(User * _Nullable)student{
+- (void)updateStudent:(Student * _Nullable)student{
    
     self.student = student;
     if (student == nil) {
@@ -59,20 +63,23 @@
         [self.iconImagV sd_setImageWithURL:[self.student.avatarUrl imageURLWithWidth:24] placeholderImage:[UIImage imageNamed: @"attachment_placeholder"]];
         
         [self requestStudentDetailTask];
+        [self requestSutdentInfo];
     }
 }
 
 #pragma mark -   UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 5;
 }
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (section == 0) {
         return 1;
     } else if (section == 1) {
-        return 6;
+        return 1;
     } else if (section == 2) {
+        return 6;
+    } else if (section == 3) {
         return 5;
     } else {
         return 6;
@@ -80,20 +87,36 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30;
+   
+    if (indexPath.section == 0) {
+        return 160;
+    } else {
+        return 30;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+       
+        MIStudentInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MIStudentInfoTableViewCellId];
+        if (cell == nil) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIStudentInfoTableViewCell class]) owner:nil options:nil] lastObject];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        [cell setupStudentInfo:self.student];
+        return cell;
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"studentDetailCellId"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"studentDetailCellId"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
 
         cell.textLabel.attributedText = [self setupContentTitle:@"综合评价:" text:nil];
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 2) {
         
         if (indexPath.row == 0) {
             cell.textLabel.attributedText = [self setupContentTitle:@"待批改数：" text:[NSString stringWithFormat:@"%lu",self.studentDetail.uncorrectHomeworksCount]];
@@ -108,7 +131,7 @@
         } else {
             cell.textLabel.attributedText = [self setupContentTitle:@"兑换礼品数：" text:[NSString stringWithFormat:@"%lu",self.studentDetail.giftCount]];
         }
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 3) {
         
         if (indexPath.row == 0) {
             
@@ -177,5 +200,20 @@
         weakSelf.onlineButton.selected = weakSelf.studentDetail.isOnline;
     }];
 }
+
+- (void)requestSutdentInfo{
+
+    [PublicService requestStudentInfoWithId:self.student.userId
+                                callback:^(Result *result, NSError *error) {
+                                    if (error == nil) {
+                                        Student *userInfo = (Student *)(result.userInfo);
+                                        self.student.phoneNumber = userInfo.phoneNumber;
+                                        self.student.gender = userInfo.gender;
+                                        self.student.clazz = userInfo.clazz;
+                                        [self.tableView reloadData];
+                                    }
+                                }];
+}
+
 
 @end

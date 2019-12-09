@@ -46,9 +46,9 @@ typedef NS_ENUM(NSInteger, TeacherType) {
 @property (nonatomic, assign) BOOL canManageCampus; //校区管理（新建/编辑/删除） (班级管理)
 // 教师端：中间tab班级模块 控制班级列表中班级可见性
 @property (nonatomic, strong) NSArray *canLookClasses; // 班级信息查看
-// 管理端：教学统计可见性  教师端：
+// 管理端：学员管理可见性  教师端：
 @property (nonatomic, assign) BOOL canManageStudents; // 管理学生
-// 管理端：该权限控制该账号在教学统计模块中，可见的学生账号范围   教师端：我的->学员管理   该账号为班级任课教师时，该班级的所有学员默认可见。
+// 管理端：该权限控制该账号在学员管理模块中，可见的学生账号范围   教师端：我的->学员管理   该账号为班级任课教师时，该班级的所有学员默认可见。
 @property (nonatomic, strong) NSArray *canLookStudents; // 学生信息查看
 @property (nonatomic, assign) BOOL canManagePresents; // 礼物管理
 

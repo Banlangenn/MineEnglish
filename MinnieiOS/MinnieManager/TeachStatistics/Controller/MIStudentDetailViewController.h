@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MIStudentDetailViewController : UIViewController
 
-- (void)updateStudent:(User * _Nullable)student;
+- (void)updateStudent:(Student * _Nullable)student;
 
 @end
 

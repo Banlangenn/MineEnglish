@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, MIManagerFuncModule) {
     MIManagerFuncTeacherModule,             // 教师管理
     MIManagerFuncTaskModule,                // 任务管理
     MIManagerFuncActivityModule,            // 活动管理
-    MIManagerFuncTeachingModule,            // 教学统计
+    MIManagerFuncTeachingModule,            // 学员管理
     MIManagerFuncCampusModule,              // 校区管理
     MIManagerFuncGiftsModule,               // 礼物管理
     MIManagerFuncImagesModule,              // 图片管理

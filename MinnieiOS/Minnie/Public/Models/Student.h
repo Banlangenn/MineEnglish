@@ -34,14 +34,14 @@
 @end
 
 
-@interface StudentsByName : User<MTLJSONSerializing>
+@interface StudentsByName : Student<MTLJSONSerializing>
 //班级名称
 @property (nonatomic, copy) NSString *className;
 
 @end
 
 
-@interface StudentByClass : User<MTLJSONSerializing>
+@interface StudentByClass : Student<MTLJSONSerializing>
 @end
 
 

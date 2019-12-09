@@ -52,7 +52,7 @@
                                @"select":@"menu_activity_sel",
                                @"normal":@"menu_activity_def"}];
         [dataArray addObject:@{@"type":@(MIManagerFuncTeachingModule),
-                               @"title":@"教学统计",
+                               @"title":@"学员管理",
                                @"select":@"menu_Statistics_sel",
                                @"normal":@"menu_Statistics_def"}];
         [dataArray addObject:@{@"type":@(MIManagerFuncCampusModule),
@@ -100,7 +100,7 @@
         if (APP.currentUser.canManageStudents) {
             
             [dataArray addObject:@{@"type":@(MIManagerFuncTeachingModule),
-                                   @"title":@"教学统计",
+                                   @"title":@"学员管理",
                                    @"select":@"menu_Statistics_sel",
                                    @"normal":@"menu_Statistics_def"}];
         }

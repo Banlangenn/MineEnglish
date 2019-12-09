@@ -10,7 +10,7 @@
 
 @protocol MISecondTeachStatisticsViewDelegate <NSObject>
 
-- (void)secondTeachStatisticsViewDidClicledWithStudent:(User *_Nullable)student;
+- (void)secondTeachStatisticsViewDidClicledWithStudent:(Student *_Nullable)student;
 
 @end
 

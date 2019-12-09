@@ -326,7 +326,7 @@ UITableViewDataSource
     self.currentIndexPath = indexPath;
     [tableView reloadData];
     
-    User *student ;
+    Student *student;
     if (tableView == self.leftTableView) {
         
         NSArray *studentsGroup = self.studentDict[self.sortedKeys[indexPath.section]];

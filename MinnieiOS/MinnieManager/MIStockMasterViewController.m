@@ -36,7 +36,7 @@ MISecondTeachStatisticsViewDelegate
 @property (nonatomic, strong) MISecondSheetView *secondSheetView;
 // 活动管理 活动列表
 @property (nonatomic, strong) MISecondActivitySheetView *secondActivitySheetView;
-// 教学统计 学生列表
+// 学员管理 学生列表
 @property (nonatomic, strong) MISecondTeachStatisticsView *secondTeaStaSheetView;
 
 // 实时任务
@@ -47,7 +47,7 @@ MISecondTeachStatisticsViewDelegate
 @property (nonatomic, strong) MISecondStockSplitViewController *taskManagerStockSplitVC;
 // 活动管理
 @property (nonatomic, strong) MISecondStockSplitViewController *activityStockSplitVC;
-// 教学统计
+// 学员管理
 @property (nonatomic, strong) MISecondStockSplitViewController *teaStaStockSplitVC;
 // 校区管理
 @property (nonatomic, strong) MISecondStockSplitViewController *camManStockSplitVC;
@@ -144,7 +144,7 @@ MISecondTeachStatisticsViewDelegate
         [self.secondDetailVC addSubViewController:self.activityStockSplitVC];
         
         [_secondActivitySheetView updateActivityListInfo];
-    } else if (type == MIManagerFuncTeachingModule) { // 教学统计
+    } else if (type == MIManagerFuncTeachingModule) { // 学员管理
         
         [self.view addSubview:self.secondTeaStaSheetView];
         _secondSheetView.hidden = YES;
@@ -189,8 +189,8 @@ MISecondTeachStatisticsViewDelegate
     }
 }
 
-#pragma mark - 教学统计 MISecondTeachStatisticsViewDelegate
--(void)secondTeachStatisticsViewDidClicledWithStudent:(User *)student{
+#pragma mark - 学员管理 MISecondTeachStatisticsViewDelegate
+-(void)secondTeachStatisticsViewDidClicledWithStudent:(Student *)student{
     
     [self.teaStaStockSplitVC updateStudent:student];
 }

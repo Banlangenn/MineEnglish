@@ -319,7 +319,7 @@ MICampusManagerViewControllerDelegate
     [self.activityMasterVC createActivity];
 }
 
-#pragma mark - 教学统计
+#pragma mark - 学员管理
 - (void)configureTeachStatisticUI{
     
     self.teachStatistickMasterVC = [[MIStudentDetailViewController alloc] initWithNibName:NSStringFromClass([MIStudentDetailViewController class]) bundle:nil];
@@ -333,7 +333,7 @@ MICampusManagerViewControllerDelegate
     self.viewControllers = @[masterNav, detailNav];
 }
 
-- (void)updateStudent:(User * _Nullable)student{
+- (void)updateStudent:(Student * _Nullable)student{
     
     if (student != nil) {
         self.teachStatistickMasterVC.view.hidden = NO;
