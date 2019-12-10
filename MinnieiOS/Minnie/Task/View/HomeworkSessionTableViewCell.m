@@ -111,11 +111,14 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     {
         maxHours = 72;
     }
-    else
+    else if (homeworkSession.homework.style == 4)
     {
         maxHours = 96;
     }
-    
+    else    // 6天
+    {
+        maxHours = 144;
+    }
     //计算时间
     NSInteger hours = [self calculateDeadlineHourForTime:homeworkSession.sendTime];
     BOOL isOutTime; //是否超时，超过规定时间

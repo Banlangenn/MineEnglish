@@ -99,13 +99,14 @@ NSString * const MISegmentTypeTableViewCellId = @"MISegmentTypeTableViewCellId";
          [self.btn1 setTitle:@"顺序播放" forState:UIControlStateNormal];
          [self.btn2 setTitle:@"随机播放" forState:UIControlStateNormal];
     } else if (self.createType == MIHomeworkCreateContentType_CommitTime){
-        //提交时间：1/2/3/4天
-        self.btnNum =4;
+        //提交时间：1/2/3/4天/6天
+        self.btnNum =5;
         self.titleLabel.text = @"提交时间:";
         [self.btn1 setTitle:@"1天" forState:UIControlStateNormal];
         [self.btn2 setTitle:@"2天" forState:UIControlStateNormal];
         [self.btn3 setTitle:@"3天" forState:UIControlStateNormal];
         [self.btn4 setTitle:@"4天" forState:UIControlStateNormal];
+        [self.btn5 setTitle:@"6天" forState:UIControlStateNormal];
     }
     [self setBtn:self.btnNum selectIndex:index];
 }

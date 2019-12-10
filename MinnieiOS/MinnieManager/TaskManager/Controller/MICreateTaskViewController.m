@@ -541,9 +541,17 @@ ClassAndStudentSelectorControllerDelegate
             MISegmentTypeTableViewCell *contentCell = [tableView dequeueReusableCellWithIdentifier:MISegmentTypeTableViewCellId forIndexPath:indexPath];
             WeakifySelf;
             contentCell.callback = ^(NSInteger selectIndex) {
-                weakSelf.homework.style = selectIndex;
+                if (selectIndex == 5) {
+                    weakSelf.homework.style = 6;
+                } else {
+                    weakSelf.homework.style = selectIndex;
+                }
             };
-            [contentCell setupWithSelectIndex:self.homework.style createType:createType];
+            if (self.homework.style == 6) {
+                [contentCell setupWithSelectIndex:5 createType:createType];
+            } else {
+                [contentCell setupWithSelectIndex:self.homework.style createType:createType];
+            }
             cell = contentCell;
         }
             break;

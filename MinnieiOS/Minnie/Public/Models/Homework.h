@@ -30,7 +30,7 @@
 
 @property (nonatomic, strong) NSArray <NSString *> *tags; // 标签
 
-@property (nonatomic, assign) NSInteger style; //提交时间：1/2/3/4天
+@property (nonatomic, assign) NSInteger style; //提交时间：1/2/3/4/6天
 
 @property (nonatomic, assign) NSInteger level; //作业难度，1-5星
 

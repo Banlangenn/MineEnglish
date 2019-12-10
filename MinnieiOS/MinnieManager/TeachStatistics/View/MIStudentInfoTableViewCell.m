@@ -32,7 +32,15 @@ NSString *const MIStudentInfoTableViewCellId = @"MIStudentInfoTableViewCellId";
 - (void)setupStudentInfo:(Student *)student{
     
     self.phoneLabel.text = student.phoneNumber;
-    NSString *gender = student.gender==1?@"男":@"女";
+    
+    NSString *gender;
+    if (student.gender == 0) {
+        gender = @"保密";
+    } else if (student.gender == 1) {
+        gender = @"男";
+    } else {
+        gender = @"女";
+    }
     self.genderLabel.text = gender;
     self.classLabel.text = student.clazz.name;
 }
