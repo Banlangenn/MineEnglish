@@ -14,6 +14,7 @@
 #import "UIScrollView+Refresh.h"
 #import "UITextView+Placeholder.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "MIPlayerViewController.h"
 
 #import "CircleViewController.h"
 #import "CircleVideoTableViewCell.h"
@@ -367,17 +368,30 @@ UITableViewDelegate
 }
 
 - (void)videoButtonPressed:(CircleHomework *)homework {
-    self.currentHomework = homework;
-    AVAudioSession *session =[AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
-    NSString *url = homework.videoUrl;
-    playerViewController.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
+  
+//    AVAudioSession *session =[AVAudioSession sharedInstance];
+//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc]init];
+//    NSString *url = homework.videoUrl;
+//    playerViewController.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:url]];
 
-    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:playerViewController animated:YES completion:nil];
+//    playerViewController.view.frame = [UIScreen mainScreen].bounds;
+//    [playerViewController.player play];
+       
+    self.currentHomework = homework;
+    NSString *url = homework.videoUrl;
+
+    MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
     [self presentViewController:playerViewController animated:YES completion:nil];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [playerViewController playVideoWithUrl:url];
     playerViewController.view.frame = [UIScreen mainScreen].bounds;
-    [playerViewController.player play];
+#if TEACHERSIDE | MANAGERSIDE // 教师端管理端显示下载视频
+    playerViewController.showSaveBtn = YES;
+#endif
+        
 }
 
 - (void)likeButtonPressed:(CircleHomework *)homework {
