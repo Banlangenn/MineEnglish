@@ -36,6 +36,7 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
 @property (weak, nonatomic) IBOutlet UIImageView *cornerBgView;    //角标
 
 @property (weak, nonatomic) IBOutlet UIImageView *unfinishTimeImaV;
+@property (weak, nonatomic) IBOutlet UILabel *attachLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *unfinishTimeTopConstraint;
 
@@ -67,6 +68,9 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     
     self.homeworkTitleLabel.preferredMaxLayoutWidth = ScreenWidth - 4 * 12.f - 56.f;
     self.lastSessionLabel.preferredMaxLayoutWidth = ScreenWidth - 4 * 12.f - 56.f;
+    
+    self.attachLabel.layer.cornerRadius = 5.f;
+    self.attachLabel.layer.masksToBounds = YES;
 }
 
 
@@ -251,29 +255,17 @@ NSString * const FinishedHomeworkSessionTableViewCellId = @"FinishedHomeworkSess
     [self setupSelectState:NO];
     
     self.cornerBgView.hidden = NO;
-    if (homeworkSession.homework.level == 0)
-    {
-        self.diffcultLabel.text = @"1星";
-    }
-    else if (homeworkSession.homework.level == 1)
-    {
-        self.diffcultLabel.text = @"2星";
-    }
-    else if (homeworkSession.homework.level == 2)
-    {
-        self.diffcultLabel.text = @"3星";
-    }
-    else if (homeworkSession.homework.level == 3)
-    {
-        self.diffcultLabel.text = @"4星";
-    }
-    else if (homeworkSession.homework.level == 4)
-    {
-        self.diffcultLabel.text = @"5星";
-    }
-    else
-    {
+    NSString *star = [NSString stringWithFormat:@"%lu星",homeworkSession.homework.level + 1];
+    if (homeworkSession.homework.level > 4) {
         self.cornerBgView.hidden = YES;
+    } else {
+        self.diffcultLabel.text = star;
+    }
+    // 作业类型：普通1、附加2
+    if (homeworkSession.homework.category == 2) {
+        self.attachLabel.hidden = NO;
+    } else {
+        self.attachLabel.hidden = YES;
     }
     
 #if TEACHERSIDE | MANAGERSIDE

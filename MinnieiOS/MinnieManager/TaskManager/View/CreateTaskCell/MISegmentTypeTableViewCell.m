@@ -86,7 +86,7 @@ NSString * const MISegmentTypeTableViewCellId = @"MISegmentTypeTableViewCellId";
         [self.btn4 setTitle:@"4星" forState:UIControlStateNormal];
         [self.btn5 setTitle:@"5星" forState:UIControlStateNormal];
     } else if (self.createType == MIHomeworkCreateContentType_StatisticalType) {
-       // 作业类型：普通1、附件2、初始化0
+       // 作业类型：普通1、附加2、初始化0
         self.btnNum =2;
         self.titleLabel.text = @"统计类型:";
         [self.btn1 setTitle:@"普通" forState:UIControlStateNormal];

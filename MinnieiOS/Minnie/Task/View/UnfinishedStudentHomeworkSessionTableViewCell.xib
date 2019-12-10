@@ -117,14 +117,27 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="XnC-xP-32O"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="附加" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYD-5L-xAn">
+                                <rect key="frame" x="305" y="0.0" width="40" height="20"/>
+                                <color key="backgroundColor" red="0.0061302934773266315" green="0.57304155826568604" blue="0.99665611982345581" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="cjV-dz-o11"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="25h-sq-sLY" secondAttribute="bottom" constant="8" id="C5Z-1u-9BD"/>
                             <constraint firstAttribute="trailing" secondItem="1kE-eZ-iBU" secondAttribute="trailing" constant="12" id="LW3-AZ-BwE"/>
                             <constraint firstItem="jrG-dy-omj" firstAttribute="top" secondItem="boh-UQ-m1A" secondAttribute="top" constant="2" id="Lc8-SS-7JC"/>
+                            <constraint firstItem="TYD-5L-xAn" firstAttribute="height" secondItem="anD-1c-WPf" secondAttribute="height" id="Lzl-vl-eYp"/>
                             <constraint firstItem="1kE-eZ-iBU" firstAttribute="leading" secondItem="2Rr-Hy-Exs" secondAttribute="leading" id="MUk-1j-lKR"/>
                             <constraint firstAttribute="trailing" secondItem="25h-sq-sLY" secondAttribute="trailing" constant="8" id="MtJ-9q-eKS"/>
+                            <constraint firstItem="anD-1c-WPf" firstAttribute="leading" secondItem="TYD-5L-xAn" secondAttribute="trailing" constant="10" id="QFk-aj-8Wb"/>
+                            <constraint firstItem="TYD-5L-xAn" firstAttribute="centerY" secondItem="anD-1c-WPf" secondAttribute="centerY" id="SQT-35-Pp9"/>
                             <constraint firstAttribute="bottom" secondItem="DUD-Kb-mJg" secondAttribute="bottom" priority="250" constant="12" id="YvH-Md-ciG"/>
                             <constraint firstItem="DUD-Kb-mJg" firstAttribute="leading" secondItem="1kE-eZ-iBU" secondAttribute="leading" id="awR-od-Jcl"/>
                             <constraint firstItem="2Rr-Hy-Exs" firstAttribute="leading" secondItem="hPq-H2-vob" secondAttribute="trailing" constant="15" id="cld-r1-vAB"/>
@@ -161,6 +174,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="attachLabel" destination="TYD-5L-xAn" id="4WF-jB-smg"/>
                 <outlet property="containerView" destination="boh-UQ-m1A" id="IFC-bU-HbO"/>
                 <outlet property="cornerBgView" destination="anD-1c-WPf" id="bz4-hh-dPH"/>
                 <outlet property="diffcultLabel" destination="jrG-dy-omj" id="jJz-p1-SlL"/>
