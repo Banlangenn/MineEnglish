@@ -13,7 +13,6 @@
 @interface StudentSelectorViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *studentsTableView;
-@property (nonatomic, strong) NSMutableArray<User *> *students;
 @property (nonatomic, strong) NSMutableDictionary *studentDict;
 @property (nonatomic, strong) NSArray *sortedKeys;
 

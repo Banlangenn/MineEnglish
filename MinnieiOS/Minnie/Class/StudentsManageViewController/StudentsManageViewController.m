@@ -61,10 +61,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)dealloc {
-    
-}
-
 #pragma mark - IBAction Methods
 
 - (IBAction)addButtonPressed:(id)sender {

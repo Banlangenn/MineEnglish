@@ -10,6 +10,7 @@
 #import "PushManager.h"
 #import "SegmentControl.h"
 #import <Masonry/Masonry.h>
+#import "SearchStudentsViewController.h"
 #import "StudentDetailViewController.h"
 #import "StudentSelectorViewController.h"
 #import "StudentsWithoutClassViewController.h"
@@ -20,8 +21,6 @@
 WMPageControllerDelegate,
 WMPageControllerDataSource
 >
-
-@property (nonatomic, strong) StudentSelectorViewController *studentsSelectorChildController;
 
 @property (nonatomic, assign) BOOL ignoreScrollCallback;
 
@@ -75,7 +74,7 @@ WMPageControllerDataSource
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeBtn setImage:[UIImage imageNamed:@"navbar_close"] forState:UIControlStateNormal];
     [self.view addSubview:closeBtn];
-    closeBtn.frame = CGRectMake(15, kNaviBarHeight - 40, 40, 40);
+    closeBtn.frame = CGRectMake(10, kNaviBarHeight - 40, 40, 40);
     [closeBtn addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     
@@ -100,11 +99,11 @@ WMPageControllerDataSource
 #pragma mark - IBActions
 - (void)backButtonPressed:(UIButton *)btn{
  
-    if (self.navigationController.viewControllers.count > 1) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+#if MANAGERSIDE
+    [self.navigationController popViewControllerAnimated:YES];
+#else
+    [self dismissViewControllerAnimated:YES completion:nil];
+#endif
 }
     
 - (void)addButtonPressed:(UIButton *)btn{
@@ -126,6 +125,24 @@ WMPageControllerDataSource
 }
 - (void)searchButtonPressed:(UIButton *)btn{
 
+    SearchStudentsViewController *searchStudents = [[SearchStudentsViewController alloc] initWithNibName:NSStringFromClass([SearchStudentsViewController class]) bundle:nil];
+    
+    StudentSelectorViewController *vc = (StudentSelectorViewController *)self.pageController.currentViewController;
+    searchStudents.students = vc.students;
+    WeakifySelf;
+    searchStudents.addCallBack = ^(NSArray * _Nonnull array) {
+      
+        if ([weakSelf.delegate respondsToSelector:@selector(studentsDidSelect:)]) {
+            [weakSelf.delegate studentsDidSelect:array];
+        }
+        NSLog(@"%@",weakSelf.navigationController.viewControllers);
+        #if MANAGERSIDE
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        #else
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        #endif
+    };
+    [self.navigationController pushViewController:searchStudents animated:YES];
 }
 
 - (WMPageController *)pageController{
@@ -148,7 +165,6 @@ WMPageControllerDataSource
         _pageController.progressViewIsNaughty = YES;
         _pageController.view.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     }
-
     return _pageController;
 }
 
