@@ -6,6 +6,17 @@
 //  Copyright © 2018年 minnieedu. All rights reserved.
 //
 
+#import "CircleService.h"
+#import "CircleHomework.h"
+#import "EntranceClassView.h"
+#import "UIScrollView+Refresh.h"
+#import "CircleVideoTableViewCell.h"
+#import "CircleLikeUsersTableViewCell.h"
+#import "CircleCommentTableViewCell.h"
+#import "CircleMoreCommentsTableViewCell.h"
+#import "CircleBottomTableViewCell.h"
+#import "MIPlayerViewController.h"
+
 #import "IMManager.h"
 #import "AlertView.h"
 #import "PushManager.h"
@@ -21,16 +32,34 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
-@interface TrialClassViewController ()
+@interface TrialClassViewController ()<
+UITableViewDelegate,
+UITableViewDataSource
+>
+// 关于米妮
+@property (weak, nonatomic) IBOutlet UIButton *aboutBtn;
+// 同学圈
+@property (weak, nonatomic) IBOutlet UIButton *schoolCircleBtn;
 
-@property (nonatomic, weak) IBOutlet UIButton *nextButton;
+// 报名
+@property (weak, nonatomic) IBOutlet UIButton *enrollBtn;
+// 入学
+@property (weak, nonatomic) IBOutlet UIButton *entranceBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *btnBgView;
+
+// 等待审核
+@property (weak, nonatomic) IBOutlet UIButton *waitBtn;
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *grade;
 @property (nonatomic, assign) NSInteger gender;
 @property (weak, nonatomic) IBOutlet UIImageView *firstImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondImageView;
+
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;// 关于
+@property (weak, nonatomic) IBOutlet UITableView *circleTableView;// 同学圈
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeight;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *image1ViewHeight;
@@ -44,46 +73,58 @@
 @property (nonatomic, assign) NSInteger contentHeight;
 @property (nonatomic, strong) NSMutableArray *imageViews;
 
+@property (nonatomic, strong) NSMutableArray *homeworks;
+@property (nonatomic, copy) NSString *nextUrl;
+
+
 @end
 
 @implementation TrialClassViewController
 
 - (void)viewDidLoad {
+   
     [super viewDidLoad];
-    
-//    UIImage *image1 = [UIImage imageNamed:@"首页1.png"];
-//    UIImage *image2 = [UIImage imageNamed:@"首页2.png"];
-    
-    [self requestImages];
-//
-//    [self.firstImageView sd_setImageWithURL:[NSURL URLWithString:@"http://api.minniedu.com:8888/main.png"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//        if (image.size.width > 0) {
-//
-//            self.image1ViewHeight.constant = ScreenWidth * image.size.height / image.size.width;
-//        }
-//        self.bFirstDown = YES;
-//        [self checkDownloadFinish];
-//    }];
-//
-//    [self.secondImageView sd_setImageWithURL:[NSURL URLWithString:@"http://api.minniedu.com:8888/main_detail.png"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//        if (image.size.width > 0) {
-//            self.image2ViewHeight.constant = ScreenWidth * image.size.height / image.size.width;
-//        }
-//        self.bSecondDown = YES;
-//        [self checkDownloadFinish];
-//    }];
-//
+    self.homeworks = [NSMutableArray array];
 
-    self.nextButton.layer.cornerRadius = 6.f;
-    self.nextButton.layer.masksToBounds = YES;
-    self.nextButton.backgroundColor = nil;
-    [self.nextButton setBackgroundImage:[Utils imageWithColor:[UIColor colorWithRed:0 green:0x98/255.f blue:0xFE/255.f alpha:1.f]] forState:UIControlStateNormal];
-    [self.nextButton setBackgroundImage:[Utils imageWithColor:[UIColor colorWithRed:0 green:0x98/255.f blue:0xFE/255.f alpha:.8f]] forState:UIControlStateHighlighted];
-    [self.nextButton setBackgroundImage:[Utils imageWithColor:[UIColor colorWithRed:0xDD/255.f green:0xDD/255.f blue:0xDD/255.f alpha:1.f]] forState:UIControlStateDisabled];
+    [self configureUI];
+    [self requestImages];
+    [self registerCellNibs];
+}
+
+- (void)configureUI{
     
     Student *user = APP.currentUser;
     if (user.enrollState == 1) {
-        [self.nextButton setTitle:@"报名审核中，请耐心等待..." forState:UIControlStateNormal];
+        [self.waitBtn setTitle:@"报名审核中，请耐心等待..." forState:UIControlStateNormal];
+        self.btnBgView.hidden = YES;
+        self.waitBtn.hidden = NO;
+    } else {
+             
+        self.btnBgView.hidden = NO;
+        self.waitBtn.hidden = YES;
+    }
+    [self showCircle:NO];
+    self.aboutBtn.selected = YES;
+    self.schoolCircleBtn.selected = NO;
+    
+    self.circleTableView.tableFooterView = [UIView new];
+    self.circleTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    if (user.enrollState == 1) {
+        [self showEnrolledAlertView];
+    }
+}
+
+- (void)showCircle:(BOOL)show{
+    
+    if (show) {// 同学圈
+        self.scrollView.hidden = YES;
+        self.circleTableView.hidden = NO;
+        
+    } else {// 关于
+
+        self.scrollView.hidden = NO;
+        self.circleTableView.hidden = YES;
     }
 }
 
@@ -99,13 +140,11 @@
     [super viewDidAppear:animated];
     
     Student *user = APP.currentUser;
-    if (user.enrollState == 1) {
-        [self showEnrolledAlertView];
-    }
 }
 
 - (void)showEnrolledAlertView {
-    [self.nextButton setTitle:@"报名审核中，请耐心等待..." forState:UIControlStateNormal];
+   
+    [self.waitBtn setTitle:@"报名审核中，请耐心等待..." forState:UIControlStateNormal];
     
     [AlertView showInView:self.view
                 withImage:[UIImage imageNamed:@"pop_img_welcome"]
@@ -116,22 +155,36 @@
            }];
 }
 
-- (void)dealloc {
-}
 
+#pragma mark - pressed action
 - (IBAction)exitButtonPressed:(id)sender {
 
     AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [app logout];
 }
 
-- (IBAction)nextButtonPressed:(id)sender {
-    Student *user = APP.currentUser;
-    if (user.enrollState == 1)
-    {
-        return;
-    }
+- (IBAction)aboutButtonPressed:(id)sender {
     
+    self.aboutBtn.selected = YES;
+    self.schoolCircleBtn.selected = NO;
+    [self showCircle:NO];
+}
+
+- (IBAction)schoolCircleButtonPressed:(id)sender {
+    
+    self.aboutBtn.selected = NO;
+    self.schoolCircleBtn.selected = YES;
+    [self showCircle:YES];
+    if (self.homeworks.count == 0) {
+        [self requestAllHomeworks];
+    }
+}
+
+// 报名
+- (IBAction)enrollButtonPressed:(id)sender {
+    
+    Student *user = APP.currentUser;
+    if (user.enrollState == 1) return;
     [EnrollTrialClassView showInSuperView:self.view
                                  callback:^(NSString *name,
                                             NSString *grade,
@@ -171,6 +224,140 @@
                                     // [self showEnrollAlert];
                                  }];
 }
+
+// 入学
+- (IBAction)entranceButtonPressed:(id)sender {
+    
+    [EntranceClassView showInSuperView:self.view callback:^(NSString * _Nonnull inviteCode) {
+       
+        
+    }];
+    
+}
+
+// 等待
+- (IBAction)waitButtonPressed:(id)sender {
+    
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.homeworks.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  
+    CircleHomework *homework = self.homeworks[section];
+    
+    NSInteger number = 1; // 同学圈内容
+    number ++; // 点赞区域始终有，根据高度来确定显不显示
+    if (homework.comments.count > 0) {
+        number += homework.comments.count; // 返回的评论，可能不是全部
+        if (homework.comments.count < homework.commentCount) { // 查看全部的按钮
+            number += 1;
+        }
+    }
+    number ++; // 最后圆角白底
+    
+    return number;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    
+    
+    CircleHomework *homework = self.homeworks[indexPath.section];
+    if (indexPath.row == 0) { //
+        if (homework.videoUrl.length > 0) {
+            CircleVideoTableViewCell *videoCell = [tableView dequeueReusableCellWithIdentifier:CircleVideoTableViewCellId forIndexPath:indexPath];
+            
+            [videoCell setupWithHomework:homework];
+            WeakifySelf;
+            [videoCell setVideoClickCallback:^{
+                [weakSelf playVideoWithHomework:homework];
+            }];
+            cell = videoCell;
+        }
+    } else if (indexPath.row == 1) {
+        if (homework.likeUsers.count == 0) {
+            UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"BlankLikeUsersCellId"];
+            if (blankCell == nil) {
+                blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BlankLikeUsersCellId"];
+            }
+            
+            cell = blankCell;
+        } else {
+            CircleLikeUsersTableViewCell *likeUsersCell = [tableView dequeueReusableCellWithIdentifier:CircleLikeUsersTableViewCellId forIndexPath:indexPath];
+            
+            [likeUsersCell setupWithLikeUsers:homework.likeUsers];
+            cell = likeUsersCell;
+        }
+    } else {
+        NSArray *comments = homework.comments;
+        NSInteger index = indexPath.row - 2;
+        if (index < comments.count) {
+            CircleCommentTableViewCell *commentCell = [tableView dequeueReusableCellWithIdentifier:CircleCommentTableViewCellId forIndexPath:indexPath];
+            
+            Comment *comment = homework.comments[index];
+            BOOL isLastOne = (homework.comments.count-1) == index;
+            [commentCell setupWithComment:comment
+                               isFirstOne:index==0
+                                isLastOne:isLastOne
+                                  hasMore:homework.comments.count<homework.commentCount];
+            
+            cell = commentCell;
+        } else {
+            if (comments.count < homework.commentCount && index == comments.count) {
+                CircleMoreCommentsTableViewCell *moreCell = [tableView dequeueReusableCellWithIdentifier:CircleMoreCommentsTableViewCellId forIndexPath:indexPath];
+                cell = moreCell;
+            } else {
+                CircleBottomTableViewCell *bottomCell = [tableView dequeueReusableCellWithIdentifier:CircleBottomTableViewCellId forIndexPath:indexPath];
+                
+                cell = bottomCell;
+            }
+        }
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CircleHomework *homework = self.homeworks[indexPath.section];
+    
+    if (indexPath.row == 0) { // 内容区域
+        if (homework.videoUrl.length > 0) {
+            return [CircleVideoTableViewCell cellHeight];
+        }
+        
+        return 0;
+    } else if (indexPath.row == 1) { // 点赞用户区域
+        if (homework.likeUsers.count == 0) {
+            return 0.f;
+        }
+        return [CircleLikeUsersTableViewCell heightWithLikeUsers:homework.likeUsers];
+    } else {
+        NSArray *comments = homework.comments;
+        NSInteger index = indexPath.row - 2;
+        if (index < comments.count) {
+            Comment *comment = comments[index];
+            BOOL isLastOne = (comments.count-1) == index;
+            return [CircleCommentTableViewCell heightOfComment:comment isFirstOne:index==0 isLastOne:isLastOne];
+        } else {
+            if (index==comments.count && homework.commentCount>comments.count) {
+                return CircleMoreCommentsTableViewCellHeight;
+            } else {
+                return CircleBottomTableViewCellHeight;
+            }
+        }
+    }
+}
+
+#pragma mark - privacy
 
 - (void)showEnrollAlert {
     NSString *message = @"是否报名？确认后我们将通过电话联系您，请保持电话畅通";
@@ -214,6 +401,15 @@
           }];
 }
 
+- (void)playVideoWithHomework:(CircleHomework *)homework {
+  
+    NSString *url = homework.videoUrl;
+    MIPlayerViewController *playerViewController = [[MIPlayerViewController alloc]init];
+    [self presentViewController:playerViewController animated:YES completion:nil];
+    playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [playerViewController playVideoWithUrl:url];
+    playerViewController.view.frame = [UIScreen mainScreen].bounds;
+}
 
 - (void)requestImages{
     
@@ -241,6 +437,7 @@
     }];
 }
 
+#pragma mark - 获取展示图片
 - (void)updateContentImage{
     
     if (self.currentIndex >= self.images.count) {
@@ -266,9 +463,122 @@
     }];
 }
 
+#pragma mark - 获取全校同学圈
+- (void)requestAllHomeworks{
+    
+    if (self.homeworks.count == 0) {
+        [self.view showLoadingView];
+        self.circleTableView.hidden = YES;
+    }
+    [CirlcleService requestAllHomeworksWithCallback:^(Result *result, NSError *error) {
+
+        [self handleRequestResult:result
+                             isLoadMore:NO
+                                  error:error];
+    }];
+}
+
+- (void)loadMoreHomeworks{
+        
+    [CirlcleService loadMoreHomeworksWithURL:self.nextUrl
+                                    callback:^(Result *result, NSError *error) {
+        
+        [self handleRequestResult:result
+                             isLoadMore:YES
+                                  error:error];
+    }];
+}
 
 
+- (void)handleRequestResult:(Result *)result
+                 isLoadMore:(BOOL)isLoadMore
+                      error:(NSError *)error {
 
+    NSDictionary *dictionary = (NSDictionary *)(result.userInfo);
+    NSString *nextUrl = dictionary[@"next"];
+    NSArray *homeworks = dictionary[@"list"];
+    [self.view hideAllStateView];
+    self.circleTableView.hidden = NO;
+    
+    if (isLoadMore) {
+        [self.circleTableView footerEndRefreshing];
+        
+        if (error != nil) {
+            return;
+        }
+        
+        if (homeworks.count > 0) {
+            [self.homeworks addObjectsFromArray:homeworks];
+        }
+        
+        if (nextUrl.length == 0) {
+            [self.circleTableView removeFooter];
+        }
+        [self.circleTableView reloadData];
+    } else {
+        // 停止加载
+        [self.circleTableView headerEndRefreshing];
+        
+        if (error != nil) {
+            if (homeworks.count > 0) {
+                [TIP showText:@"加载失败" inView:self.view];
+            } else {
+                WeakifySelf;
+                self.circleTableView.hidden = YES;
+                [self.view showFailureViewWithRetryCallback:^{
+                    [weakSelf requestAllHomeworks];
+                }];
+            }
+            return;
+        }
+        
+        [self.homeworks removeAllObjects];
+        self.nextUrl = nil;
+        
+        if (homeworks.count > 0) {
+            
+            [self.homeworks addObjectsFromArray:homeworks];
+            [self.circleTableView reloadData];
+            
+            [self.circleTableView addPullToRefreshWithTarget:self
+                                               refreshingAction:@selector(requestAllHomeworks)];
+            
+            if (nextUrl.length > 0) {
+                WeakifySelf;
+                [self.circleTableView addInfiniteScrollingWithRefreshingBlock:^{
+                    [weakSelf loadMoreHomeworks];
+                }];
+            } else {
+                [self.circleTableView removeFooter];
+            }
+            
+            APP.circleList = self.homeworks;
+            
+        } else {
+            WeakifySelf;
+            self.circleTableView.hidden = YES;
+            [self.view showEmptyViewWithImage:nil
+                                        title:@"暂无同学圈内容"
+                                centerYOffset:0
+                                    linkTitle:nil
+                            linkClickCallback:nil
+                                retryCallback:^{
+                                    [weakSelf requestAllHomeworks];
+                                }];
+        }
+    }
+    
+    self.nextUrl = nextUrl;
+}
+
+- (void)registerCellNibs {
+    
+    [self.circleTableView registerNib:[UINib nibWithNibName:@"CircleVideoTableViewCell" bundle:nil] forCellReuseIdentifier:CircleVideoTableViewCellId];
+    [self.circleTableView registerNib:[UINib nibWithNibName:@"CircleLikeUsersTableViewCell" bundle:nil] forCellReuseIdentifier:CircleLikeUsersTableViewCellId];
+    [self.circleTableView registerNib:[UINib nibWithNibName:@"CircleCommentTableViewCell" bundle:nil] forCellReuseIdentifier:CircleCommentTableViewCellId];
+    [self.circleTableView registerNib:[UINib nibWithNibName:@"CircleMoreCommentsTableViewCell" bundle:nil] forCellReuseIdentifier:CircleMoreCommentsTableViewCellId];
+    [self.circleTableView registerNib:[UINib nibWithNibName:@"CircleBottomTableViewCell" bundle:nil] forCellReuseIdentifier:CircleBottomTableViewCellId];
+}
 @end
 
 

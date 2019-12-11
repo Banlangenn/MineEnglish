@@ -17,6 +17,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) CreateWordViewCallBack callback;
 
+@property (nonatomic,strong) WordInfo *word;
+
+// 已添加单词列表
+@property (nonatomic,strong) NSArray *words;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

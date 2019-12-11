@@ -65,6 +65,8 @@ NSString * const MIWordTagCollectionViewCellId = @"MIWordTagCollectionViewCellId
         self.specLineView.hidden = NO;
         if ([info.chinese isEqualToString:@"添加单词"] && [info.english isEqualToString:@"+"]) {
             self.specLineView.hidden = YES;
+        } else if ([info.chinese isEqualToString:@"从文件导入"] && [info.english isEqualToString:@"+"]) {
+            self.specLineView.hidden = YES;
         }
         self.bottomConstraint.constant = 32;
     }
@@ -96,8 +98,10 @@ NSString * const MIWordTagCollectionViewCellId = @"MIWordTagCollectionViewCellId
         tempCell = [[[NSBundle mainBundle] loadNibNamed:@"MIWordTagCollectionViewCell" owner:nil options:nil] lastObject];
     });
     [tempCell setupWithTag:tag];
-    
-    return [tempCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+
+    CGSize itemSize = [tempCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    itemSize.width = itemSize.width + 10;
+    return itemSize;
 }
 
 

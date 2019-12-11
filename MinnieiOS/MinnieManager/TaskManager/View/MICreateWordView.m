@@ -13,11 +13,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *chinese;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 
-@property (strong, nonatomic) WordInfo *word;
 @property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
 
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgTopConstraint;
+
+@property (strong, nonatomic) NSMutableDictionary *wordsDict;
 
 @end
 
@@ -32,8 +33,10 @@
     
     self.cancelBtn.layer.borderWidth = 0.5;
     self.cancelBtn.layer.borderColor = [UIColor mainColor].CGColor;
-    
+    [self.English becomeFirstResponder];
     [self addObserverOfKeyBoardChanged];
+    self.wordsDict = [NSMutableDictionary dictionary];
+    self.word = [[WordInfo alloc] init];
 }
 
 - (IBAction)cancelAction:(id)sender {
@@ -53,12 +56,35 @@
         [HUD showErrorWithMessage:@"请输入中文意思"];
         return;
     }
+    if (self.wordsDict[self.word.english]) {
+      
+        [HUD showErrorWithMessage:@"该单词已存在"];
+        return;
+    }
     if (self.callback) {
         self.callback(self.word);
     }
     if (self.superview) {
         [self removeFromSuperview];
     }
+}
+
+- (void)setWords:(NSArray *)words{
+    
+    _words = words;
+    [self.wordsDict removeAllObjects];
+    for (WordInfo *info in _words) {
+        if (info.english) {
+            [self.wordsDict setValue:info forKey:info.english];
+        }
+    }
+}
+
+- (void)setWord:(WordInfo *)word{
+    
+    _word = word;
+    self.English.text = _word.english;
+    self.chinese.text = _word.chinese;
 }
 
 - (IBAction)textFieldChanged:(UITextField *)sender {
@@ -77,13 +103,6 @@
     self.word.chinese = textField.text;
 }
 
-- (WordInfo *)word{
-    
-    if (!_word) {
-        _word = [[WordInfo alloc] init];
-    }
-    return _word;
-}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.English resignFirstResponder];

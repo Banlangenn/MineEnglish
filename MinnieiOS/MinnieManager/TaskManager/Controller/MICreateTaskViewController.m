@@ -237,7 +237,7 @@ ClassAndStudentSelectorControllerDelegate
         self.homework.category = 1;
         self.homework.limitTimes = 300;
         self.homework.examType = 1;
-        self.wordsItem.playtime = 1000;
+        self.wordsItem.playtime = 2000;
     } else {// 编辑作业
         
         self.taskType = [self setTaskTypeWithHomeWork:homework];
@@ -592,7 +592,7 @@ ClassAndStudentSelectorControllerDelegate
             __weak UITableView *weakTableView = tableView;
             __weak MIAddWordTableViewCell *weakTagCell = tagsCell;
             tagsCell.callback = ^(BOOL isAdd, NSArray * _Nonnull dataArray) {
-                if (isAdd) {
+                if (isAdd) {// 添加单词
                     
                     MICreateWordView *wordView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MICreateWordView class]) owner:nil options:nil].lastObject;
                     wordView.callback = ^(WordInfo * _Nullable word) {
@@ -604,6 +604,7 @@ ClassAndStudentSelectorControllerDelegate
                         [weakTableView beginUpdates];
                         [weakTableView endUpdates];
                     };
+                    wordView.words = weakSelf.wordsItem.words;
                     wordView.frame = [UIScreen mainScreen].bounds;
                     [[UIApplication sharedApplication].keyWindow addSubview:wordView];
                     
@@ -620,6 +621,27 @@ ClassAndStudentSelectorControllerDelegate
                     [weakTableView beginUpdates];
                     [weakTableView endUpdates];
                 }
+            };
+            tagsCell.editWordCallBack = ^(NSInteger index) {// 编辑单词
+                
+                MICreateWordView *wordView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MICreateWordView class]) owner:nil options:nil].lastObject;
+                if (index < self.wordsItem.words.count) {
+                    
+                    WordInfo *wordInfo = self.wordsItem.words[index];
+                    wordView.word = wordInfo;
+                }
+                wordView.callback = ^(WordInfo * _Nullable word) {
+                    
+                    NSMutableArray *wordInfoList = [NSMutableArray arrayWithArray:weakSelf.wordsItem.words];
+                    [wordInfoList addObject:word];
+                    weakSelf.wordsItem.words = (NSArray<WordInfo>*)wordInfoList;
+                    [weakTagCell setupAwordWithDataArray:weakSelf.wordsItem.words collectionView:weakSelf.collectionWidth];
+                    [weakTableView beginUpdates];
+                    [weakTableView endUpdates];
+                };
+                wordView.words = weakSelf.wordsItem.words;
+                wordView.frame = [UIScreen mainScreen].bounds;
+                [[UIApplication sharedApplication].keyWindow addSubview:wordView];
             };
             [tagsCell setupAwordWithDataArray:self.wordsItem.words collectionView:weakSelf.collectionWidth];
             cell = tagsCell;
@@ -1234,6 +1256,13 @@ ClassAndStudentSelectorControllerDelegate
                 wordInfo.english = @"+";
                 wordInfo.chinese = @"添加单词";
                 [words addObject:wordInfo];
+                
+                
+                WordInfo *excelInfo = [[WordInfo alloc] init];
+                excelInfo.english = @"+";
+                excelInfo.chinese = @"从文件导入";
+                [words addObject:excelInfo];
+                
                 rowHeight = [MIAddWordTableViewCell heightWithTags:words collectionView:self.collectionWidth] + 30;
             } else {
                 rowHeight = MITitleTypeTableViewCellHeight + 25;

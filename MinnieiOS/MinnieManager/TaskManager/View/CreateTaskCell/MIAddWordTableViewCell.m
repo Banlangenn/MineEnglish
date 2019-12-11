@@ -6,15 +6,19 @@
 //  Copyright © 2019 minnieedu. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "MIAddWordTableViewCell.h"
 #import "MIEqualSpaceFlowLayout.h"
 #import "MIWordTagCollectionViewCell.h"
 
+static const char keyOfPickerDocument;
 
 NSString * const MIAddWordTableViewCellId = @"MIAddWordTableViewCellId";
 
 @interface MIAddWordTableViewCell ()
 <
+UIWebViewDelegate,
+UIDocumentPickerDelegate,
 UICollectionViewDelegate,
 UICollectionViewDataSource,
 MIEqualSpaceFlowLayoutDelegate
@@ -67,10 +71,17 @@ MIEqualSpaceFlowLayoutDelegate
     self.createType = MIHomeworkCreateContentType_AddWords;
     [self.dataArray removeAllObjects];
     [self.dataArray addObjectsFromArray:dataArray];
+    // 添加按钮
     WordInfo *wordInfo = [[WordInfo alloc] init];
     wordInfo.english = @"+";
     wordInfo.chinese = @"添加单词";
     [self.dataArray addObject:wordInfo];
+    // 批量导入
+    WordInfo *excelInfo = [[WordInfo alloc] init];
+    excelInfo.english = @"+";
+    excelInfo.chinese = @"从文件导入";
+    [self.dataArray addObject:excelInfo];
+    
     if (!self.collectionView) {
         [self addContentView];
     }
@@ -128,6 +139,7 @@ MIEqualSpaceFlowLayoutDelegate
         if ([tags[indexPath.row] isKindOfClass:[WordInfo class]]) {
             
            itemSize = [MIWordTagCollectionViewCell cellSizeWithTag:tags[indexPath.row]];
+           NSLog(@" ********* %f %f %@",height,itemSize.width,((WordInfo *)tags[indexPath.row]).english);
         } else {
             
             NSString *tag;
@@ -143,9 +155,11 @@ MIEqualSpaceFlowLayoutDelegate
             }
             itemSize = [MIWordTagCollectionViewCell cellSizeWithTag:tag];
         }
+        itemSize.width = itemSize.width + 10;
         
-        xNextOffset+=(minimumInteritemSpacing + itemSize.width);
-        if (xNextOffset >= collecttionViewWidth - rightSpace) {
+        xNextOffset += (minimumInteritemSpacing + itemSize.width);
+        if (xNextOffset >= collecttionViewWidth - rightSpace ) {
+           
             xOffset = leftSpace;
             xNextOffset = (leftSpace + minimumInteritemSpacing + itemSize.width);
             yOffset += (itemSize.height + minimumLineSpacing);
@@ -175,7 +189,7 @@ MIEqualSpaceFlowLayoutDelegate
     if ([self.dataArray[indexPath.row] isKindOfClass:[WordInfo class]]) {
         WordInfo *word = self.dataArray[indexPath.row];
        
-        if (indexPath.row == self.dataArray.count - 1) {
+        if (indexPath.row >= self.dataArray.count - 2) {
             [cell setupWithText:word isEditState:self.isEditState isLast:YES];
         } else {
             [cell setupWithText:word isEditState:self.isEditState isLast:NO];
@@ -205,7 +219,7 @@ MIEqualSpaceFlowLayoutDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     
-    if (indexPath.row < self.dataArray.count - 1) {
+    if (indexPath.row < self.dataArray.count - 2) {
       
         if (self.isEditState) {
             
@@ -214,19 +228,37 @@ MIEqualSpaceFlowLayoutDelegate
             if (self.callback) {
                 NSMutableArray *returnArray = [NSMutableArray arrayWithArray:self.dataArray];
                 [returnArray removeLastObject];
+                [returnArray removeLastObject];
                 self.callback(NO,returnArray);
             }
             [self.collectionView reloadData];
+        } else {
+            if (self.editWordCallBack) {// 点击编辑单词
+                self.editWordCallBack(indexPath.row);
+            }
         }
-    } else {// 添加
-        if (self.isEditState) {
-            self.isEditState = NO;
-            [self.collectionView reloadData];
-        }
-        if (self.callback) {
-            NSMutableArray *returnArray = [NSMutableArray arrayWithArray:self.dataArray];
-            [returnArray removeLastObject];
-            self.callback(YES,returnArray);
+    } else {
+        
+        if (indexPath.row == self.dataArray.count - 2) {// 添加
+
+            if (self.isEditState) {
+                self.isEditState = NO;
+                [self.collectionView reloadData];
+            }
+            if (self.callback) {
+                NSMutableArray *returnArray = [NSMutableArray arrayWithArray:self.dataArray];
+                [returnArray removeLastObject];
+                [returnArray removeLastObject];
+                self.callback(YES,returnArray);
+            }
+        } else {// 批量导入
+
+           if (self.isEditState) {
+               self.isEditState = NO;
+               [self.collectionView reloadData];
+           }
+            [self chooseExcelFile];
+
         }
     }
 }
@@ -300,4 +332,109 @@ MIEqualSpaceFlowLayoutDelegate
         self.isEditState = NO;
     }
 }
+
+#pragma mark - 从Excel中导入
+- (void)chooseExcelFile {
+    // 适配ipad版本
+    UIAlertControllerStyle alertStyle;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        alertStyle = UIAlertControllerStyleActionSheet;
+    } else {
+        alertStyle = UIAlertControllerStyleAlert;
+    }
+    NSString *title= @"选择文件类型";
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title
+                                                                     message:nil
+                                                              preferredStyle:alertStyle];
+    UIAlertAction * fileAction = [UIAlertAction actionWithTitle:@"文件"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                          
+        
+        UIDocumentPickerViewController * picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[@"com.microsoft.excel.xls",
+        @"com.microsoft.excel.xlsx",
+        @"public.data"] inMode:UIDocumentPickerModeImport];
+        picker.delegate = self;
+        objc_setAssociatedObject(picker , &keyOfPickerDocument, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [self presentVC:picker];
+                                                        }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                         }];
+
+    [alertVC addAction:fileAction];
+    [alertVC addAction:cancelAction];
+    [self presentVC:alertVC];
+}
+
+- (void)presentVC:(UIViewController *)VC{
+    
+#if MANAGERSIDE
+    
+    UIViewController *rootController = self.window.rootViewController;
+    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [rootController presentViewController:VC animated:YES completion:nil];
+#else
+    
+    VC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    UIViewController *rootController = self.window.rootViewController;
+    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    [rootController presentViewController:VC
+                          animated:YES
+                        completion:nil];
+#endif
+    
+}
+
+
+#pragma mark - UIDocumentPickerDelegate
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url
+{
+    id homeworkItem = objc_getAssociatedObject(controller, &keyOfPickerDocument);
+    
+    if (controller.documentPickerMode == UIDocumentPickerModeImport)
+    {
+        // 通过文件协调器读取文件地址
+        NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+        WeakifySelf;
+        [fileCoordinator coordinateReadingItemAtURL:url options:NSFileCoordinatorReadingWithoutChanges error:nil  byAccessor:^(NSURL * _Nonnull newURL) {
+            // 读取文件
+            NSString *fileName = [newURL lastPathComponent];
+            [weakSelf saveLocalCachesCont:newURL fileName:fileName withObject:homeworkItem];
+        }];
+    }
+}
+
+- (void)saveLocalCachesCont:(NSURL * )fileUrl fileName:(NSString *)name withObject:(id)object
+{
+
+//    NSData *fileData = [NSData dataWithContentsOfURL:fileUrl];
+    NSString *extension = [fileUrl pathExtension];
+    if ([extension isEqualToString:@"xls"] || [extension isEqualToString:@"xlsx"]) {
+        
+        UIWebView *excelWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        excelWebView.delegate = self;
+        NSURLRequest *request = [NSURLRequest requestWithURL:fileUrl];
+        [excelWebView loadRequest:request];
+    }
+}
+#pragma mark - UIWebViewDelegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    NSString *str = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerText"];
+    NSArray *array = [str componentsSeparatedByString:@"\n"];
+    for (NSString *string in array) {
+        
+      NSLog(@"webViewDidFinishLoad %@",[string componentsSeparatedByString:@"\t"].description);
+    }
+}
+
 @end

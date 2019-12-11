@@ -10,6 +10,7 @@
 #import "WordInfo.h"
 NS_ASSUME_NONNULL_BEGIN
 
+
 typedef void(^MIAddWordTableViewCellCallback)(BOOL isAdd, NSArray *dataArray);
 extern NSString * _Nullable const MIAddWordTableViewCellId;
 
@@ -18,7 +19,9 @@ extern NSString * _Nullable const MIAddWordTableViewCellId;
 
 @property (nonatomic,copy) MIAddWordTableViewCellCallback callback;
 
-//Clazz ,User,NSString
+@property (nonatomic,copy) void (^editWordCallBack) (NSInteger index);
+
+//Clazz,User,NSString
 + (CGFloat)heightWithTags:(NSArray*)tags collectionView:(CGFloat)collectionWidth;
 
 - (void)setupAwordWithDataArray:(NSArray <WordInfo *> *)dataArray

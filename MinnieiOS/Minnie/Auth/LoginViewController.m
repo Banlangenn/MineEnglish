@@ -146,8 +146,6 @@
                                          user = student;
 #endif
                                          
-                                         
-                                         
                                          [BaseRequest setToken:APP.currentUser.token];
                                          
                                          if (user.avatarUrl == nil || user.nickname == nil) {

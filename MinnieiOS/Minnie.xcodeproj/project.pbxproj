@@ -395,6 +395,8 @@
 		12961452239E335100F6B734 /* MIStudentInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */; };
 		12961453239E335100F6B734 /* MIStudentInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */; };
 		12961456239E3E7B00F6B734 /* MIStudentTaskRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */; };
+		1296145C23A0D76900F6B734 /* EntranceClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1296145823A0CFAF00F6B734 /* EntranceClassView.m */; };
+		1296145D23A0D77400F6B734 /* EntranceClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1296145A23A0CFD800F6B734 /* EntranceClassView.xib */; };
 		12961C49229E5B130075B04A /* HomeworkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 973649A320AF2F8500511A95 /* HomeworkTableViewCell.m */; };
 		12961C4A229E5B260075B04A /* HomeworkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9736499C20AF2F8500511A95 /* HomeworkTableViewCell.xib */; };
 		12961C4B229E5B590075B04A /* icon_mission_choice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 971095F2207A006C00568785 /* icon_mission_choice@2x.png */; };
@@ -2275,6 +2277,9 @@
 		12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIStudentInfoTableViewCell.xib; sourceTree = "<group>"; };
 		12961454239E3E7A00F6B734 /* MIStudentTaskRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIStudentTaskRecordViewController.h; sourceTree = "<group>"; };
 		12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIStudentTaskRecordViewController.m; sourceTree = "<group>"; };
+		1296145723A0CFAF00F6B734 /* EntranceClassView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntranceClassView.h; sourceTree = "<group>"; };
+		1296145823A0CFAF00F6B734 /* EntranceClassView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EntranceClassView.m; sourceTree = "<group>"; };
+		1296145A23A0CFD800F6B734 /* EntranceClassView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntranceClassView.xib; sourceTree = "<group>"; };
 		12A647732351A91E0094519F /* DownloadCacheVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadCacheVideo.h; sourceTree = "<group>"; };
 		12A647742351A91E0094519F /* DownloadCacheVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCacheVideo.m; sourceTree = "<group>"; };
 		12AF64F3228E4A780031E1F6 /* EqualSpaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqualSpaceFlowLayout.m; sourceTree = "<group>"; };
@@ -6078,6 +6083,9 @@
 				979BBD51207FBC6700359253 /* EnrollTrialClassView.h */,
 				979BBD50207FBC6700359253 /* EnrollTrialClassView.m */,
 				979BBD4F207FBC6700359253 /* EnrollTrialClassView.xib */,
+				1296145723A0CFAF00F6B734 /* EntranceClassView.h */,
+				1296145823A0CFAF00F6B734 /* EntranceClassView.m */,
+				1296145A23A0CFD800F6B734 /* EntranceClassView.xib */,
 				979BBD54207FBD0D00359253 /* TrialClassTableViewCell.h */,
 				979BBD55207FBD0D00359253 /* TrialClassTableViewCell.m */,
 				979BBD56207FBD0D00359253 /* TrialClassTableViewCell.xib */,
@@ -6781,6 +6789,7 @@
 				97109C12207A2E3E00568785 /* CircleHomeworksViewController.xib in Resources */,
 				971097D5207A006D00568785 /* ic_class_bule@2x.png in Resources */,
 				8709C2FF21A24C7400970757 /* 第4名@2x.png in Resources */,
+				1296145D23A0D77400F6B734 /* EntranceClassView.xib in Resources */,
 				87FD07D321BE443800664AF1 /* icon_Enclosure@3x.png in Resources */,
 				9710975B207A006D00568785 /* buttonbar_correcting_active@3x.png in Resources */,
 				122F799422ACFD7800D2AA53 /* MIStuUploadVideoViewController.xib in Resources */,
@@ -8012,6 +8021,7 @@
 				87FDFBC1214B6764006E987C /* AppVersion.m in Sources */,
 				8707EFCB21D61E6B0060B5A6 /* DeleteTagRequest.m in Sources */,
 				97109DA3207A2F0400568785 /* NicknameEditViewController.m in Sources */,
+				1296145C23A0D76900F6B734 /* EntranceClassView.m in Sources */,
 				1204264623000EA5008B90C9 /* AudioPlayerManager.m in Sources */,
 				97109A38207A158C00568785 /* HomeworkSessionsRequest.m in Sources */,
 				97109912207A0BF500568785 /* ProgressHUD.m in Sources */,
