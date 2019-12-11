@@ -19,6 +19,7 @@ typedef void(^StudentSelectorViewControllerPreviewCallback)(NSInteger);
 @property (nonatomic, copy) void (^updateStudentStatusCallBack) (void);
 
 @property (nonatomic, strong) NSMutableArray *selectedStudents;
+// yes:查看 no:选择状态
 @property (nonatomic, assign) BOOL reviewMode;
 
 @property (nonatomic, assign) BOOL classStateMode;

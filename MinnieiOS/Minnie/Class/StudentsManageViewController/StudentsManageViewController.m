@@ -68,7 +68,7 @@
 #pragma mark - IBAction Methods
 
 - (IBAction)addButtonPressed:(id)sender {
-    StudentsWithoutClassViewController *studentsVC = [[StudentsWithoutClassViewController alloc] initWithNibName:@"StudentsWithoutClassViewController" bundle:nil];
+    StudentsWithoutClassViewController *studentsVC = [[StudentsWithoutClassViewController alloc] init];
     
     studentsVC.delegate = self;
     

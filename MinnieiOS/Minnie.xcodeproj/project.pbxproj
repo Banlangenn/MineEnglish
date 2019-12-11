@@ -718,7 +718,6 @@
 		12B7B97022D88C900057C798 /* StudentsManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97109AA8207A1C0800568785 /* StudentsManageViewController.m */; };
 		12B7B97122D88C940057C798 /* StudentsManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97109AA9207A1C0800568785 /* StudentsManageViewController.xib */; };
 		12B7B97222D88DAB0057C798 /* StudentsWithoutClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A0C20B1447600511A95 /* StudentsWithoutClassViewController.m */; };
-		12B7B97322D88DB10057C798 /* StudentsWithoutClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364A0E20B1447600511A95 /* StudentsWithoutClassViewController.xib */; };
 		12B9B63322891C6F00D8F277 /* my_star_rank@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 12B9B63122891C6F00D8F277 /* my_star_rank@3x.png */; };
 		12B9B63422891C6F00D8F277 /* my_star_rank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 12B9B63222891C6F00D8F277 /* my_star_rank@2x.png */; };
 		12B9B6372289341400D8F277 /* btn_mission_preview@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 12B9B6352289341300D8F277 /* btn_mission_preview@3x.png */; };
@@ -2152,7 +2151,6 @@
 		97364A0A20B1231E00511A95 /* StudentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A0720B1231E00511A95 /* StudentDetailViewController.m */; };
 		97364A0B20B1231E00511A95 /* StudentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A0720B1231E00511A95 /* StudentDetailViewController.m */; };
 		97364A0F20B1447700511A95 /* StudentsWithoutClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A0C20B1447600511A95 /* StudentsWithoutClassViewController.m */; };
-		97364A1020B1447700511A95 /* StudentsWithoutClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364A0E20B1447600511A95 /* StudentsWithoutClassViewController.xib */; };
 		97364A1320B16BFD00511A95 /* NetworkStateErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A1220B16BFD00511A95 /* NetworkStateErrorView.m */; };
 		97364A1420B16BFD00511A95 /* NetworkStateErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364A1220B16BFD00511A95 /* NetworkStateErrorView.m */; };
 		97364A1620B16C0B00511A95 /* NetworkStateErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364A1520B16C0B00511A95 /* NetworkStateErrorView.xib */; };
@@ -3477,7 +3475,6 @@
 		97364A0720B1231E00511A95 /* StudentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentDetailViewController.m; sourceTree = "<group>"; };
 		97364A0C20B1447600511A95 /* StudentsWithoutClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentsWithoutClassViewController.m; sourceTree = "<group>"; };
 		97364A0D20B1447600511A95 /* StudentsWithoutClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentsWithoutClassViewController.h; sourceTree = "<group>"; };
-		97364A0E20B1447600511A95 /* StudentsWithoutClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentsWithoutClassViewController.xib; sourceTree = "<group>"; };
 		97364A1120B16BFD00511A95 /* NetworkStateErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStateErrorView.h; sourceTree = "<group>"; };
 		97364A1220B16BFD00511A95 /* NetworkStateErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkStateErrorView.m; sourceTree = "<group>"; };
 		97364A1520B16C0B00511A95 /* NetworkStateErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworkStateErrorView.xib; sourceTree = "<group>"; };
@@ -5844,7 +5841,6 @@
 				1950D7F02277E856004F7291 /* HomeworkConfirmViewController.xib */,
 				97364A0D20B1447600511A95 /* StudentsWithoutClassViewController.h */,
 				97364A0C20B1447600511A95 /* StudentsWithoutClassViewController.m */,
-				97364A0E20B1447600511A95 /* StudentsWithoutClassViewController.xib */,
 				9736496D20AF2F8500511A95 /* ClassAndStudentSelectorController.h */,
 				9736496A20AF2F8500511A95 /* ClassAndStudentSelectorController.m */,
 				9736496720AF2F8500511A95 /* ClassAndStudentSelectorController.xib */,
@@ -6625,7 +6621,6 @@
 				12747BFE22A7CE5F009C390E /* AnswerPickerImageCell.xib in Resources */,
 				128F133322CDD36600C9F5B7 /* message_send_error@3x.png in Resources */,
 				12CB73A922AB91A40064FB21 /* HomeworkTextTableViewCell.xib in Resources */,
-				12B7B97322D88DB10057C798 /* StudentsWithoutClassViewController.xib in Resources */,
 				1226F34B22983A2000BAB1C9 /* navbar_back@3x.png in Resources */,
 				12ED3B61229D96B900255F8B /* hud_ic_loading@3x.png in Resources */,
 				12747C3222A7D134009C390E /* btn_send_video@3x.png in Resources */,
@@ -7355,7 +7350,6 @@
 				9710966E207A006D00568785 /* btn_send_photo@3x.png in Resources */,
 				973649D120AF2F8600511A95 /* ClassSelectorViewController.xib in Resources */,
 				875C262D218ADBC20047E32A /* FilterAlertView.xib in Resources */,
-				97364A1020B1447700511A95 /* StudentsWithoutClassViewController.xib in Resources */,
 				973649C720AF2F8600511A95 /* HomeworkTextTableViewCell.xib in Resources */,
 				97109DEF207A5D9700568785 /* FullfillProfileViewController_Student.xib in Resources */,
 				97109A5D207A158C00568785 /* RightTextMessageTableViewCell.xib in Resources */,

@@ -6,15 +6,20 @@
 //  Copyright © 2017年 netease. All rights reserved.
 //
 
-#import "StudentsWithoutClassViewController.h"
-#import "StudentSelectorViewController.h"
-#import "SegmentControl.h"
 #import "Constants.h"
-#import "StudentDetailViewController.h"
-#import <Masonry/Masonry.h>
 #import "PushManager.h"
+#import "SegmentControl.h"
+#import <Masonry/Masonry.h>
+#import "StudentDetailViewController.h"
+#import "StudentSelectorViewController.h"
+#import "StudentsWithoutClassViewController.h"
+#import <WMPageController/WMPageController.h>
 
-@interface StudentsWithoutClassViewController ()
+
+@interface StudentsWithoutClassViewController ()<
+WMPageControllerDelegate,
+WMPageControllerDataSource
+>
 
 @property (nonatomic, strong) StudentSelectorViewController *studentsSelectorChildController;
 
@@ -25,6 +30,11 @@
 
 @property (nonatomic, assign) NSInteger selectedStudentsCount;
 
+@property (nonatomic, strong) WMPageController *pageController;
+
+@property (nonatomic, strong) NSMutableArray *pages;
+@property (nonatomic, strong) NSMutableArray *pageTitles;
+
 @end
 
 @implementation StudentsWithoutClassViewController
@@ -32,29 +42,78 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addChildPageViewController];
+    StudentSelectorViewController *unEnrollVC = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
+    unEnrollVC.reviewMode = NO;
+    unEnrollVC.classStateMode = YES;
+    unEnrollVC.inClass = 0;
+    WeakifySelf;
+    unEnrollVC.selectCallback = ^(NSInteger count) {
+        weakSelf.selectedStudentsCount = count;
+    };
+
+    
+    StudentSelectorViewController *onHandVC = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
+    onHandVC.reviewMode = NO;
+    onHandVC.classStateMode = YES;
+    onHandVC.inClass = -1;
+    onHandVC.selectCallback = ^(NSInteger count) {
+        weakSelf.selectedStudentsCount = count;
+    };
+    
+    self.pages = [NSMutableArray arrayWithObjects:unEnrollVC,onHandVC, nil];
+    self.pageTitles = [NSMutableArray arrayWithObjects:@"未入学",@"待处理", nil];
+    
+    [self configureUI];
 }
 
-- (void)dealloc {
+- (void)configureUI{
     
+    [self.view addSubview:self.pageController.view];
+    [self addChildViewController:self.pageController];
+    [self.pageController didMoveToParentViewController:self];
+    
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn setImage:[UIImage imageNamed:@"navbar_close"] forState:UIControlStateNormal];
+    [self.view addSubview:closeBtn];
+    closeBtn.frame = CGRectMake(15, kNaviBarHeight - 40, 40, 40);
+    [closeBtn addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    addBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    addBtn.frame = CGRectMake(ScreenWidth - 45, kNaviBarHeight - 40, 40, 40);
+    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setTitleColor:[UIColor mainColor] forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(addButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addBtn];
+    
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    searchBtn.frame = CGRectMake(ScreenWidth - 90, kNaviBarHeight - 40, 40, 40);
+    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [searchBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:searchBtn];
 }
 
 #pragma mark - IBActions
-
-- (IBAction)backButtonPressed:(id)sender {
+- (void)backButtonPressed:(UIButton *)btn{
+ 
     if (self.navigationController.viewControllers.count > 1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
+    
+- (void)addButtonPressed:(UIButton *)btn{
 
-- (IBAction)addButtonPressed:(id)sender {
     if (self.selectedStudentsCount == 0) {
         return;
     }
-    
-    NSArray *selectedStudents = self.studentsSelectorChildController.selectedStudents;
+    StudentSelectorViewController *vc = (StudentSelectorViewController *)self.pageController.currentViewController;
+    NSArray *selectedStudents = vc.selectedStudents;
     
     if ([self.delegate respondsToSelector:@selector(studentsDidSelect:)]) {
         [self.delegate studentsDidSelect:selectedStudents];
@@ -65,74 +124,50 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
+- (void)searchButtonPressed:(UIButton *)btn{
 
-- (void)addChildPageViewController {
-    BaseViewController *childPageViewController = nil;
-    
-    if (self.studentsSelectorChildController == nil) {
-        self.studentsSelectorChildController = [[StudentSelectorViewController alloc] initWithNibName:NSStringFromClass([StudentSelectorViewController class]) bundle:nil];
-        self.studentsSelectorChildController.reviewMode = NO;
-        self.studentsSelectorChildController.classStateMode = YES;
-        self.studentsSelectorChildController.inClass = 0;
-
-        WeakifySelf;
-        self.studentsSelectorChildController.selectCallback = ^(NSInteger count) {
-            weakSelf.selectedStudentsCount = count;
-        };
-        
-        self.studentsSelectorChildController.previewCallback = ^(NSInteger userId) {
-            StudentDetailViewController *vc = [[StudentDetailViewController alloc] initWithNibName:@"StudentDetailViewController" bundle:nil];
-            vc.userId = userId;
-            
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-        };
-    }
-    
-    childPageViewController = self.studentsSelectorChildController;
-    [self addChildViewController:childPageViewController];
-    
-    [self.containerView addSubview:childPageViewController.view];
-    [self addContraintsWithX:0 view:childPageViewController.view superView:self.containerView];
-    
-    [childPageViewController didMoveToParentViewController:self];
 }
 
-- (void)addContraintsWithX:(CGFloat)offsetX view:(UIView *)view superView:(UIView *)superView {
-    view.translatesAutoresizingMaskIntoConstraints = NO;
+- (WMPageController *)pageController{
     
-    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:view
-                                                                         attribute:NSLayoutAttributeLeading
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:superView
-                                                                         attribute:NSLayoutAttributeLeading
-                                                                        multiplier:1
-                                                                          constant:offsetX];
+    if (!_pageController) {
+        
+        _pageController = [[WMPageController alloc] initWithViewControllerClasses:self.pages andTheirTitles:self.pageTitles];
+        
+        _pageController.delegate = self;
+        _pageController.dataSource = self;
+        _pageController.menuViewStyle = WMMenuViewStyleLine;
+        _pageController.titleSizeNormal = 16.0;
+        _pageController.titleSizeSelected = 16.0;
+        _pageController.progressWidth = 25.0;
+        _pageController.progressHeight = 4.0;
+        _pageController.progressViewCornerRadius = 2.0;
+        _pageController.menuItemWidth = 50;
+        _pageController.titleColorSelected = [UIColor mainColor];
+        _pageController.titleColorNormal = [UIColor detailColor];
+        _pageController.progressViewIsNaughty = YES;
+        _pageController.view.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+    }
+
+    return _pageController;
+}
+
+#pragma mark - WMPageControllerDelegate, WMPageControllerDataSource
+-(NSInteger)numbersOfTitlesInMenuView:(WMMenuView *)menu{
+    return 2;
+}
+
+- (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index{
+    return self.pages[index];
+}
+
+- (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index{
+    return self.pageTitles[index];
+}
+
+- (CGRect)pageController:(WMPageController *)pageController preferredFrameForMenuView:(WMMenuView *)menuView{
     
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:view
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:nil
-                                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                                      multiplier:1
-                                                                        constant:ScreenWidth];
-    
-    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:view
-                                                                     attribute:NSLayoutAttributeTop
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:superView
-                                                                     attribute:NSLayoutAttributeTop
-                                                                    multiplier:1
-                                                                      constant:0];
-    
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:view
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:superView
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1
-                                                                         constant:0];
-    
-    [superView addConstraints:@[leadingConstraint, widthConstraint, topConstraint, bottomConstraint]];
+    return CGRectMake((ScreenWidth - 140)/2.0, kNaviBarHeight - 40, 140 , 40);
 }
 
 @end

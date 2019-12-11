@@ -116,6 +116,4 @@ UIScrollViewDelegate
     return CGRectMake(15, 0, kColumnThreeWidth - 30 , 35);
 }
 
-- (void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
-}
 @end
