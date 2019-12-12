@@ -153,7 +153,8 @@ typedef NS_ENUM(NSInteger, MIHomeworkTaskType) {
     MIHomeworkTaskType_WordMemory,              // 单词记忆
     MIHomeworkTaskType_GeneralTask,             // 普通任务
     MIHomeworkTaskType_Activity,                // 活动
-    MIHomeworkTaskType_ExaminationStatistics    // 成绩统计
+    MIHomeworkTaskType_ExaminationStatistics,   // 成绩统计
+    MIHomeworkTaskType_PictureTranslation       // 看图说意思
 };
 
 #define kHomeworkTaskNotifyName                    @"通知"
@@ -161,6 +162,7 @@ typedef NS_ENUM(NSInteger, MIHomeworkTaskType) {
 #define kHomeworkTaskWordMemoryName                @"单词记忆"
 #define kHomeworkTaskGeneralTaskName               @"普通任务"
 #define kHomeworkTaskNameExaminationStatistics     @"成绩统计"
+#define kHomeworkTaskPictureTranslation            @"看图说意思"
 #define kHomeworkTaskActivityName                  @"活动"
 
 

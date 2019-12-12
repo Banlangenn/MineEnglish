@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="answerViewWidthConstraint" destination="BqD-xe-Ty0" id="uFH-8U-22f"/>
                 <outlet property="audioButton" destination="JRS-v2-iQO" id="GIw-3P-jrF"/>
+                <outlet property="collectionButton" destination="qxE-go-iCo" id="H9C-TC-Zwi"/>
                 <outlet property="correctButton" destination="gX6-D7-QPj" id="9Tz-0P-a2X"/>
                 <outlet property="customTitleLabel" destination="8Jc-bj-FMO" id="BrU-T8-dIV"/>
                 <outlet property="emojiButton" destination="L6r-Zf-rek" id="uij-e9-FFY"/>
@@ -493,8 +494,22 @@
                                 <action selector="correctButtonPressed:" destination="-1" eventType="touchUpInside" id="Reo-NK-SQk"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxE-go-iCo">
+                            <rect key="frame" x="273" y="7.5" width="52" height="29"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="52" id="EwV-EN-A8Y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                            <state key="normal" title="收藏">
+                                <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <state key="selected" title="已收藏"/>
+                            <connections>
+                                <action selector="collectionTaskButtonPressed:" destination="-1" eventType="touchUpInside" id="gqL-oV-Ic0"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YG2-dg-zt2">
-                            <rect key="frame" x="59" y="0.0" width="249" height="44"/>
+                            <rect key="frame" x="59" y="0.0" width="30" height="44"/>
                             <connections>
                                 <action selector="studentButtonPressed:" destination="-1" eventType="touchUpInside" id="jHY-q1-iWl"/>
                             </connections>
@@ -511,10 +526,11 @@
                         <constraint firstItem="2DP-L3-oqb" firstAttribute="leading" secondItem="hkx-ob-cYQ" secondAttribute="leading" id="Mlh-oa-LWx"/>
                         <constraint firstItem="2DP-L3-oqb" firstAttribute="top" secondItem="gX6-D7-QPj" secondAttribute="bottom" id="QU0-G0-X8M"/>
                         <constraint firstAttribute="bottom" secondItem="2DP-L3-oqb" secondAttribute="bottom" id="Uaj-qt-aPT"/>
+                        <constraint firstItem="D2Z-dZ-vqi" firstAttribute="trailing" secondItem="qxE-go-iCo" secondAttribute="trailing" constant="50" id="Wi0-vC-5Jy"/>
                         <constraint firstItem="gX6-D7-QPj" firstAttribute="top" secondItem="D2Z-dZ-vqi" secondAttribute="top" id="fVO-sT-rf2"/>
                         <constraint firstItem="D2Z-dZ-vqi" firstAttribute="trailing" secondItem="gX6-D7-QPj" secondAttribute="trailing" id="fdd-10-5I4"/>
                         <constraint firstAttribute="trailing" secondItem="2DP-L3-oqb" secondAttribute="trailing" id="j4o-oQ-5kP"/>
-                        <constraint firstItem="gX6-D7-QPj" firstAttribute="leading" secondItem="YG2-dg-zt2" secondAttribute="trailing" constant="15" id="jHV-ow-djB"/>
+                        <constraint firstItem="qxE-go-iCo" firstAttribute="centerY" secondItem="gX6-D7-QPj" secondAttribute="centerY" id="kUe-tG-1dI"/>
                         <constraint firstItem="YG2-dg-zt2" firstAttribute="bottom" secondItem="D2Z-dZ-vqi" secondAttribute="bottom" id="msS-5C-c60"/>
                         <constraint firstItem="8Jc-bj-FMO" firstAttribute="centerX" secondItem="hkx-ob-cYQ" secondAttribute="centerX" id="rVg-I0-byU"/>
                         <constraint firstItem="JTL-Ga-EOC" firstAttribute="leading" secondItem="hkx-ob-cYQ" secondAttribute="leading" id="zLR-D3-zDL"/>

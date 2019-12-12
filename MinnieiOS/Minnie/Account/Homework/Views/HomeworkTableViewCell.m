@@ -20,6 +20,9 @@ NSString * const HomeworkTableViewCellId = @"HomeworkTableViewCellId";
 
 @property (nonatomic, weak) IBOutlet UIButton *sendButton;
 @property (nonatomic, weak) IBOutlet UIButton *selecteButton;
+@property (weak, nonatomic) IBOutlet UILabel *avaScoreLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *totalScoreLabel;
 
 // 预览
 @property (weak, nonatomic) IBOutlet UIButton *previewButton;
@@ -107,6 +110,9 @@ NSString * const HomeworkTableViewCellId = @"HomeworkTableViewCellId";
     self.homework = homework;
     [self selectedState:NO];
     self.homeworkTitleLabel.text = self.homework.title?:@"[无标题]";
+    NSInteger level = homework.level > 4 ? 4 : homework.level + 1;
+    self.totalScoreLabel.text = [NSString stringWithFormat:@"%lu",level];
+    self.avaScoreLabel.text = [NSString stringWithFormat:@"%lu",level];
     
     NSString *text = nil;
     for (HomeworkItem *item in self.homework.items) {
@@ -170,7 +176,9 @@ NSString * const HomeworkTableViewCellId = @"HomeworkTableViewCellId";
     
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     homework.cellHeight = size.height + 10;
-    
+    if (homework.cellHeight < 160) {
+        homework.cellHeight = 160;
+    }
     return homework.cellHeight;
 }
 

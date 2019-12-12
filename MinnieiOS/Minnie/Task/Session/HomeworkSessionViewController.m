@@ -71,6 +71,8 @@ UINavigationControllerDelegate,
 HomeworkAnswersPickerViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *messagesTableView;
+
+@property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (nonatomic, weak) IBOutlet UIButton *audioButton;
 @property (nonatomic, weak) IBOutlet UIButton *emojiButton;
 @property (nonatomic, weak) IBOutlet UITextView *inputTextView;
@@ -208,6 +210,11 @@ HomeworkAnswersPickerViewControllerDelegate>
     }
 #endif
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)collectionTaskButtonPressed:(id)sender {
+   
+    self.collectionButton.selected = !self.collectionButton.selected;
 }
 
 #pragma mark - Notification
@@ -2306,14 +2313,16 @@ HomeworkAnswersPickerViewControllerDelegate>
     self.correctButton.hidden = NO;
     self.answerViewWidthConstraint.constant = ScreenWidth/4;
     self.warnViewWidthConstraint.constant = ScreenWidth/4;
-    
+    self.collectionButton.hidden = NO;
 #elif MANAGERSIDE
     
     self.correctButton.hidden = NO;
+    self.collectionButton.hidden = NO;
     self.answerViewWidthConstraint.constant = kColumnThreeWidth/4;
     self.warnViewWidthConstraint.constant = kColumnThreeWidth/4;
 #else
     self.correctButton.hidden = YES;
+    self.collectionButton.hidden = YES;
     self.answerViewWidthConstraint.constant = 0;
     self.warnViewWidthConstraint.constant = 0;
 #endif

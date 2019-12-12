@@ -352,6 +352,10 @@ ClassAndStudentSelectorControllerDelegate
         case MIHomeworkTaskType_ExaminationStatistics:
             self.homework.typeName = kHomeworkTaskNameExaminationStatistics;
             break;
+        case MIHomeworkTaskType_PictureTranslation:
+            self.homework.typeName = kHomeworkTaskPictureTranslation;
+            break;
+            
         default:
             break;
     }
@@ -377,7 +381,9 @@ ClassAndStudentSelectorControllerDelegate
         taskType = MIHomeworkTaskType_GeneralTask;
     } else if ([homework.typeName isEqualToString:kHomeworkTaskNameExaminationStatistics]) {
         taskType = MIHomeworkTaskType_ExaminationStatistics;
-    }
+    } else if ([homework.typeName isEqualToString:kHomeworkTaskPictureTranslation]) {
+           taskType = MIHomeworkTaskType_PictureTranslation;
+       }
     return taskType;
 }
 
@@ -1139,6 +1145,27 @@ ClassAndStudentSelectorControllerDelegate
                           @(MIHomeworkCreateContentType_AddWords),
                           @(MIHomeworkCreateContentType_WordsTimeInterval),
 //                          @(MIHomeworkCreateContentType_AddBgMusic),
+                          @(MIHomeworkCreateContentType_Materials),
+                          @(MIHomeworkCreateContentType_TaskSheet),
+                          @(MIHomeworkCreateContentType_Label),
+                          @(MIHomeworkCreateContentType_TypeLabel)
+                          ]];
+        }
+            break;
+        case MIHomeworkTaskType_PictureTranslation:// 看图说意思
+        {
+            // 位置、标题、批改备注、统计类型、单词随机、选择提交时间、选择星级、添加单词、播放间隔时间、添加背景音乐、添加材料、任务类型(单选)、分类标签（多选）
+            typeArray =
+            [NSMutableArray arrayWithArray:@[@(MIHomeworkCreateContentType_Localtion),
+                          @(MIHomeworkCreateContentType_Title),
+                          @(MIHomeworkCreateContentType_Content),
+                          @(MIHomeworkCreateContentType_MarkingRemarks),
+                          @(MIHomeworkCreateContentType_StatisticalType),
+                          @(MIHomeworkCreateContentType_RandomWordsType),
+                          @(MIHomeworkCreateContentType_CommitTime),
+                          @(MIHomeworkCreateContentType_HomeworkDifficulty),
+//                          @(MIHomeworkCreateContentType_AddWords),// 添加图片
+                          @(MIHomeworkCreateContentType_WordsTimeInterval),
                           @(MIHomeworkCreateContentType_Materials),
                           @(MIHomeworkCreateContentType_TaskSheet),
                           @(MIHomeworkCreateContentType_Label),

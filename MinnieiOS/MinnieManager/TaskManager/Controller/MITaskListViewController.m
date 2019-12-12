@@ -828,7 +828,13 @@ NEPhotoBrowserDataSource
                                                     handler:^(UIAlertAction * _Nonnull action) {
                         [weakSelf goToCreateTaskWithType:MIHomeworkTaskType_ExaminationStatistics];
                                                     }];
-    UIAlertAction *action7 = [UIAlertAction actionWithTitle:@"取消"
+    
+    UIAlertAction *action7 = [UIAlertAction actionWithTitle:kHomeworkTaskPictureTranslation
+                                                      style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        [weakSelf goToCreateTaskWithType:MIHomeworkTaskType_PictureTranslation];
+                                                    }];
+    UIAlertAction *action8 = [UIAlertAction actionWithTitle:@"取消"
                                                       style:UIAlertActionStyleCancel
                                                     handler:^(UIAlertAction * _Nonnull action) {
                                                         
@@ -840,6 +846,7 @@ NEPhotoBrowserDataSource
     [alertVC addAction:action4];
     [alertVC addAction:action6];
     [alertVC addAction:action7];
+    [alertVC addAction:action8];
 
     alertVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:alertVC
