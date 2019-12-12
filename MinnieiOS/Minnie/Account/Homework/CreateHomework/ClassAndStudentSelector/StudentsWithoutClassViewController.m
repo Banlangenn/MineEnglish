@@ -129,6 +129,11 @@ WMPageControllerDataSource
     
     StudentSelectorViewController *vc = (StudentSelectorViewController *)self.pageController.currentViewController;
     searchStudents.students = vc.students;
+    if (self.pageController.selectIndex == 0) {// 未入学
+        [searchStudents setDataWithSelectState:YES inClass:0 showClassName:NO];
+    } else {// 待处理
+        [searchStudents setDataWithSelectState:YES inClass:-1 showClassName:NO];
+    }
     WeakifySelf;
     searchStudents.addCallBack = ^(NSArray * _Nonnull array) {
       

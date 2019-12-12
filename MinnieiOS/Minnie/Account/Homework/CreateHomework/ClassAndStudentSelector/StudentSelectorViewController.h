@@ -34,4 +34,6 @@ typedef void(^StudentSelectorViewControllerPreviewCallback)(NSInteger);
 
 - (void)updateStudents;
 
+- (void)requestMoveStudentsWithUserId:(NSInteger)userId;
+
 @end

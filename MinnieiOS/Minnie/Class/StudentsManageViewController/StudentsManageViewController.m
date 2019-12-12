@@ -160,7 +160,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - StudentsViewControllerDelegate
+#pragma mark - StudentsWithoutClassViewControllerDelegate
 
 - (void)studentsDidSelect:(NSArray<User *> *)students {
     NSMutableArray *ids = [NSMutableArray array];

@@ -6,13 +6,15 @@
 //  Copyright © 2017年 netease. All rights reserved.
 //
 
-#import "StudentsViewController.h"
-#import "StudentSelectorViewController.h"
 #import "SegmentControl.h"
 #import "Constants.h"
-#import "StudentDetailViewController.h"
-#import <Masonry/Masonry.h>
 #import "PushManager.h"
+#import <Masonry/Masonry.h>
+#import "StudentsViewController.h"
+#import "SearchStudentsViewController.h"
+#import "StudentDetailViewController.h"
+#import "StudentSelectorViewController.h"
+#import "SearchStudentsViewController.h"
 
 @interface StudentsViewController ()
 
@@ -61,9 +63,6 @@
     [self showChildPageViewControllerWithIndex:0 animated:NO shouldLocate:YES];
 }
 
-- (void)dealloc {
-    
-}
 
 #pragma mark - IBActions
 
@@ -73,6 +72,36 @@
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+}
+- (IBAction)searchButtonPressed:(id)sender {
+
+    SearchStudentsViewController *searchStudents = [[SearchStudentsViewController alloc] initWithNibName:NSStringFromClass([SearchStudentsViewController class]) bundle:nil];
+//    学生是否属于班级（0未入学，1已入学，-1待处理）
+    StudentSelectorViewController *vc;
+    if (self.segmentControl.selectedIndex == 0) {// 已入学
+        vc = self.studentsSelectorChildController;
+        [searchStudents setDataWithSelectState:NO inClass:1 showClassName:YES];
+    } else if (self.segmentControl.selectedIndex == 1) {// 未入学
+        vc = self.enrollingStudentsSelectorChildController;
+        [searchStudents setDataWithSelectState:NO inClass:0 showClassName:NO];
+    } else {// 待处理
+        vc = self.disposalStudentsSelectorChildController;
+        [searchStudents setDataWithSelectState:NO inClass:-1 showClassName:NO];
+    }
+    searchStudents.students = vc.students;
+    WeakifySelf;
+    searchStudents.clickCallBack = ^(NSInteger userId) {
+       
+        StudentDetailViewController *vc = [[StudentDetailViewController alloc] initWithNibName:@"StudentDetailViewController" bundle:nil];
+        vc.userId = userId;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    };
+    searchStudents.updateStudentStateCallBack = ^{
+        
+        [weakSelf.disposalStudentsSelectorChildController updateStudents];
+        [weakSelf.enrollingStudentsSelectorChildController updateStudents];
+    };
+    [self.navigationController pushViewController:searchStudents animated:YES];
 }
 
 - (void)showChildPageViewControllerWithIndex:(NSUInteger)index animated:(BOOL)animated shouldLocate:(BOOL)shouldLocate {

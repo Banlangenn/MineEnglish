@@ -8,14 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol StudentsViewControllerDelegate<NSObject>
-
-- (void)studentsDidSelect:(NSArray<User *> *)students;
-
-@end
-
 @interface StudentsViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet id<StudentsViewControllerDelegate> delegate;
 
 @end

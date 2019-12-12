@@ -9,6 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchStudentsViewController">
             <connections>
+                <outlet property="addBtn" destination="F4J-no-xjp" id="86K-Uy-GHD"/>
+                <outlet property="cancelTrailConstraint" destination="Ucb-kY-TLL" id="Utf-WV-3dq"/>
                 <outlet property="contentView" destination="k1r-Ma-CMP" id="HGo-7j-Eeu"/>
                 <outlet property="tableView" destination="lg0-yW-Rkm" id="7a4-gj-Fy2"/>
                 <outlet property="textField" destination="JdO-WC-5g7" id="X20-yK-b4C"/>
@@ -34,7 +36,7 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" 可以按手机号码进行搜索" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JdO-WC-5g7">
-                            <rect key="frame" x="62" y="12.5" width="240" height="19"/>
+                            <rect key="frame" x="62" y="12.5" width="250" height="19"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -50,7 +52,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="取消">
-                                <color key="titleColor" red="1" green="0.28235294119999998" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="cancelBtnPressed:" destination="-1" eventType="touchUpInside" id="8me-YA-hFY"/>
@@ -63,7 +65,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="添加">
-                                <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" red="0.26843353351022264" green="0.61682221005874716" blue="0.97130590677261353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </state>
                             <connections>
                                 <action selector="addBtnPressed:" destination="-1" eventType="touchUpInside" id="2em-T0-eIo"/>
@@ -85,7 +87,7 @@
                         <constraint firstItem="ear-yk-FHf" firstAttribute="top" secondItem="xZI-CM-gRW" secondAttribute="top" id="ewJ-k2-Mjn"/>
                         <constraint firstItem="zKu-4n-6FG" firstAttribute="centerY" secondItem="S4Q-Av-Ye8" secondAttribute="centerY" id="fdE-k7-AWO"/>
                         <constraint firstItem="zKu-4n-6FG" firstAttribute="leading" secondItem="xZI-CM-gRW" secondAttribute="leading" constant="20" id="i9f-Mm-XGx"/>
-                        <constraint firstItem="ear-yk-FHf" firstAttribute="leading" secondItem="JdO-WC-5g7" secondAttribute="trailing" constant="20" id="tX5-Uz-4vQ"/>
+                        <constraint firstItem="ear-yk-FHf" firstAttribute="leading" secondItem="JdO-WC-5g7" secondAttribute="trailing" constant="10" id="tX5-Uz-4vQ"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="xZI-CM-gRW"/>
                 </view>
