@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+
+#pragma mark - 报名
 typedef void(^EnrollTrialViewConfirmCallback)(NSString *name,
                                               NSString *grade,
                                               NSInteger gender);
@@ -16,6 +18,19 @@ typedef void(^EnrollTrialViewConfirmCallback)(NSString *name,
 
 + (void)showInSuperView:(UIView *)superView
                callback:(EnrollTrialViewConfirmCallback)callback;
+
++ (void)hideAnimated:(BOOL)animated;
+
+
+@end
+
+#pragma mark - 入学
+typedef void (^InviteCodeCallback) (NSString *inviteCode);
+
+@interface EntranceClassView : UIView
+
++ (void)showInSuperView:(UIView *)superView
+               callback:(InviteCodeCallback)callback;
 
 + (void)hideAnimated:(BOOL)animated;
 

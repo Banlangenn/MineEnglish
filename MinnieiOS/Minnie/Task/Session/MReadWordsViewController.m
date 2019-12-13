@@ -548,7 +548,6 @@ IFlySpeechRecognizerDelegate
 #pragma mark - 音频识别
 - (void)recognizerAudioStreamIndex:(NSInteger)index count:(NSInteger)count{
 
-    NSLog(@"recognizerIndex :%lu",index);
     //设置音频源为音频流（-1）
     [self.iFlySpeechRecognizer setParameter:@"-1" forKey:@"audio_source"];
     //启动识别服务

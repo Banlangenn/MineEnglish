@@ -1997,10 +1997,12 @@ HomeworkAnswersPickerViewControllerDelegate>
         [videoCell setupWithUser:user message:message];
         
         WeakifySelf;
+#if TEACHERSIDE || MANAGERSIDE
         [videoCell setLongPressGestureCallback:^(NSString * _Nullable shareVideoUrl) {//收藏、分享视频
-           
             [weakSelf showSelectButtonVideoUrl:shareVideoUrl indexPath:indexPath];
         }];
+#endif
+
         if (indexPath == self.currentSelectedIndexPath) {
             [videoCell setupSelectedVideo:YES];
         } else {
@@ -2260,7 +2262,8 @@ HomeworkAnswersPickerViewControllerDelegate>
 }
 #pragma mark - 收藏、分享视频
 - (void)showSelectButtonVideoUrl:(NSString *)url indexPath:(NSIndexPath *)indexPath{
-    
+
+#if TEACHERSIDE || MANAGERSIDE
     MIEidtFileView *editFileView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIEidtFileView class]) owner:nil options:nil].lastObject;
     WeakifySelf;
     editFileView.oneBtnCallback = ^{// 收藏视频
@@ -2314,6 +2317,7 @@ HomeworkAnswersPickerViewControllerDelegate>
                           offset:CGPointMake(ScreenWidth/2.0 - 100,editViewY)
                            style:MIEidtFileViewHorizontal];
     [[UIApplication sharedApplication].keyWindow addSubview:editFileView];
+#endif
 }
 #pragma mark - 更新
 

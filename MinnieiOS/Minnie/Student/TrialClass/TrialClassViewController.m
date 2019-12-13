@@ -4,11 +4,10 @@
 //
 //  Created by yebw on 2018/4/12.
 //  Copyright © 2018年 minnieedu. All rights reserved.
-//
+//  报名入口
 
 #import "CircleService.h"
 #import "CircleHomework.h"
-#import "EntranceClassView.h"
 #import "UIScrollView+Refresh.h"
 #import "CircleVideoTableViewCell.h"
 #import "CircleLikeUsersTableViewCell.h"
@@ -138,8 +137,6 @@ UITableViewDataSource
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    Student *user = APP.currentUser;
 }
 
 - (void)showEnrolledAlertView {

@@ -395,7 +395,6 @@
 		12961452239E335100F6B734 /* MIStudentInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961450239E335100F6B734 /* MIStudentInfoTableViewCell.m */; };
 		12961453239E335100F6B734 /* MIStudentInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */; };
 		12961456239E3E7B00F6B734 /* MIStudentTaskRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */; };
-		1296145C23A0D76900F6B734 /* EntranceClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1296145823A0CFAF00F6B734 /* EntranceClassView.m */; };
 		1296145D23A0D77400F6B734 /* EntranceClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1296145A23A0CFD800F6B734 /* EntranceClassView.xib */; };
 		1296146123A0FBE800F6B734 /* SearchStudentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1296145F23A0FBE800F6B734 /* SearchStudentsViewController.m */; };
 		1296146223A0FBE800F6B734 /* SearchStudentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1296145F23A0FBE800F6B734 /* SearchStudentsViewController.m */; };
@@ -2174,8 +2173,6 @@
 		979BBD48207FB23300359253 /* TrialClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 979BBD46207FB23300359253 /* TrialClassViewController.xib */; };
 		979BBD52207FBC6800359253 /* EnrollTrialClassView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 979BBD4F207FBC6700359253 /* EnrollTrialClassView.xib */; };
 		979BBD53207FBC6800359253 /* EnrollTrialClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 979BBD50207FBC6700359253 /* EnrollTrialClassView.m */; };
-		979BBD57207FBD0D00359253 /* TrialClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 979BBD55207FBD0D00359253 /* TrialClassTableViewCell.m */; };
-		979BBD58207FBD0D00359253 /* TrialClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 979BBD56207FBD0D00359253 /* TrialClassTableViewCell.xib */; };
 		979BBD822081B38900359253 /* TrialClassService.m in Sources */ = {isa = PBXBuildFile; fileRef = 979BBD812081B38900359253 /* TrialClassService.m */; };
 		979BBD852081B9C700359253 /* TrialClasssRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 979BBD842081B9C700359253 /* TrialClasssRequest.m */; };
 		979C851D208CB93F00940959 /* FinishClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 979C851B208CB93E00940959 /* FinishClassTableViewCell.m */; };
@@ -2279,8 +2276,6 @@
 		12961451239E335100F6B734 /* MIStudentInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MIStudentInfoTableViewCell.xib; sourceTree = "<group>"; };
 		12961454239E3E7A00F6B734 /* MIStudentTaskRecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIStudentTaskRecordViewController.h; sourceTree = "<group>"; };
 		12961455239E3E7A00F6B734 /* MIStudentTaskRecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIStudentTaskRecordViewController.m; sourceTree = "<group>"; };
-		1296145723A0CFAF00F6B734 /* EntranceClassView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntranceClassView.h; sourceTree = "<group>"; };
-		1296145823A0CFAF00F6B734 /* EntranceClassView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EntranceClassView.m; sourceTree = "<group>"; };
 		1296145A23A0CFD800F6B734 /* EntranceClassView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntranceClassView.xib; sourceTree = "<group>"; };
 		1296145E23A0FBE800F6B734 /* SearchStudentsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchStudentsViewController.h; sourceTree = "<group>"; };
 		1296145F23A0FBE800F6B734 /* SearchStudentsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchStudentsViewController.m; sourceTree = "<group>"; };
@@ -3504,9 +3499,6 @@
 		979BBD4F207FBC6700359253 /* EnrollTrialClassView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrollTrialClassView.xib; sourceTree = "<group>"; };
 		979BBD50207FBC6700359253 /* EnrollTrialClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrollTrialClassView.m; sourceTree = "<group>"; };
 		979BBD51207FBC6700359253 /* EnrollTrialClassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrollTrialClassView.h; sourceTree = "<group>"; };
-		979BBD54207FBD0D00359253 /* TrialClassTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrialClassTableViewCell.h; sourceTree = "<group>"; };
-		979BBD55207FBD0D00359253 /* TrialClassTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrialClassTableViewCell.m; sourceTree = "<group>"; };
-		979BBD56207FBD0D00359253 /* TrialClassTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialClassTableViewCell.xib; sourceTree = "<group>"; };
 		979BBD802081B38900359253 /* TrialClassService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TrialClassService.h; path = ../TrialClassService.h; sourceTree = "<group>"; };
 		979BBD812081B38900359253 /* TrialClassService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TrialClassService.m; path = ../TrialClassService.m; sourceTree = "<group>"; };
 		979BBD832081B9C600359253 /* TrialClasssRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrialClasssRequest.h; sourceTree = "<group>"; };
@@ -3682,6 +3674,22 @@
 				12B504032317DD89001880A9 /* ViewController */,
 			);
 			path = ActivityManager;
+			sourceTree = "<group>";
+		};
+		123D774E23A38AAC0031413B /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				979BBD42207FB1F800359253 /* TrialClass */,
+				879CE51421905C4C00BBE4B7 /* Achiever */,
+			);
+			path = Student;
+			sourceTree = "<group>";
+		};
+		123D774F23A38AC20031413B /* Teacher */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Teacher;
 			sourceTree = "<group>";
 		};
 		128F136A22D453BC00C9F5B7 /* RealTimeTask */ = {
@@ -4287,8 +4295,8 @@
 		97108DFF2079F54900568785 /* Minnie */ = {
 			isa = PBXGroup;
 			children = (
-				879CE51421905C4C00BBE4B7 /* Achiever */,
-				979BBD42207FB1F800359253 /* TrialClass */,
+				123D774F23A38AC20031413B /* Teacher */,
+				123D774E23A38AAC0031413B /* Student */,
 				97109C52207A2EC900568785 /* Auth */,
 				971099D7207A158B00568785 /* Task */,
 				97109BD8207A2E3E00568785 /* Circle */,
@@ -6089,12 +6097,7 @@
 				979BBD51207FBC6700359253 /* EnrollTrialClassView.h */,
 				979BBD50207FBC6700359253 /* EnrollTrialClassView.m */,
 				979BBD4F207FBC6700359253 /* EnrollTrialClassView.xib */,
-				1296145723A0CFAF00F6B734 /* EntranceClassView.h */,
-				1296145823A0CFAF00F6B734 /* EntranceClassView.m */,
 				1296145A23A0CFD800F6B734 /* EntranceClassView.xib */,
-				979BBD54207FBD0D00359253 /* TrialClassTableViewCell.h */,
-				979BBD55207FBD0D00359253 /* TrialClassTableViewCell.m */,
-				979BBD56207FBD0D00359253 /* TrialClassTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6756,7 +6759,6 @@
 				971097CD207A006D00568785 /* 对话框_白色@2x.png in Resources */,
 				97109D5D207A2F0400568785 /* NoticeMessageTextItemTableViewCell.xib in Resources */,
 				971096F7207A006D00568785 /* my_reward_stars@3x.png in Resources */,
-				979BBD58207FBD0D00359253 /* TrialClassTableViewCell.xib in Resources */,
 				9710968B207A006D00568785 /* buttonbar_class_manager_unsel@3x.png in Resources */,
 				12E079952313D3600054A8CE /* MICheckWordsViewController.xib in Resources */,
 				97109A4C207A158C00568785 /* RightImageMessageTableViewCell.xib in Resources */,
@@ -8028,7 +8030,6 @@
 				87FDFBC1214B6764006E987C /* AppVersion.m in Sources */,
 				8707EFCB21D61E6B0060B5A6 /* DeleteTagRequest.m in Sources */,
 				97109DA3207A2F0400568785 /* NicknameEditViewController.m in Sources */,
-				1296145C23A0D76900F6B734 /* EntranceClassView.m in Sources */,
 				1204264623000EA5008B90C9 /* AudioPlayerManager.m in Sources */,
 				97109A38207A158C00568785 /* HomeworkSessionsRequest.m in Sources */,
 				97109912207A0BF500568785 /* ProgressHUD.m in Sources */,
@@ -8084,7 +8085,6 @@
 				97109E92207A7BDD00568785 /* ExchangeRecord.m in Sources */,
 				97109A28207A158C00568785 /* HomeworkSessionTableViewCell.m in Sources */,
 				9710992A207A0BF600568785 /* UIView+Load.m in Sources */,
-				979BBD57207FBD0D00359253 /* TrialClassTableViewCell.m in Sources */,
 				97109C42207A2E3E00568785 /* HomeworkDetailLikeUsersTableViewCell.m in Sources */,
 				97364A1320B16BFD00511A95 /* NetworkStateErrorView.m in Sources */,
 				1229814322C5B3E800C09750 /* ClassSelectorTableViewCell.m in Sources */,
