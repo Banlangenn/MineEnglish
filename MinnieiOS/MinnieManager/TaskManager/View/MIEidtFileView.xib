@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nOV-8o-xwJ">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nOV-8o-xwJ" userLabel="verticalContentView">
                     <rect key="frame" x="87" y="159" width="144" height="89"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3H7-V7-zMj">
@@ -26,7 +23,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="renameAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="HpO-8m-BfD"/>
+                                <action selector="oneButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="558-h4-tqg"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBD-0T-xsh">
@@ -43,7 +40,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="deleteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="7IV-7X-Fyj"/>
+                                <action selector="twoButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="AJt-af-ZwP"/>
                             </connections>
                         </button>
                     </subviews>
@@ -64,17 +61,74 @@
                         <constraint firstAttribute="bottom" secondItem="1FF-Fa-6x6" secondAttribute="bottom" id="uJE-qO-emc"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72A-Cy-AwJ" userLabel="horizontalContentView">
+                    <rect key="frame" x="100" y="403" width="240" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBN-GR-RZQ" userLabel="收藏视频">
+                            <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="收藏视频">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </state>
+                            <connections>
+                                <action selector="oneButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Pv4-wX-JIx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JyS-K7-Egs" userLabel="设置为分享">
+                            <rect key="frame" x="120" y="0.0" width="120" height="44"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="设置为分享">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </state>
+                            <connections>
+                                <action selector="twoButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="i3w-lH-6CH"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0M-yE-3DO">
+                            <rect key="frame" x="119.5" y="0.0" width="1" height="44"/>
+                            <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="BNQ-h8-nla"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="0kN-nJ-b6b"/>
+                        <constraint firstItem="UBN-GR-RZQ" firstAttribute="top" secondItem="72A-Cy-AwJ" secondAttribute="top" id="B1j-2e-LBJ"/>
+                        <constraint firstItem="JyS-K7-Egs" firstAttribute="leading" secondItem="UBN-GR-RZQ" secondAttribute="trailing" id="G2x-Ec-e6h"/>
+                        <constraint firstAttribute="bottom" secondItem="JyS-K7-Egs" secondAttribute="bottom" id="ebS-xY-LaN"/>
+                        <constraint firstAttribute="trailing" secondItem="JyS-K7-Egs" secondAttribute="trailing" id="fL5-2i-GG5"/>
+                        <constraint firstAttribute="bottom" secondItem="L0M-yE-3DO" secondAttribute="bottom" id="geI-KY-XNF"/>
+                        <constraint firstItem="JyS-K7-Egs" firstAttribute="top" secondItem="UBN-GR-RZQ" secondAttribute="top" id="jAQ-wE-WC8"/>
+                        <constraint firstAttribute="width" constant="240" id="ljR-fA-3F5"/>
+                        <constraint firstItem="L0M-yE-3DO" firstAttribute="centerX" secondItem="72A-Cy-AwJ" secondAttribute="centerX" id="mns-dk-gse"/>
+                        <constraint firstItem="UBN-GR-RZQ" firstAttribute="width" secondItem="JyS-K7-Egs" secondAttribute="width" id="n0a-JE-WIb"/>
+                        <constraint firstItem="UBN-GR-RZQ" firstAttribute="height" secondItem="JyS-K7-Egs" secondAttribute="height" id="oxS-Ct-EtI"/>
+                        <constraint firstItem="L0M-yE-3DO" firstAttribute="top" secondItem="72A-Cy-AwJ" secondAttribute="top" id="w0w-C2-Vd4"/>
+                        <constraint firstItem="UBN-GR-RZQ" firstAttribute="leading" secondItem="72A-Cy-AwJ" secondAttribute="leading" id="wHO-sk-ZXe"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="72A-Cy-AwJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="100" id="Ixi-6Z-1fk"/>
                 <constraint firstItem="nOV-8o-xwJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="115" id="V4F-UR-nSG"/>
+                <constraint firstItem="72A-Cy-AwJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="359" id="dJZ-QO-YcY"/>
                 <constraint firstItem="nOV-8o-xwJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="87" id="dbf-hJ-mJE"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="bgView" destination="nOV-8o-xwJ" id="G1Y-qp-1p9"/>
-                <outlet property="leftContraint" destination="dbf-hJ-mJE" id="ihR-YX-l7r"/>
-                <outlet property="topConstraint" destination="V4F-UR-nSG" id="yuu-Eu-I8Z"/>
+                <outlet property="bottomButton" destination="1FF-Fa-6x6" id="prJ-q1-5A5"/>
+                <outlet property="horizontalLeftContraint" destination="Ixi-6Z-1fk" id="q4N-ic-2M7"/>
+                <outlet property="horizontalTopConstraint" destination="dJZ-QO-YcY" id="J7p-W1-Rfa"/>
+                <outlet property="horizontalView" destination="72A-Cy-AwJ" id="bf7-dt-n4h"/>
+                <outlet property="leftButton" destination="UBN-GR-RZQ" id="yC3-L7-lxO"/>
+                <outlet property="rightButton" destination="JyS-K7-Egs" id="ZNt-3d-SD3"/>
+                <outlet property="topButton" destination="3H7-V7-zMj" id="KoS-xZ-phW"/>
+                <outlet property="verticalLeftConstraint" destination="dbf-hJ-mJE" id="mlk-MF-tgN"/>
+                <outlet property="verticalTopConstraint" destination="V4F-UR-nSG" id="lbv-ME-8VF"/>
+                <outlet property="verticalView" destination="nOV-8o-xwJ" id="dGg-JK-us1"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="81.696428571428569"/>
         </view>

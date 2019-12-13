@@ -53,7 +53,10 @@
 #endif
 
 #if TEACHERSIDE || MANAGERSIDE
+
 #import "HomeworkService.h"
+#import "MIEidtFileView.h"
+
 #endif
 static NSString * const kKeyOfCreateTimestamp = @"createTimestamp";
 static NSString * const kKeyOfAudioDuration = @"audioDuration";
@@ -1994,17 +1997,9 @@ HomeworkAnswersPickerViewControllerDelegate>
         [videoCell setupWithUser:user message:message];
         
         WeakifySelf;
-        [videoCell setShareVideoUrlCallBack:^(NSString *shareVideoUrl) {
+        [videoCell setLongPressGestureCallback:^(NSString * _Nullable shareVideoUrl) {//收藏、分享视频
            
-            weakSelf.shareVideoUrl = shareVideoUrl;
-            if (shareVideoUrl.length == 0) { // 取消
-                
-                weakSelf.currentSelectedIndexPath = nil;
-            } else {// 选中
-                
-                weakSelf.currentSelectedIndexPath = indexPath;
-            }
-            [weakSelf.messagesTableView reloadData];
+            [weakSelf showSelectButtonVideoUrl:shareVideoUrl indexPath:indexPath];
         }];
         if (indexPath == self.currentSelectedIndexPath) {
             [videoCell setupSelectedVideo:YES];
@@ -2263,7 +2258,63 @@ HomeworkAnswersPickerViewControllerDelegate>
         }
     }];
 }
+#pragma mark - 收藏、分享视频
+- (void)showSelectButtonVideoUrl:(NSString *)url indexPath:(NSIndexPath *)indexPath{
+    
+    MIEidtFileView *editFileView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIEidtFileView class]) owner:nil options:nil].lastObject;
+    WeakifySelf;
+    editFileView.oneBtnCallback = ^{// 收藏视频
+        
+    };
+    editFileView.twoBtnCallBack = ^{// 分享视频
+       
+        UITableViewCell *cell = [self.messagesTableView cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[VideoMessageTableViewCell class]]) {
 
+            if (self.currentSelectedIndexPath == indexPath) {//取消
+                
+                self.currentSelectedIndexPath = nil;
+                self.shareVideoUrl = nil;
+                [((VideoMessageTableViewCell *)cell) setupSelectedVideo:NO];
+            } else {//分享
+                
+                if (self.currentSelectedIndexPath) {// 重置上一个选中cell
+
+                    UITableViewCell *preCell = [self.messagesTableView cellForRowAtIndexPath:self.currentSelectedIndexPath];
+                    if ([preCell isKindOfClass:[VideoMessageTableViewCell class]]) {
+                        
+                        [((VideoMessageTableViewCell *)preCell) setupSelectedVideo:NO];
+                    }
+                }
+                self.currentSelectedIndexPath = indexPath;
+                self.shareVideoUrl = url;
+                [((VideoMessageTableViewCell *)cell) setupSelectedVideo:YES];
+            }
+        }
+    };
+    editFileView.frame = [UIScreen mainScreen].bounds;
+    
+    CGRect rectInTableView = [self.messagesTableView rectForRowAtIndexPath:indexPath];
+    CGRect rect = [self.messagesTableView convertRect:rectInTableView toView:self.view];
+    CGFloat editViewY = CGRectGetMidY(rect) - 20;
+    if (editViewY >= ScreenHeight - 40) {
+        editViewY = ScreenHeight - 40;
+    } else if (editViewY <= kNaviBarHeight){
+        editViewY = kNaviBarHeight;
+    }
+    NSString *shareTitle = @"设置为分享";
+    if (self.currentSelectedIndexPath == indexPath) {
+        shareTitle = @"取消分享";
+    }
+    [editFileView setupTextColor:[UIColor blackColor]
+                         bgColor:[UIColor emptyBgColor]
+                        oneTitle:@"收藏视频"
+                        twoTitle:shareTitle
+                    cornerRadius:5.f
+                          offset:CGPointMake(ScreenWidth/2.0 - 100,editViewY)
+                           style:MIEidtFileViewHorizontal];
+    [[UIApplication sharedApplication].keyWindow addSubview:editFileView];
+}
 #pragma mark - 更新
 
 - (void)updateData{

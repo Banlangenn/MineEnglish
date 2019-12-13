@@ -14,13 +14,25 @@ typedef void(^RenameFileCallback)(void);
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger,MIEidtFileViewStyle) {
+    
+    MIEidtFileViewVertical,
+    MIEidtFileViewHorizontal,
+};
+
 @interface MIEidtFileView : UIView
 
-@property (nonatomic,copy) DeleteFileCallback deleteCallback;
-@property (nonatomic,copy) RenameFileCallback renameCallBack;
+@property (nonatomic,copy) void(^oneBtnCallback)(void);
+@property (nonatomic,copy) void(^twoBtnCallBack)(void);
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftContraint;
+- (void)setupTextColor:(UIColor *)textColor
+               bgColor:(UIColor *)bgColor
+              oneTitle:(NSString *)oneTitle
+              twoTitle:(NSString *)twoTitle
+          cornerRadius:(CGFloat)radius
+                offset:(CGPoint)offset
+                 style:(MIEidtFileViewStyle)style;
+
 
 @end
 

@@ -6,7 +6,7 @@
 //  Copyright © 2019 songzhen. All rights reserved.
 //
 
-#import "MIEidtFileView.h"
+
 #import "ParentFileInfo.h"
 #import "MIHeaderTableViewCell.h"
 

@@ -213,17 +213,17 @@ UITableViewDataSource
         
         MIEidtFileView *editFileView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIEidtFileView class]) owner:nil options:nil].lastObject;
         WeakifySelf;
-        editFileView.deleteCallback = ^{
+        editFileView.oneBtnCallback = ^{
+            if (indexPath.section < weakSelf.parentFileList.count) {
+                ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
+                [weakSelf renameFileWithFileInfo:parentFileInfo.fileInfo];
+            }
+        };
+        editFileView.twoBtnCallBack = ^{
             if (indexPath.section < weakSelf.parentFileList.count) {
                 ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
                 weakSelf.currentParentFileId = -1;
                 [weakSelf deleteFile:parentFileInfo.fileInfo indexPath:indexPath];
-            }
-        };
-        editFileView.renameCallBack = ^{
-            if (indexPath.section < weakSelf.parentFileList.count) {
-                ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
-                [weakSelf renameFileWithFileInfo:parentFileInfo.fileInfo];
             }
         };
         editFileView.frame = [UIScreen mainScreen].bounds;
@@ -231,29 +231,24 @@ UITableViewDataSource
         // header位置
         CGRect rectInTableView = [self.tableView rectForHeaderInSection:indexPath.section];
         CGRect rect = [self.tableView convertRect:rectInTableView toView:[self.tableView superview]];
-        CGFloat editViewY = CGRectGetMidY(rect) - 45;
+        CGFloat editViewY = CGRectGetMidY(rect) - 65;
         
         if (editViewY >= ScreenHeight - 120) {
             editViewY = ScreenHeight - 120;
         }
-        editFileView.topConstraint.constant = editViewY;
-        editFileView.leftContraint.constant = kColumnSecondWidth + kRootModularWidth;
+        [editFileView setupTextColor:[UIColor whiteColor]
+                             bgColor:[UIColor blackColor]
+                            oneTitle:@"重命名"
+                            twoTitle:@"删除文件夹"
+                        cornerRadius:20.f
+                              offset:CGPointMake(kColumnSecondWidth + kRootModularWidth,editViewY)
+                               style:MIEidtFileViewHorizontal];
         [[UIApplication sharedApplication].keyWindow addSubview:editFileView];
     } else {
         
         MIEidtFileView *editFileView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIEidtFileView class]) owner:nil options:nil].lastObject;
         WeakifySelf;
-        editFileView.deleteCallback = ^{
-            
-            if (indexPath.section < weakSelf.parentFileList.count) {
-                ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
-                if (indexPath.row < parentFileInfo.subFileList.count) {
-                    FileInfo *subInfo = parentFileInfo.subFileList[indexPath.row];
-                    [weakSelf deleteFile:subInfo indexPath:indexPath];
-                }
-            }
-        };
-        editFileView.renameCallBack = ^{
+        editFileView.oneBtnCallback = ^{
            
             if (indexPath.section < weakSelf.parentFileList.count) {
                 ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
@@ -263,18 +258,33 @@ UITableViewDataSource
                 }
             }
         };
+        editFileView.twoBtnCallBack = ^{
+            
+            if (indexPath.section < weakSelf.parentFileList.count) {
+                ParentFileInfo *parentFileInfo = weakSelf.parentFileList[indexPath.section];
+                if (indexPath.row < parentFileInfo.subFileList.count) {
+                    FileInfo *subInfo = parentFileInfo.subFileList[indexPath.row];
+                    [weakSelf deleteFile:subInfo indexPath:indexPath];
+                }
+            }
+        };
         editFileView.frame = [UIScreen mainScreen].bounds;
         
         // header位置
         CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:indexPath];
         CGRect rect = [self.tableView convertRect:rectInTableView toView:self];
-        CGFloat editViewY = CGRectGetMidY(rect) - 45;
+        CGFloat editViewY = CGRectGetMidY(rect) - 65;
         
         if (editViewY >= ScreenHeight - 120) {
             editViewY = ScreenHeight - 120;
         }
-        editFileView.topConstraint.constant = editViewY;
-        editFileView.leftContraint.constant = kColumnSecondWidth + kRootModularWidth;
+        [editFileView setupTextColor:[UIColor whiteColor]
+                             bgColor:[UIColor blackColor]
+                            oneTitle:@"重命名"
+                            twoTitle:@"删除文件夹"
+                        cornerRadius:20.f
+                              offset:CGPointMake(kColumnSecondWidth + kRootModularWidth,editViewY)
+                               style:MIEidtFileViewVertical];
         [[UIApplication sharedApplication].keyWindow addSubview:editFileView];
     }
 }

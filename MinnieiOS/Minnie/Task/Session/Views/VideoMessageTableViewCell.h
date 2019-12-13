@@ -13,16 +13,15 @@ typedef void(^VideoMessageTableViewCellPlayCallback)(void);
 
 extern CGFloat const VideoMessageTableViewCellHeight;
 
-extern NSString * const LeftVideoMessageTableViewCellId;
-extern NSString * const RightVideoMessageTableViewCellId;
+extern NSString * _Nullable const LeftVideoMessageTableViewCellId;
+extern NSString * _Nullable const RightVideoMessageTableViewCellId;
 
 @interface VideoMessageTableViewCell : MessageTableViewCell
 
 
-@property (nonatomic, copy) void(^shareVideoUrlCallBack)(NSString *_Nullable shareVideoUrl);
+@property (nonatomic, copy) void(^ _Nullable longPressGestureCallback)(NSString *_Nullable shareVideoUrl);
 
-@property (nonatomic, copy) VideoMessageTableViewCellPlayCallback videoPlayCallback;
-
+@property (nonatomic, copy) VideoMessageTableViewCellPlayCallback _Nullable videoPlayCallback;
 
 - (void)setupSelectedVideo:(BOOL)selected;
 

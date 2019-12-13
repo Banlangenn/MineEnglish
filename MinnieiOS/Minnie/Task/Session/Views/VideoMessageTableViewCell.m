@@ -6,8 +6,9 @@
 //  Copyright © 2017年 mfox. All rights reserved.
 //
 
-#import "VideoMessageTableViewCell.h"
 #import "MaskImageView.h"
+#import "MIEidtFileView.h"
+#import "VideoMessageTableViewCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 CGFloat const VideoMessageTableViewCellHeight = 152.f;
@@ -49,23 +50,81 @@ NSString * const RightVideoMessageTableViewCellId = @"RightVideoMessageTableView
     // 教师端 长按学生发过来视频选中，指定当前选中视频为分享
     if (longGest.state == UIGestureRecognizerStateEnded) {
         
-        if (self.shareSelected) {
-            self.shareSelected = NO;
-            self.shareSelectImaV.hidden = YES;
-            
-            if (self.shareVideoUrlCallBack) {
-                self.shareVideoUrlCallBack(nil);
-            }
-        } else {
-            self.shareSelected = YES;
-            self.shareSelectImaV.hidden = NO;
-            
-            if (self.shareVideoUrlCallBack) {
-                self.shareVideoUrlCallBack(self.currentVideoUrl);
-            }
+        if (self.longPressGestureCallback) {
+            self.longPressGestureCallback(self.currentVideoUrl);
         }
+
+//        if (self.shareSelected) {
+//            self.shareSelected = NO;
+//            self.shareSelectImaV.hidden = YES;
+//
+//            if (self.shareVideoUrlCallBack) {
+//                self.shareVideoUrlCallBack(nil);
+//            }
+//        } else {
+//            self.shareSelected = YES;
+//            self.shareSelectImaV.hidden = NO;
+//
+//            if (self.shareVideoUrlCallBack) {
+//                self.shareVideoUrlCallBack(self.currentVideoUrl);
+//            }
+//        }
+
+//        [self showSelectButton];
     }
 }
+
+//- (void)showSelectButton{
+//
+//    MIEidtFileView *editFileView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIEidtFileView class]) owner:nil options:nil].lastObject;
+//    WeakifySelf;
+//    editFileView.oneBtnCallback = ^{
+//
+//    };
+//    editFileView.twoBtnCallBack = ^{// 分享
+//
+//        [weakSelf updateShareSelectedState];
+//    };
+//    editFileView.frame = [UIScreen mainScreen].bounds;
+//
+//    CGRect rect = self.rect;
+//    CGFloat editViewY = CGRectGetMidY(rect) - 20;
+//    if (editViewY >= ScreenHeight - 40) {
+//        editViewY = ScreenHeight - 40;
+//    }
+//    NSString *shareTitle = @"设置为分享";
+//    if (self.shareSelected)  {
+//        shareTitle = @"设置为取消分享";
+//    }
+//    [editFileView setupTextColor:[UIColor blackColor]
+//                         bgColor:[UIColor emptyBgColor]
+//                        oneTitle:@"收藏视频"
+//                        twoTitle:@"设置为取消分享"
+//                    cornerRadius:5.f
+//                          offset:CGPointMake(ScreenWidth/2.0 - 100,editViewY)
+//                           style:MIEidtFileViewHorizontal];
+//    [[UIApplication sharedApplication].keyWindow addSubview:editFileView];
+//}
+
+//- (void)updateShareSelectedState{
+//
+//    if (self.shareSelected) {
+//        self.shareSelected = NO;
+//        self.shareSelectImaV.hidden = YES;
+//
+//        if (self.shareVideoUrlCallBack) {
+//            self.shareVideoUrlCallBack(nil);
+//        }
+//    } else {
+//        self.shareSelected = YES;
+//        self.shareSelectImaV.hidden = NO;
+//
+//        if (self.shareVideoUrlCallBack) {
+//            self.shareVideoUrlCallBack(self.currentVideoUrl);
+//        }
+//    }
+//}
+
 
 - (void)setupSelectedVideo:(BOOL)selected{
     

@@ -176,8 +176,8 @@ NSString * const HomeworkTableViewCellId = @"HomeworkTableViewCellId";
     
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     homework.cellHeight = size.height + 10;
-    if (homework.cellHeight < 160) {
-        homework.cellHeight = 160;
+    if (homework.cellHeight < 200) {
+        homework.cellHeight = 200;
     }
     return homework.cellHeight;
 }
@@ -195,6 +195,13 @@ NSString * const HomeworkTableViewCellId = @"HomeworkTableViewCellId";
     
     if (self.previewCallback != nil) {
         self.previewCallback();
+    }
+}
+
+- (IBAction)excellentVideoButtonPressed:(id)sender {
+    
+    if (self.excellentVideoCallback != nil) {
+        self.excellentVideoCallback();
     }
 }
 
